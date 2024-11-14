@@ -12,8 +12,15 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
--Readme.md de README_TR.md linkinin verilmesi(trReadmeHere)
-
+- Book Controller yazýldý
+- Automapper kütüphanesi kuruldu ve gerekli ayarlamalarý yapýldý(MappingProfile.cs,Services.AddAutoMapper(typeof(Program)))
+- BookViewModel class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModel e mapleme ayarý yapýldý
+- Book Controller Index fonksiyonu yazýldý
+- Book Controller Edit Fonksiyonu Get Kýsmý yazýldý
+- BookViewModelForUpdate class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForUpdate e mapleme ayarý yapýldý
+- decimal problemi çözülmeye çalýþýldý.Ancak Çözülemedi
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -34,3 +41,14 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Readme dosyalarý bir üst dizine taþýndý
 - üst dizinde gitignore dosyasý oluþturuldu ve içeriði yazýldý
 - git vcs baðlantýlarý yapýldý
+- Readme.md de README_TR.md linkinin verilmesi(trReadmeHere)
+- Automapper kütüphanesi kuruldu ve gerekli ayarlamalarý yapýldý(MappingProfile.cs,Services.AddAutoMapper(typeof(Program)))
+- BookViewModel class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModel e mapleme ayarý yapýldý
+- Book Controller Index fonksiyonu yazýldý
+- Book Controller Edit Fonksiyonu Get Kýsmý yazýldý
+- BookViewModelForUpdate class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForUpdate e mapleme ayarý yapýldý
+
+### Sorunlar
+decimal problemi edit sayfasýnda girilen deðer gönderildikten sonra istenen deðer olarak dönmüyor  (1234.4 (gönderilen)  (12344,00)(sonucunda olan))

@@ -21,7 +21,8 @@ namespace BookWebApp.Models.Dto
 
 
         /*
-         Daha sonrasında kategori,Yazar(obje olarak),Isbn numarası eklenebilir
+         Daha sonrasında Issactive,kategori,Yazar(obje olarak),Isbn numarası eklenebilir
+        buradaki yapmış olacağın değişikleri gerekiyor sa viewmodel de yapmayı unutma
          */
     }
 }

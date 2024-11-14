@@ -1,4 +1,6 @@
 using BookWebApp.Extensions;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 //set db context
 builder.Services.ConfigureSqlContext(builder.Configuration);
+//automapper
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
@@ -28,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Book}/{action=Index}/");
 
 app.Run();
