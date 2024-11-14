@@ -1,1 +1,1 @@
-[trReadmeHere](https://google.com)
+[trReadmeHere](https://github.com/fatihemregit/BookWebApp/blob/master/README_TR.md)
