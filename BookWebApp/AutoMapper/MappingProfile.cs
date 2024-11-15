@@ -16,6 +16,14 @@ namespace BookWebApp.AutoMapper
             CreateMap<BookViewModelForUpdate, BookDto>();
             CreateMap<BookDto,BookViewModelForUpdate>();
 
+            //BookViewModelForCreate to BookDto
+            CreateMap<BookViewModelForCreate, BookDto>();
+            CreateMap<BookDto, BookViewModelForCreate>();
+
+            //BookViewModelForDetails to BookDto
+            CreateMap<BookViewModelForDetails, BookDto>();
+            CreateMap<BookDto, BookViewModelForDetails>();
+
         }
     }
 }

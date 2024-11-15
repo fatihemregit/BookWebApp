@@ -28,8 +28,32 @@ namespace BookWebApp.Controllers
             IEnumerable<BookViewModel> bookViewModels = _mapper.Map<IEnumerable<BookViewModel>>(bookDtos);
             return View(bookViewModels);
         }
+        //create
+
+        [HttpGet("Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost("Create")]
+        public IActionResult Create([FromForm]BookViewModelForCreate bookViewModelForCreate)
+        {
+            if (bookViewModelForCreate is null)
+            {
+                return BadRequest();
+            }
+            //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)
+            _context.BookDtos.Add(_mapper.Map<BookDto>(bookViewModelForCreate));
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Book");
+        }
+
+
+        //edit
+
         [HttpGet("Edit/{id:int}")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit([FromRoute]int id)
         {
             _logger.LogInformation("edit get çalıştı");
 
@@ -58,30 +82,53 @@ namespace BookWebApp.Controllers
             return View(foundBookViewModelForUpdate);
         }
         [HttpPost("Edit/{id:int}")]
-        public IActionResult Edit([FromRoute]int id,BookViewModelForUpdate bookViewModelForUpdate)
+        public IActionResult Edit([FromRoute]int id, [FromForm]BookViewModelForUpdate bookViewModelForUpdate)
         {
             _logger.LogInformation("edit post çalıştı");
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogInformation("model valid değil");
-                return View(bookViewModelForUpdate);
-            }
-
             if (bookViewModelForUpdate is null)
             {
                 _logger.LogInformation("bookViewModelForUpdate is null if ine girildi");
                 return BadRequest();
             }
             _logger.LogInformation("bookViewModelForUpdate is null if ine girilmedi");
-            _logger.LogWarning($"(before update) price is {bookViewModelForUpdate.Price}");
-            _logger.LogWarning($"(after update) price is {bookViewModelForUpdate.Price}");
+            _logger.LogWarning($"BookViewModelForUpdate price is {bookViewModelForUpdate.Price}");
             //update işlemi
             _context.BookDtos.Update(_mapper.Map<BookDto>(bookViewModelForUpdate));
             _context.SaveChanges();
             return RedirectToAction("Index", "Book");
-
         }
+
+        //Details
+
+        [HttpGet("Details/{id:int}")]
+        public IActionResult Details([FromRoute]int id)
+        {
+
+            //id is null
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            //is is not null
+            
+            //find a bookdto
+
+            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
+            //foundBookDto is null
+            if (foundBookDto is null)
+            {
+                return NotFound();
+            }
+
+            //foundBookDto is not null
+
+            //convert BookDto to BookViewModelForDetails
+            BookViewModelForDetails foundbookViewModelForDetails = _mapper.Map<BookViewModelForDetails>(foundBookDto);
+
+            return View(foundbookViewModelForDetails);
+        }
+
+
 
 
     }

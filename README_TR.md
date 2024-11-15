@@ -12,15 +12,14 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Book Controller yazýldý
-- Automapper kütüphanesi kuruldu ve gerekli ayarlamalarý yapýldý(MappingProfile.cs,Services.AddAutoMapper(typeof(Program)))
-- BookViewModel class oluþturuldu ve yazýldý
-- MappingProfile.cs de BookDto dan BookViewModel e mapleme ayarý yapýldý
-- Book Controller Index fonksiyonu yazýldý
-- Book Controller Edit Fonksiyonu Get Kýsmý yazýldý
-- BookViewModelForUpdate class oluþturuldu ve yazýldý
-- MappingProfile.cs de BookDto dan BookViewModelForUpdate e mapleme ayarý yapýldý
-- decimal problemi çözülmeye çalýþýldý.Ancak Çözülemedi
+- Book Controller Edit Fonksiyonu Post Kýsmý yazýldý
+- BookViewModelForCreate class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForCreate e mapleme ayarý yapýldý.
+- Book Controller Create fonksiyonu get kýsmý yazýldý
+- Book Controller Create fonksiyonu post kýsmý yazýldý
+- BookViewModelForDetails class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForDetails e mapleme ayarý yapýldý.
+- Book Controller Details fonksiyonu yazýldý(get kýsmý)
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -56,4 +55,12 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - denemdto yu içeren migrate silindi.
 - veritabaný,sqlserver managment studio üzerinden silindi
 - sýfýrdan migrate alýndý.ve daha sonrasýnda bu migrate veritabanýna uygulandý
+- Book Controller Edit Fonksiyonu Post Kýsmý yazýldý
+- BookViewModelForCreate class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForCreate e mapleme ayarý yapýldý.
+- Book Controller Create fonksiyonu get kýsmý yazýldý
+- Book Controller Create fonksiyonu post kýsmý yazýldý
+- BookViewModelForDetails class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForDetails e mapleme ayarý yapýldý.
+- Book Controller Details fonksiyonu yazýldý(get kýsmý) 
 ### Sorunlar
