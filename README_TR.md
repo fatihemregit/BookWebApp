@@ -12,14 +12,12 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Book Controller Edit Fonksiyonu Post Kýsmý yazýldý
-- BookViewModelForCreate class oluþturuldu ve yazýldý
-- MappingProfile.cs de BookDto dan BookViewModelForCreate e mapleme ayarý yapýldý.
-- Book Controller Create fonksiyonu get kýsmý yazýldý
-- Book Controller Create fonksiyonu post kýsmý yazýldý
-- BookViewModelForDetails class oluþturuldu ve yazýldý
-- MappingProfile.cs de BookDto dan BookViewModelForDetails e mapleme ayarý yapýldý.
-- Book Controller Details fonksiyonu yazýldý(get kýsmý)
+- BookViewModelForDelete class oluþturuldu ve yazýldý
+- MappingProfile.cs de BookDto dan BookViewModelForDelete e mapleme ayarý yapýldý.
+- Book Controller Delete fonksiyonu get kýsmý yazýldý
+- BookDto ya safe delete özelliði(isDeleted Prop) eklendi
+- safe delete için ApplicationDbContext teki OnModelCreating fonkisyonunda gerekli ayarlama yapýldý(modelBuilder.Entity<BookDto>().HasQueryFilter(bd => !bd.isDeleted);)
+- Book Controller Delete fonksiyonu Post kýsmý Yazýldý(DeletePost)
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -64,3 +62,4 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - MappingProfile.cs de BookDto dan BookViewModelForDetails e mapleme ayarý yapýldý.
 - Book Controller Details fonksiyonu yazýldý(get kýsmý) 
 ### Sorunlar
+- BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil

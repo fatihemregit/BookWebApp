@@ -16,6 +16,7 @@ namespace BookWebApp.Data.Config
                 new BookDto { Id = 4, Name = "Tutunamayanlar", Writer = "Oğuz Atay", Price = 150 },
                 new BookDto { Id = 5, Name = "Sinekli Bakkal", Writer = "Halide Edip Adıvar", Price = 150 }
                );
+
         }
     }
 }

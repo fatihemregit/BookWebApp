@@ -17,6 +17,8 @@ namespace BookWebApp.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BookDtoConfig());
+            //safe delete olan verileri getirmiyorum
+            modelBuilder.Entity<BookDto>().HasQueryFilter(bd => !bd.isDeleted);
         }
     }
 }

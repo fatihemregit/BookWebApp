@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookWebApp.Models.ViewModel.BookViewModel>
+﻿@model IEnumerable<BookWebApp.Models.ViewModel.BookViewModelForList>
 
 @{
     ViewData["Title"] = "Index";
@@ -27,7 +27,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 
             </td>
         </tr>

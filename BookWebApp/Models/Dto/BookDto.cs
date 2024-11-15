@@ -19,9 +19,11 @@ namespace BookWebApp.Models.Dto
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        public bool isDeleted { get; set; } = false;
+
 
         /*
-         Daha sonrasında Issactive,kategori,Yazar(obje olarak),Isbn numarası eklenebilir
+         Daha sonrasında kategori,Yazar(obje olarak),Isbn numarası eklenebilir
         buradaki yapmış olacağın değişikleri gerekiyor sa viewmodel de yapmayı unutma
          */
     }

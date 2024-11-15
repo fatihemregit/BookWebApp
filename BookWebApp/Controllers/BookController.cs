@@ -7,6 +7,8 @@ using System.Globalization;
 
 namespace BookWebApp.Controllers
 {
+
+    
     public class BookController : Controller
     {
 
@@ -25,7 +27,7 @@ namespace BookWebApp.Controllers
         {
             //mapping
             IEnumerable<BookDto> bookDtos = _context.BookDtos.ToList();
-            IEnumerable<BookViewModel> bookViewModels = _mapper.Map<IEnumerable<BookViewModel>>(bookDtos);
+            IEnumerable<BookViewModelForList> bookViewModels = _mapper.Map<IEnumerable<BookViewModelForList>>(bookDtos);
             return View(bookViewModels);
         }
         //create
@@ -120,15 +122,63 @@ namespace BookWebApp.Controllers
                 return NotFound();
             }
 
-            //foundBookDto is not null
+            //foundBookDto is not nullc
 
             //convert BookDto to BookViewModelForDetails
             BookViewModelForDetails foundbookViewModelForDetails = _mapper.Map<BookViewModelForDetails>(foundBookDto);
 
             return View(foundbookViewModelForDetails);
         }
+        [HttpGet("Delete/{id:int}")]
+        public IActionResult Delete([FromRoute]int id)
+        {
+            //id is null
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            //id is not null
 
 
+            //find a bookDto
+            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
+            //foundBookDto is null
+            if (foundBookDto is null)
+            {
+                return NotFound();
+            }
+            //foundBookDto is not null
+            //convert bookDto to BookViewModelForDelete
+            BookViewModelForDelete foundBookViewModelForDelete = _mapper.Map<BookViewModelForDelete>(foundBookDto);
+            return View(foundBookViewModelForDelete);
+        }
+
+        [HttpPost("Delete/{id:int}")]
+        public IActionResult DeletePost([FromRoute] int id)
+        {
+            //id is null
+
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            //is is not null
+
+            //find a bookdto
+
+            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
+            //foundBookDto is null
+
+            if (foundBookDto is null) { 
+                return NotFound();
+            
+            }
+            //foundBookDto is null
+            //safe delete bookDto(changing the isdeleted value)
+            foundBookDto.isDeleted = true;
+            _context.SaveChanges();
+            return RedirectToAction("Index","Book");
+        }
 
 
     }
