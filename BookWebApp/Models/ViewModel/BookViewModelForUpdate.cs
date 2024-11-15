@@ -8,6 +8,8 @@ namespace BookWebApp.Models.ViewModel
         public string Name { get; set; }
 
         public string Writer { get; set; }
-        public decimal Price { get; set; }
+
+		//virgülden sonra iki basamak ayarı yapılacak
+		public decimal Price { get; set; }
     }
 }

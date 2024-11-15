@@ -7,7 +7,7 @@
 namespace BookWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class firstmig : Migration
+    public partial class mig3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

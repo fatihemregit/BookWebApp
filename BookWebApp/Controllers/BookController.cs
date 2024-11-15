@@ -52,6 +52,7 @@ namespace BookWebApp.Controllers
             //find a object with id end
             //map bookDto to bookViewModel
             //idsiz işlem yapmayı deneyelim daha sonra
+            _logger.LogWarning($"(edit get function) book dto price is {foundBookDto.Price}");
             BookViewModelForUpdate foundBookViewModelForUpdate = _mapper.Map<BookViewModelForUpdate>(foundBookDto);
 
             return View(foundBookViewModelForUpdate);
@@ -60,6 +61,13 @@ namespace BookWebApp.Controllers
         public IActionResult Edit([FromRoute]int id,BookViewModelForUpdate bookViewModelForUpdate)
         {
             _logger.LogInformation("edit post çalıştı");
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogInformation("model valid değil");
+                return View(bookViewModelForUpdate);
+            }
+
             if (bookViewModelForUpdate is null)
             {
                 _logger.LogInformation("bookViewModelForUpdate is null if ine girildi");
@@ -67,7 +75,7 @@ namespace BookWebApp.Controllers
             }
             _logger.LogInformation("bookViewModelForUpdate is null if ine girilmedi");
             _logger.LogWarning($"(before update) price is {bookViewModelForUpdate.Price}");
-            _logger.LogWarning($"(after update) price is {bookViewModelForUpdate.Price.ToString("0.##")}");
+            _logger.LogWarning($"(after update) price is {bookViewModelForUpdate.Price}");
             //update işlemi
             _context.BookDtos.Update(_mapper.Map<BookDto>(bookViewModelForUpdate));
             _context.SaveChanges();

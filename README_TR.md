@@ -49,6 +49,11 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Book Controller Edit Fonksiyonu Get Kýsmý yazýldý
 - BookViewModelForUpdate class oluþturuldu ve yazýldý
 - MappingProfile.cs de BookDto dan BookViewModelForUpdate e mapleme ayarý yapýldý
-
+- decimal problemi çözülmeye çalýþýldý.Ancak Çözülemedi
+### Gün 2 (15.11.2024)
+- decimal problemi çözüldü.ancak bu seferde viewmodel de validasyon yapýlamýyor.Ama þuanlýk problem i çözdüðü için önemli deðil(_ValidationScriptsPartial.cshtml dosyasýna jquery kodu yazýlarak çözüldü)
+- decimal problemini double da ayný hatayý verip vermediðini test etmek için geçiçi olarak  denemedto.cs,denemedtoConfig.cs ve controller ý yazýldý.sorun çözüldükten sonra denemedto ile alakalý þeyler silindi.
+- denemdto yu içeren migrate silindi.
+- veritabaný,sqlserver managment studio üzerinden silindi
+- sýfýrdan migrate alýndý.ve daha sonrasýnda bu migrate veritabanýna uygulandý
 ### Sorunlar
-decimal problemi edit sayfasýnda girilen deðer gönderildikten sonra istenen deðer olarak dönmüyor  (1234.4 (gönderilen)  (12344,00)(sonucunda olan))
