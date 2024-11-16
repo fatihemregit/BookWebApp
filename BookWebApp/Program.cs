@@ -9,9 +9,12 @@ builder.Services.AddControllersWithViews();
 
 //set db context
 builder.Services.ConfigureSqlContext(builder.Configuration);
+//identity config
+builder.Services.ConfigureIdentity();
+//cookie config
+builder.Services.ConfigureCookie();
 //automapper
 builder.Services.AddAutoMapper(typeof(Program));
-
 var app = builder.Build();
 
 
@@ -28,6 +31,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

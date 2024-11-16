@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookWebApp.Models.Auth;
 using BookWebApp.Models.Dto;
 using BookWebApp.Models.ViewModel;
 
@@ -28,6 +29,9 @@ namespace BookWebApp.AutoMapper
             CreateMap<BookViewModelForDelete, BookDto>();
             CreateMap<BookDto, BookViewModelForDelete>();
 
+            //AppUserViewModel to AppUser
+            CreateMap<AppUser, AppUserViewModel>();
+            CreateMap<AppUserViewModel,AppUser>();
 
         }
     }

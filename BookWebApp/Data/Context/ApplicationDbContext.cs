@@ -1,10 +1,12 @@
 ﻿using BookWebApp.Data.Config;
+using BookWebApp.Models.Auth;
 using BookWebApp.Models.Dto;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace BookWebApp.Data.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
 
         public DbSet<BookDto> BookDtos{ get; set; }
@@ -19,6 +21,9 @@ namespace BookWebApp.Data.Context
             modelBuilder.ApplyConfiguration(new BookDtoConfig());
             //safe delete olan verileri getirmiyorum
             modelBuilder.Entity<BookDto>().HasQueryFilter(bd => !bd.isDeleted);
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

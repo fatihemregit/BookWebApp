@@ -12,12 +12,6 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- BookViewModelForDelete class oluþturuldu ve yazýldý
-- MappingProfile.cs de BookDto dan BookViewModelForDelete e mapleme ayarý yapýldý.
-- Book Controller Delete fonksiyonu get kýsmý yazýldý
-- BookDto ya safe delete özelliði(isDeleted Prop) eklendi
-- safe delete için ApplicationDbContext teki OnModelCreating fonkisyonunda gerekli ayarlama yapýldý(modelBuilder.Entity<BookDto>().HasQueryFilter(bd => !bd.isDeleted);)
-- Book Controller Delete fonksiyonu Post kýsmý Yazýldý(DeletePost)
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -61,5 +55,11 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - BookViewModelForDetails class oluþturuldu ve yazýldý
 - MappingProfile.cs de BookDto dan BookViewModelForDetails e mapleme ayarý yapýldý.
 - Book Controller Details fonksiyonu yazýldý(get kýsmý) 
+- Identity mekanizmasý kurulmaya baþlandý
+### Gün 3 (16.11.2024)
+- Cookie Temelli Identity Mekanizmasý Kuruldu
+
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
+### Kendime Not
+validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
