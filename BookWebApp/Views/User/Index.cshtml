@@ -21,7 +21,7 @@
             @* <th>
                 @Html.DisplayNameFor(model => model.Sifre)
             </th> *@
-            <th></th>
+            <th>Delete User</th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +33,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
+                <td>@Html.ActionLink("Delete User", "DeleteUser", new { userName  = item.UserName})</td>
             @* <td>
                 @Html.DisplayFor(modelItem => item.Sifre)
             </td> *@

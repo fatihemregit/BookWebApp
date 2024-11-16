@@ -9,11 +9,6 @@ namespace BookWebApp.Controllers
     public class UserController : Controller
     {
 
-        /*
-         * username:email:password
-         * fterm:fatih@admin.com:6YyRLyKJEt@k  (kayıtlı)
-         * fatihKILINC:fatih@test.com:Qwe12. (kayıtlı)
-         */
 
         private readonly UserManager<AppUser> _userManager;
 
@@ -21,6 +16,11 @@ namespace BookWebApp.Controllers
 
         private readonly IMapper _mapper;
 
+
+        /* username:email:password
+         *  admin:admin@admin.com:&dY3#cQjA8d!BAZo9vYLidDg
+         *  
+         */
 
         public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager)
         {
@@ -106,8 +106,21 @@ namespace BookWebApp.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
-
-
+        [Authorize(Roles = "DeleteUser")]
+        public async Task<IActionResult> DeleteUser(string UserName)
+        {
+            Console.WriteLine("deleting users");
+            AppUser founduser = await _userManager.FindByNameAsync(UserName);
+            if (founduser is null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("kullanıcı bulundu");
+            Console.WriteLine("kullanıcı siliniyor");
+            await _userManager.DeleteAsync(founduser);
+            Console.WriteLine("kullanıcı silindi");
+            return RedirectToAction("Index", "User");
+        }
 
     }
 }
