@@ -1,49 +1,65 @@
 ﻿@model IEnumerable<BookWebApp.Models.Auth.AppUserViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="SignIn">Create New</a>
+	<a asp-action="SignIn">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Sifre)
-            </th> *@
-            <th>Delete User</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-                <td>@Html.ActionLink("Delete User", "DeleteUser", new { userName  = item.UserName})</td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.Sifre)
-            </td> *@
-            @*
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td> *@
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.UserName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Email)
+			</th>
+			@* <th>
+			@Html.DisplayNameFor(model => model.Sifre)
+			</th> *@
+			<th>Delete User</th>
+			<th>Roles</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.ActionLink("Delete User", "DeleteUser", new { userName = item.UserName })
+				</td>
+				@{
+					string totalRoles = "";
+					@foreach (string role in item.Roles){
+						totalRoles = totalRoles + "," + role;
+					}
+				}
+				
+
+				<td>
+					@totalRoles
+				</td>
+
+				@* <td>
+			@Html.DisplayFor(modelItem => item.Sifre)
+			</td> *@
+				@*
+			<td>
+			@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+			@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+			@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+			</td> *@
+			</tr>
+		}
+	</tbody>
 </table>

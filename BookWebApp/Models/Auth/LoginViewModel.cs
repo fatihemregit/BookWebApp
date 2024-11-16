@@ -12,8 +12,6 @@ namespace BookWebApp.Models.Auth
         [DataType(DataType.Password, ErrorMessage = "Lütfen uygun formatta şifre giriniz.")]
         [Display(Name = "Şifre")]
         public string Password { get; set; }
-
-
         [Display(Name = "Beni Hatırla")]
         public bool Persistent { get; set; }
     }

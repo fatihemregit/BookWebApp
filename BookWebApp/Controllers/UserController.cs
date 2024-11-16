@@ -13,7 +13,7 @@ namespace BookWebApp.Controllers
         private readonly UserManager<AppUser> _userManager;
 
         private readonly SignInManager<AppUser> _signInManager;
-
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
 
 
@@ -22,20 +22,30 @@ namespace BookWebApp.Controllers
          *  
          */
 
-        public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager)
+        public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
-
-
-
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
+            List<AppUser> users = _userManager.Users.ToList();
 
-            return View(_mapper.Map<IEnumerable<AppUserViewModel>>(_userManager.Users));
+			foreach (AppUser appUser in users)
+            {
+                AppUserViewModel appUserViewModel = new AppUserViewModel();
+                appUserViewModel.UserName = appUser.UserName;
+                appUserViewModel.Email = appUser.Email;
+                appUserViewModel.Roles = await _userManager.GetRolesAsync(appUser);
+				appUserViewModels.Add(appUserViewModel);
+
+			}
+
+            return View(appUserViewModels);
         }
 
 

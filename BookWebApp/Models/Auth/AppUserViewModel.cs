@@ -17,5 +17,10 @@ namespace BookWebApp.Models.Auth
         [Display(Name = "Şifre")]
         public string Sifre { get; set; }
 
+
+        public IList<string> Roles { get; set; }
+
+
+
     }
 }

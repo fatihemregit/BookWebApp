@@ -33,6 +33,11 @@ namespace BookWebApp.AutoMapper
             CreateMap<AppUser, AppUserViewModel>();
             CreateMap<AppUserViewModel,AppUser>();
 
-        }
-    }
+            //CreateRoleViewModel to AppRole
+            CreateMap<AppRole, CreateRoleViewModel>();
+			CreateMap<CreateRoleViewModel,AppRole >();
+
+
+		}
+	}
 }
