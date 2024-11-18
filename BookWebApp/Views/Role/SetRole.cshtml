@@ -1,0 +1,40 @@
+﻿@model List<BookWebApp.Models.Auth.SetRoleViewModel>
+
+<h4>You manage for @TempData["userEmail"]</h4>
+<hr />
+<form asp-action="SetRole" asp-controller="Role" asp-route-userEmail ="@TempData["userEmail"]" method="post">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Set</th>
+				<th>Rol Name</th>
+				@* <th>@Html.DisplayNameFor(model => model.RoleName)</th> *@
+			</tr>
+		</thead>
+		<tbody>
+			@for (int i = 0; i < Model.Count(); i++)
+			{
+				<tr>
+					<td>
+						<input type="checkbox" asp-for="@Model[i].State"/>
+					</td>
+					<td>@Model[i].RoleName</td>
+					<td><input type="hidden" asp-for="@Model[i].RoleName"/></td>
+				</tr>
+			}
+
+			@* @foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						<input type="checkbox" asp-for="@item.State"/>
+					</td>
+					<td>@item.RoleName</td>
+					<td><input type="hidden" asp-for="@item.RoleName" /></td>
+				</tr>
+			} *@
+		</tbody>
+	</table>
+	<button>Set Role</button>
+</form>
+

@@ -23,6 +23,7 @@
 			</th> *@
 			<th>Delete User</th>
 			<th>Roles</th>
+			<th>Manage Roles</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -48,6 +49,10 @@
 
 				<td>
 					@totalRoles
+				</td>
+
+				<td>
+					@Html.ActionLink("Manage Roles", "SetRole", "Role", new { userEmail  = item.Email})
 				</td>
 
 				@* <td>

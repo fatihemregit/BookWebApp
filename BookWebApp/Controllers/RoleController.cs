@@ -55,18 +55,66 @@ namespace BookWebApp.Controllers
 
 		}
 
-
-
 		[HttpGet]
-		public IActionResult RemoveRoleFromUser()
+		public async Task<IActionResult> SetRole(string userEmail = null)
 		{
 
-			return View();
+			if (userEmail is null)
+			{
+				return BadRequest();
+			}
+
+			AppUser foundUser = await _userManager.FindByEmailAsync(userEmail);
+
+			if (foundUser == null)
+			{
+				return NotFound();
+			}
+
+			IList<string> foundUserRoles = await _userManager.GetRolesAsync(foundUser);
+			List<SetRoleViewModel> setRoleViewModels = new List<SetRoleViewModel>();
+			//get All Roles in db
+			IQueryable<AppRole> allRoles = _roleManager.Roles;
+
+
+			foreach (AppRole role in allRoles)
+			{
+				SetRoleViewModel setRoleViewModel = new SetRoleViewModel();
+				setRoleViewModel.RoleName = role.Name;
+				setRoleViewModel.State = foundUserRoles.Contains(role.Name);
+				setRoleViewModels.Add(setRoleViewModel);
+			}
+			TempData["userEmail"] = userEmail;
+
+			return View(setRoleViewModels);
 		}
-
-		public IActionResult RemoveRole()
+		[HttpPost]
+		public async Task<IActionResult> SetRole(List<SetRoleViewModel> setRoleViewModels,string userEmail)
 		{
-			return View();
+			Console.WriteLine("========================================================================");
+
+            Console.WriteLine("userEmail is " + userEmail);
+
+			AppUser foundUserbyEmail = await _userManager.FindByEmailAsync(userEmail);
+
+			if (foundUserbyEmail is null)
+			{
+				return NotFound("Kullanıcı bulunamadı");
+			
+			}
+
+			foreach (SetRoleViewModel setRoleViewModel in setRoleViewModels)
+			{
+				if (setRoleViewModel.State)
+				{
+					await _userManager.AddToRoleAsync(foundUserbyEmail,setRoleViewModel.RoleName);
+				}
+				else
+				{
+					await _userManager.RemoveFromRoleAsync(foundUserbyEmail,setRoleViewModel.RoleName);
+				}
+			}
+			return RedirectToAction("Index", "User");
 		}
 
 

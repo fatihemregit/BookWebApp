@@ -59,6 +59,10 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ### Gün 3 (16.11.2024)
 - Cookie Temelli Identity Mekanizmasý Kuruldu
 - Identiy Role mekanizmasý kodlanmaya baþlandý.sonlarýna doðru gelindi
+
+### Gün 4 (18.11.2024)
+- Identity Role mekanizmasý kuruldu.(controllerla Authrozie attribute u eklenecek)
+- Rol Atama Sayfasý kodlandý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
