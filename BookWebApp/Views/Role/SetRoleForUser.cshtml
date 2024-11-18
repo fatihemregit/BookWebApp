@@ -1,8 +1,8 @@
-﻿@model List<BookWebApp.Models.Auth.SetRoleViewModel>
+﻿@model List<BookWebApp.Models.Auth.SetRoleForUserViewModel>
 
 <h4>You manage for @TempData["userEmail"]</h4>
 <hr />
-<form asp-action="SetRole" asp-controller="Role" asp-route-userEmail ="@TempData["userEmail"]" method="post">
+<form asp-action="SetRoleForUser" asp-controller="Role" asp-route-userEmail="@TempData["userEmail"]" method="post">
 	<table class="table">
 		<thead>
 			<tr>

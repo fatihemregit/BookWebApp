@@ -55,8 +55,31 @@ namespace BookWebApp.Controllers
 
 		}
 
+
 		[HttpGet]
-		public async Task<IActionResult> SetRole(string userEmail = null)
+		public IActionResult DeleteRole()
+		{
+
+			List<DeleteRoleViewModel> deleteRoleViewModels = _roleManager.Roles.Select(r => new DeleteRoleViewModel { RoleName = r.Name}).ToList();
+			return View(deleteRoleViewModels);
+		}
+
+        [HttpPost("DeleteRole")]
+		public async  Task<IActionResult> DeleteRolePost()
+		{
+			//deleting Role
+			AppRole foundRole = await _roleManager.FindByNameAsync(Request.Form["SelectRole"]);
+			if (foundRole == null)
+			{
+				return BadRequest();
+			}
+			await _roleManager.DeleteAsync(foundRole);
+			return RedirectToAction("Index","User");
+		}
+
+
+        [HttpGet]
+		public async Task<IActionResult> SetRoleForUser(string userEmail = null)
 		{
 
 			if (userEmail is null)
@@ -72,14 +95,14 @@ namespace BookWebApp.Controllers
 			}
 
 			IList<string> foundUserRoles = await _userManager.GetRolesAsync(foundUser);
-			List<SetRoleViewModel> setRoleViewModels = new List<SetRoleViewModel>();
+			List<SetRoleForUserViewModel> setRoleViewModels = new List<SetRoleForUserViewModel>();
 			//get All Roles in db
 			IQueryable<AppRole> allRoles = _roleManager.Roles;
 
 
 			foreach (AppRole role in allRoles)
 			{
-				SetRoleViewModel setRoleViewModel = new SetRoleViewModel();
+				SetRoleForUserViewModel setRoleViewModel = new SetRoleForUserViewModel();
 				setRoleViewModel.RoleName = role.Name;
 				setRoleViewModel.State = foundUserRoles.Contains(role.Name);
 				setRoleViewModels.Add(setRoleViewModel);
@@ -89,7 +112,7 @@ namespace BookWebApp.Controllers
 			return View(setRoleViewModels);
 		}
 		[HttpPost]
-		public async Task<IActionResult> SetRole(List<SetRoleViewModel> setRoleViewModels,string userEmail)
+		public async Task<IActionResult> SetRoleForUser(List<SetRoleForUserViewModel> setRoleViewModels,string userEmail)
 		{
 			Console.WriteLine("========================================================================");
 
@@ -103,7 +126,7 @@ namespace BookWebApp.Controllers
 			
 			}
 
-			foreach (SetRoleViewModel setRoleViewModel in setRoleViewModels)
+			foreach (SetRoleForUserViewModel setRoleViewModel in setRoleViewModels)
 			{
 				if (setRoleViewModel.State)
 				{
@@ -116,6 +139,8 @@ namespace BookWebApp.Controllers
 			}
 			return RedirectToAction("Index", "User");
 		}
+
+
 
 
 	}

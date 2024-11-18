@@ -63,7 +63,11 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ### Gün 4 (18.11.2024)
 - Identity Role mekanizmasý kuruldu.(controllerla Authrozie attribute u eklenecek)
 - Rol Atama Sayfasý kodlandý
+- Rol Silme Sayfasý kodlandý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
+
+### Geliþtirilebilecek Yerler
+rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin,rol adý request.form ile deðil model ile alýnsýn)

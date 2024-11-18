@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookWebApp.Models.Auth
 {
-    public class SetRoleViewModel
+    public class SetRoleForUserViewModel
     {
         public bool State { get; set; }
 		[Display(Name = "Role Name")]

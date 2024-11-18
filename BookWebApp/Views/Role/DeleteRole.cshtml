@@ -1,0 +1,14 @@
+﻿@model List<BookWebApp.Models.Auth.DeleteRoleViewModel>
+
+Delete Role
+<hr>
+
+<form asp-action="DeleteRolePost" asp-controller="Role" method="post">
+	<select name="SelectRole" id="SelectRole">
+		@foreach (var item in Model)
+		{
+			<option value="@item.RoleName">@item.RoleName</option>
+		}
+	</select>
+	<button>Delete Role</button>
+</form>
