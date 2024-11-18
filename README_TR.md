@@ -70,4 +70,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
 ### Geliþtirilebilecek Yerler
-rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin,rol adý request.form ile deðil model ile alýnsýn)
+- rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin,rol adý request.form ile deðil model ile alýnsýn)
+- Kitap Silme,Ekleme,Düzenleme yetkiye göre yapýlsýn(BookController.cs).eðer yetkisi yoksa kitaplarýn listelendiðini arayüzde(BookController.cs index fonksiyonu) iþlemler için gerekli butonlar gözükmesin
+- Kullanýcý ile alakalý iþlemler(UserController.cs)yetkiye göre yapýlabilsin
+- Rol Ýle alakalý Ýþlemler yetkiye göre yapýlabilsin(RoleController.cs)
