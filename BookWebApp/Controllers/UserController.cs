@@ -29,11 +29,35 @@ namespace BookWebApp.Controllers
             _signInManager = signInManager;
             _roleManager = roleManager;
         }
-        [Authorize]
+        [Authorize(Roles = "user_list")]
         public async Task<IActionResult> Index()
         {
-            List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
+
+			//yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
+			//oturum açan kullanıcıyı bulma
+			var user = await _userManager.GetUserAsync(User);
+			//eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
+			//oturum açan kullanıcı yoksa yapılacaklar
+			if (user is null)
+            {
+                ViewData["currentUser"] = "";
+                ViewData["user_delete"] = false;
+                ViewData["roles_list_in_user"] = false;
+				ViewData["role_set"] = false;
+			}
+			else
+            {
+				ViewData["currentUser"] = user.Email.ToString();
+                ViewData["user_delete"] = await _userManager.IsInRoleAsync(user, "user_delete");
+				ViewData["roles_list_in_user"] = await _userManager.IsInRoleAsync(user, "roles_list_in_user");
+				ViewData["role_set"] = await _userManager.IsInRoleAsync(user, "role_set");
+			}
+
+			//yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş
+
+			List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
             List<AppUser> users = _userManager.Users.ToList();
+
 
 			foreach (AppUser appUser in users)
             {
@@ -58,14 +82,15 @@ namespace BookWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(AppUserViewModel appUserViewModel)
         {
+
             if (ModelState.IsValid)
             {
 
                 AppUser appUser = _mapper.Map<AppUser>(appUserViewModel);
-
                 IdentityResult result = await _userManager.CreateAsync(appUser, appUserViewModel.Sifre);
                 if (result.Succeeded)
                 {
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -94,6 +119,13 @@ namespace BookWebApp.Controllers
             if (ModelState.IsValid)
             { 
                 AppUser founduser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+
+                if (TempData["returnUrl"] is null)
+                {
+                    TempData["returnUrl"] = "/";
+
+				}
+
                 if (founduser != null)
                 {
                     //İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
@@ -111,12 +143,16 @@ namespace BookWebApp.Controllers
 
             return View(loginViewModel);
         }
+
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "DeleteUser")]
+
+
+        [Authorize(Roles = "user_delete")]
         public async Task<IActionResult> DeleteUser(string UserName)
         {
             Console.WriteLine("deleting users");
@@ -132,5 +168,10 @@ namespace BookWebApp.Controllers
             return RedirectToAction("Index", "User");
         }
 
-    }
+		public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+	}
 }

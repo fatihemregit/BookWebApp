@@ -16,8 +16,6 @@ namespace BookWebApp.Models.Auth
         [DataType(DataType.Password, ErrorMessage = "Lütfen şifreyi tüm kuralları göz önüne alarak giriniz...")]
         [Display(Name = "Şifre")]
         public string Sifre { get; set; }
-
-
         public IList<string> Roles { get; set; }
 
 

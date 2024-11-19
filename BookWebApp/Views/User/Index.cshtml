@@ -5,7 +5,7 @@
 }
 
 <h1>Index</h1>
-
+<h1>You are @ViewData["currentUser"]</h1>
 <p>
 	<a asp-action="SignIn">Create New</a>
 </p>
@@ -21,9 +21,25 @@
 			@* <th>
 			@Html.DisplayNameFor(model => model.Sifre)
 			</th> *@
-			<th>Delete User</th>
-			<th>Roles</th>
-			<th>Manage Roles</th>
+			@if ((bool)ViewData["user_delete"])
+			{
+				<th>Delete User</th>
+			}
+
+			@if ((bool)ViewData["roles_list_in_user"])
+			{
+				<th>Roles</th>
+
+
+			}
+
+
+			@if ((bool)ViewData["role_set"])
+			{
+				<th>Manage Roles</th>
+
+			}
+
 		</tr>
 	</thead>
 	<tbody>
@@ -36,24 +52,35 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Email)
 				</td>
-				<td>
-					@Html.ActionLink("Delete User", "DeleteUser", new { userName = item.UserName })
-				</td>
-				@{
+				@if ((bool)ViewData["user_delete"])
+				{
+					<td>
+						@Html.ActionLink("Delete User", "DeleteUser", new { userName = item.UserName })
+					</td>
+
+				}
+
+				@if ((bool)ViewData["roles_list_in_user"])
+				{
 					string totalRoles = "";
-					@foreach (string role in item.Roles){
+					@foreach (string role in item.Roles)
+					{
 						totalRoles = totalRoles + "," + role;
 					}
+					<td>
+						@totalRoles
+					</td>
 				}
-				
 
-				<td>
-					@totalRoles
-				</td>
 
-				<td>
-					@Html.ActionLink("Manage Roles", "SetRoleForUser", "Role", new { userEmail = item.Email })
-				</td>
+
+
+				@if ((bool)ViewData["role_set"])
+				{
+					<td>
+						@Html.ActionLink("Manage Roles", "SetRoleForUser", "Role", new { userEmail = item.Email })
+					</td>
+				}
 
 				@* <td>
 			@Html.DisplayFor(modelItem => item.Sifre)

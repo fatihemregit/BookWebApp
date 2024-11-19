@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using BookWebApp.Data.Context;
+using BookWebApp.Models.Auth;
 using BookWebApp.Models.Dto;
 using BookWebApp.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -15,29 +18,55 @@ namespace BookWebApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<BookController> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
-        public BookController(ApplicationDbContext context, IMapper mapper, ILogger<BookController> logger)
+
+        public BookController(ApplicationDbContext context, IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
+            _userManager = userManager;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //mapping
+
+            //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
+            //oturum açan kullanıcıyı bulma
+            var user = await _userManager.GetUserAsync(User);
+            //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
+            //oturum açan kullanıcı yoksa yapılacaklar
+            if (user is null)
+            {
+                //oturum açan kullanıcı yoksa  create,edit ve delete butonları gözükmez
+                ViewData["book_create"] = false;
+                ViewData["book_edit"] = false; 
+                ViewData["book_delete"] = false;
+            }
+            //oturum açan kullanıcı var
+            //kullanıcının yetkilerini öğrenme ve yetkileri view datalara atama
+            else
+            {
+                ViewData["book_create"] = await _userManager.IsInRoleAsync(user, "book_create");
+                ViewData["book_edit"] = await _userManager.IsInRoleAsync(user, "book_edit");
+                ViewData["book_delete"] = await _userManager.IsInRoleAsync(user, "book_delete");
+            }
+            //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
+            //bookdtos mapping
             IEnumerable<BookDto> bookDtos = _context.BookDtos.ToList();
             IEnumerable<BookViewModelForList> bookViewModels = _mapper.Map<IEnumerable<BookViewModelForList>>(bookDtos);
             return View(bookViewModels);
         }
         //create
 
+        [Authorize(Roles = "book_create")]
         [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "book_create")]
         [HttpPost("Create")]
         public IActionResult Create([FromForm]BookViewModelForCreate bookViewModelForCreate)
         {
@@ -53,7 +82,7 @@ namespace BookWebApp.Controllers
 
 
         //edit
-
+        [Authorize(Roles = "book_edit")]
         [HttpGet("Edit/{id:int}")]
         public IActionResult Edit([FromRoute]int id)
         {
@@ -83,6 +112,8 @@ namespace BookWebApp.Controllers
 
             return View(foundBookViewModelForUpdate);
         }
+
+        [Authorize(Roles = "book_edit")]
         [HttpPost("Edit/{id:int}")]
         public IActionResult Edit([FromRoute]int id, [FromForm]BookViewModelForUpdate bookViewModelForUpdate)
         {
@@ -129,6 +160,8 @@ namespace BookWebApp.Controllers
 
             return View(foundbookViewModelForDetails);
         }
+
+        [Authorize(Roles = "book_delete")]
         [HttpGet("Delete/{id:int}")]
         public IActionResult Delete([FromRoute]int id)
         {
@@ -153,6 +186,8 @@ namespace BookWebApp.Controllers
             return View(foundBookViewModelForDelete);
         }
 
+
+        [Authorize(Roles = "book_delete")]
         [HttpPost("Delete/{id:int}")]
         public IActionResult DeletePost([FromRoute] int id)
         {
@@ -179,7 +214,5 @@ namespace BookWebApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index","Book");
         }
-
-
     }
 }

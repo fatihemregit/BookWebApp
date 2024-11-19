@@ -64,6 +64,10 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Identity Role mekanizmasý kuruldu.(controllerla Authrozie attribute u eklenecek)
 - Rol Atama Sayfasý kodlandý
 - Rol Silme Sayfasý kodlandý
+### Gün 5 (19.11.2024)
+- UserController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
+- BookController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
+- RoleController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -71,6 +75,3 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
 ### Geliþtirilebilecek Yerler
 - rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin,rol adý request.form ile deðil model ile alýnsýn)
-- Kitap Silme,Ekleme,Düzenleme yetkiye göre yapýlsýn(BookController.cs).eðer yetkisi yoksa kitaplarýn listelendiðini arayüzde(BookController.cs index fonksiyonu) iþlemler için gerekli butonlar gözükmesin
-- Kullanýcý ile alakalý iþlemler(UserController.cs)yetkiye göre yapýlabilsin
-- Rol Ýle alakalý Ýþlemler yetkiye göre yapýlabilsin(RoleController.cs)

@@ -4,8 +4,7 @@
     ViewData["Title"] = "SignIn";
 }
 
-<h1>SignIn</h1>
-
+<h1>SignIn</h1
 <h4>AppUserViewModel</h4>
 <hr />
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -31,9 +30,13 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <input type="hidden" asp-for="Roles" value=""/>
         </form>
+        
+
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

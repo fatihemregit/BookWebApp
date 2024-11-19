@@ -1,37 +1,46 @@
 ﻿using AutoMapper;
 using BookWebApp.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWebApp.Controllers
 {
+
+	//bunun authorize işlemini en son yap.çünkü rol authorize işlemi için kritik bir controller
 	public class RoleController : Controller
 	{
 
 		private readonly RoleManager<AppRole> _roleManager;
 
 		private readonly UserManager<AppUser> _userManager;
+
+		private readonly SignInManager<AppUser> _signInManager;
+
 		private readonly IMapper _mapper;
 
-		public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, IMapper mapper)
-		{
-			_roleManager = roleManager;
-			_userManager = userManager;
-			_mapper = mapper;
-		}
+        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _mapper = mapper;
+            _signInManager = signInManager;
+        }
 
-		public IActionResult Index()
+        public IActionResult Index()
 		{
 
 			return View();
 		}
 
+
+		[Authorize(Roles = "role_create")]
 		[HttpGet]
 		public IActionResult CreateRole()
 		{
 			return View();
 		}
-
+		[Authorize(Roles = "role_create")]
 		[HttpPost]
 		public async Task<IActionResult> CreateRole(CreateRoleViewModel createRoleViewModel)
 		{
@@ -55,7 +64,7 @@ namespace BookWebApp.Controllers
 
 		}
 
-
+		[Authorize(Roles = "role_delete")]
 		[HttpGet]
 		public IActionResult DeleteRole()
 		{
@@ -64,7 +73,8 @@ namespace BookWebApp.Controllers
 			return View(deleteRoleViewModels);
 		}
 
-        [HttpPost("DeleteRole")]
+		[Authorize(Roles = "role_delete")]
+		[HttpPost("DeleteRole")]
 		public async  Task<IActionResult> DeleteRolePost()
 		{
 			//deleting Role
@@ -77,8 +87,8 @@ namespace BookWebApp.Controllers
 			return RedirectToAction("Index","User");
 		}
 
-
-        [HttpGet]
+		[Authorize(Roles = "role_set")]
+		[HttpGet]
 		public async Task<IActionResult> SetRoleForUser(string userEmail = null)
 		{
 
@@ -111,6 +121,7 @@ namespace BookWebApp.Controllers
 
 			return View(setRoleViewModels);
 		}
+		[Authorize(Roles = "role_set")]
 		[HttpPost]
 		public async Task<IActionResult> SetRoleForUser(List<SetRoleForUserViewModel> setRoleViewModels,string userEmail)
 		{
@@ -136,6 +147,17 @@ namespace BookWebApp.Controllers
 				{
 					await _userManager.RemoveFromRoleAsync(foundUserbyEmail,setRoleViewModel.RoleName);
 				}
+			}
+			//roller ayarlandı ancak etkili olması için giriş çıkış yapılması gerekli
+			AppUser user = await _userManager.GetUserAsync(User);
+			if (user == foundUserbyEmail)
+			{
+				await _signInManager.SignOutAsync();
+				await _signInManager.SignInAsync(foundUserbyEmail, true);
+			}
+			else
+			{
+				await _signInManager.SignOutAsync();
 			}
 			return RedirectToAction("Index", "User");
 		}
