@@ -82,11 +82,21 @@ namespace BookWebApp.Controllers
         public async Task<IActionResult> DeleteRolePost(DeleteRoleViewModel deleteRoleViewModel)
         {
             //deleting Role
+            //find a role with id which comes from deleteRoleViewModel
             AppRole foundRole = await _roleManager.FindByIdAsync(deleteRoleViewModel.SelectedRoleId);
             if (foundRole == null)
             {
-                return BadRequest();
+                return BadRequest("Böyle bir Rol Yok!");
             }
+            Console.WriteLine("========================================================");
+            Console.WriteLine("delete role post method for each");
+            Console.WriteLine();
+            IList<AppUser> usersWithFoundRoleName = await _userManager.GetUsersInRoleAsync(foundRole.Name);
+            if (usersWithFoundRoleName.Count > 0) 
+            {
+                return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
+            }
+
             await _roleManager.DeleteAsync(foundRole);
             return RedirectToAction("Index", "User");
         }
