@@ -64,11 +64,11 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Identity Role mekanizmasý kuruldu.(controllerla Authrozie attribute u eklenecek)
 - Rol Atama Sayfasý kodlandý
 - Rol Silme Sayfasý kodlandý
-- Rol Silme Sayfasýnda model kullanmadan iþlemler yapýlýyordu.Artýk model kullanarak yapýlýyor
 ### Gün 5 (19.11.2024)
 - UserController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
 - BookController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
 - RoleController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
+- Rol Silme Sayfasýnda model kullanmadan iþlemler yapýlýyordu.Artýk model kullanarak yapýlýyor
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
