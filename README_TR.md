@@ -64,6 +64,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Identity Role mekanizmasý kuruldu.(controllerla Authrozie attribute u eklenecek)
 - Rol Atama Sayfasý kodlandý
 - Rol Silme Sayfasý kodlandý
+- Rol Silme Sayfasýnda model kullanmadan iþlemler yapýlýyordu.Artýk model kullanarak yapýlýyor
 ### Gün 5 (19.11.2024)
 - UserController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
 - BookController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
@@ -74,4 +75,4 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
 ### Geliþtirilebilecek Yerler
-- rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin,rol adý request.form ile deðil model ile alýnsýn)
+- rol silme sistemi geliþtirilebilir(Ör : eðer bu rol birine atanmýþ ise silme gerçekleþmesin)

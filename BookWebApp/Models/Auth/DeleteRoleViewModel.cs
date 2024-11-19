@@ -2,6 +2,10 @@
 {
 	public class DeleteRoleViewModel
 	{
-        public string RoleName { get; set; }
+
+
+
+        public List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> RoleNames { get; set; }
+        public string SelectedRoleId { get; set; }
     }
 }

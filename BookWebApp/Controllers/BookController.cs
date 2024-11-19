@@ -30,7 +30,6 @@ namespace BookWebApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
             //oturum açan kullanıcıyı bulma
             var user = await _userManager.GetUserAsync(User);
