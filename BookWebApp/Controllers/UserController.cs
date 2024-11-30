@@ -33,49 +33,54 @@ namespace BookWebApp.Controllers
         public async Task<IActionResult> Index()
         {
 
-			//yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
-			//oturum açan kullanıcıyı bulma
-			var user = await _userManager.GetUserAsync(User);
-			//eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
-			//oturum açan kullanıcı yoksa yapılacaklar
-			if (user is null)
+            //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
+            //oturum açan kullanıcıyı bulma
+            var user = await _userManager.GetUserAsync(User);
+            //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
+            //oturum açan kullanıcı yoksa yapılacaklar
+            if (user is null)
             {
                 ViewData["currentUser"] = "";
                 ViewData["user_delete"] = false;
                 ViewData["roles_list_in_user"] = false;
-				ViewData["role_set"] = false;
-			}
-			else
+                ViewData["role_set"] = false;
+            }
+            else
             {
-				ViewData["currentUser"] = user.Email.ToString();
+                ViewData["currentUser"] = user.Email.ToString();
                 ViewData["user_delete"] = await _userManager.IsInRoleAsync(user, "user_delete");
-				ViewData["roles_list_in_user"] = await _userManager.IsInRoleAsync(user, "roles_list_in_user");
-				ViewData["role_set"] = await _userManager.IsInRoleAsync(user, "role_set");
-			}
+                ViewData["roles_list_in_user"] = await _userManager.IsInRoleAsync(user, "roles_list_in_user");
+                ViewData["role_set"] = await _userManager.IsInRoleAsync(user, "role_set");
+            }
 
-			//yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş
+            //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş
 
-			List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
+            List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
             List<AppUser> users = _userManager.Users.ToList();
 
 
-			foreach (AppUser appUser in users)
+            foreach (AppUser appUser in users)
             {
                 AppUserViewModel appUserViewModel = new AppUserViewModel();
                 appUserViewModel.UserName = appUser.UserName;
                 appUserViewModel.Email = appUser.Email;
                 appUserViewModel.Roles = await _userManager.GetRolesAsync(appUser);
-				appUserViewModels.Add(appUserViewModel);
+                appUserViewModels.Add(appUserViewModel);
 
-			}
+            }
 
             return View(appUserViewModels);
         }
 
 
         [HttpGet]
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
+            bool userIsSignedIn = await checkUserIsLogin();
+            if (userIsSignedIn)
+            {
+                return RedirectToAction("AccessDenied", "User", new { ErrorMessage = "Giriş yapan kullanıcı tekrar kayıt oluşturamaz" });
+            }
             return View();
         }
 
@@ -104,9 +109,13 @@ namespace BookWebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl)
         {
-
+            bool userIsSignedIn = await checkUserIsLogin();
+            if (userIsSignedIn)
+            {
+                return RedirectToAction("AccessDenied", "User", new { ErrorMessage = "Giriş Yapan Kullanıcı tekrar giriş yapamaz(Sisteme Zaten Giriş Yaptınız)" });
+            }
             TempData["returnUrl"] = returnUrl;
             return View();
 
@@ -117,14 +126,14 @@ namespace BookWebApp.Controllers
         {
 
             if (ModelState.IsValid)
-            { 
+            {
                 AppUser founduser = await _userManager.FindByEmailAsync(loginViewModel.Email);
 
                 if (TempData["returnUrl"] is null)
                 {
                     TempData["returnUrl"] = "/";
 
-				}
+                }
 
                 if (founduser != null)
                 {
@@ -168,10 +177,30 @@ namespace BookWebApp.Controllers
             return RedirectToAction("Index", "User");
         }
 
-		public IActionResult AccessDenied()
+        public IActionResult AccessDenied(string ErrorMessage = "Yetkilendirme Hatasi")
         {
+            ViewBag.ErrorMessage = ErrorMessage;
             return View();
         }
+        [NonAction]
+        public async Task<bool> checkUserIsLogin()
+        {
+            bool result;
+            var user = await _userManager.GetUserAsync(User);
+            if (user is null)
+            {
+                Console.WriteLine($"{new string('=', 10)},kullanıcı oturumu yok");
+                result = false;
 
-	}
+            }
+            else
+            {
+                Console.WriteLine($"{new string('=', 10)} kullanıcı oturumu var");
+                result = true;
+            }
+            return result;
+        }
+
+
+    }
 }

@@ -70,6 +70,9 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - RoleController.cs de yetkilendirme sisteminin(Authorize attribute) uygulanmasý
 - Rol Silme Sayfasýnda model kullanmadan iþlemler yapýlýyordu.Artýk model kullanarak yapýlýyor
 - Rol Silme Sisteminde aktif rollerin silinmesi engellendi(Rol Silme Sisteminde Eðer silinmeye çalýþýlan rol,bir ve birden fazla kullanýcýya atanmýþ ise silme yapamaz.)
+### Gün 6 (30.11.2024)
+- Eðer kullanýcý giriþ yaptýðý client ta tekrar Login veya SignIn Sayfasýna giderse yetkilendirme hatasý sayfasýna yönlendirme yapýldý
+
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
