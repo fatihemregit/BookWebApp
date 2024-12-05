@@ -12,6 +12,9 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
+- Katmanlý mimariye geçiþ için gerekli  katmanlar yazýlmaya baþlandý (Data,Entity)
+- Data Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý
+- Entity Katmaný yazýlmaya baþlandý.Projede gerekli olan entity(model) ler gerektikçe yazýlacak
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -72,10 +75,15 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Rol Silme Sisteminde aktif rollerin silinmesi engellendi(Rol Silme Sisteminde Eðer silinmeye çalýþýlan rol,bir ve birden fazla kullanýcýya atanmýþ ise silme yapamaz.)
 ### Gün 6 (30.11.2024)
 - Eðer kullanýcý giriþ yaptýðý client ta tekrar Login veya SignIn Sayfasýna giderse yetkilendirme hatasý sayfasýna yönlendirme yapýldý
-
+### Gün 7 (5.12.2024)
+- Katmanlý mimariye geçiþ için gerekli  katmanlar yazýlmaya baþlandý (Data,Entity)
+- Data Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý
+- Entity Katmaný yazýlmaya baþlandý.Projede gerekli olan entity(model) ler gerektikçe yazýlacak
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
 ### Geliþtirilebilecek Yerler
+- Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
+- Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)

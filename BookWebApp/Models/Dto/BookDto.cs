@@ -3,7 +3,7 @@
 namespace BookWebApp.Models.Dto
 {
 
-
+    //entity katmanına taşındı
     [Table("Book")]
     public class BookDto
     {
@@ -22,9 +22,6 @@ namespace BookWebApp.Models.Dto
         public bool isDeleted { get; set; } = false;
 
 
-        /*
-         Daha sonrasında kategori,Yazar(obje olarak),Isbn numarası eklenebilir
-        buradaki yapmış olacağın değişikleri gerekiyor sa viewmodel de yapmayı unutma
-         */
+        
     }
 }
