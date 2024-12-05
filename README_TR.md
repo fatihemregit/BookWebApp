@@ -12,9 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Katmanlý mimariye geçiþ için gerekli  katmanlar yazýlmaya baþlandý (Data,Entity)
-- Data Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý
-- Entity Katmaný yazýlmaya baþlandý.Projede gerekli olan entity(model) ler gerektikçe yazýlacak
+-Readme düzenlemesi
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -87,3 +85,4 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 ### Geliþtirilebilecek Yerler
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
+-Isbn ile kitap bilgilerini otomatik çekme
