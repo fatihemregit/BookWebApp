@@ -185,18 +185,13 @@ namespace BookWebApp.Controllers
         [NonAction]
         public async Task<bool> checkUserIsLogin()
         {
-            bool result;
+            bool result = false;
             var user = await _userManager.GetUserAsync(User);
-            if (user is null)
+            if (user is not null)
             {
-                Console.WriteLine($"{new string('=', 10)},kullanıcı oturumu yok");
-                result = false;
-
-            }
-            else
-            {
-                Console.WriteLine($"{new string('=', 10)} kullanıcı oturumu var");
+                //client ta giriş yapmış kullanıcı var
                 result = true;
+
             }
             return result;
         }
