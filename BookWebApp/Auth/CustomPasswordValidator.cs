@@ -1,4 +1,4 @@
-﻿using BookWebApp.Models.Auth;
+﻿using Entity.Auth;
 using Microsoft.AspNetCore.Identity;
 
 namespace BookWebApp.Auth

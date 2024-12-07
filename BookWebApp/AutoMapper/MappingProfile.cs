@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BookWebApp.Models.Auth;
-using BookWebApp.Models.Dto;
-using BookWebApp.Models.ViewModel;
-
+using Entity.ViewModel;
+using Entity.Dto;
+using Entity.Auth;
+using Entity.IBookService;
 namespace BookWebApp.AutoMapper
 {
     public class MappingProfile : Profile
@@ -38,6 +38,27 @@ namespace BookWebApp.AutoMapper
 			CreateMap<CreateRoleViewModel,AppRole >();
 
 
+            //IBookServiceGetAllBook to BookViewModelForList
+            CreateMap<List<IBookServiceGetAllBook>, List<BookViewModelForList>>();
+            CreateMap<List<BookViewModelForList>, List<IBookServiceGetAllBook>>();
+			CreateMap<IBookServiceGetAllBook, BookViewModelForList>();
+			CreateMap<BookViewModelForList, IBookServiceGetAllBook>();
+
+            //IBookServiceCreateOneBook to BookViewModelForCreate
+            CreateMap<IBookServiceCreateOneBook, BookViewModelForCreate>();
+            CreateMap<BookViewModelForCreate,IBookServiceCreateOneBook >();
+            //IBookServiceGetOneBookById to BookViewModelForUpdate
+            CreateMap<IBookServiceGetOneBookById, BookViewModelForUpdate>();
+            CreateMap<BookViewModelForUpdate,IBookServiceGetOneBookById >();
+            //IBookServiceEditOneBookById to BookViewModelForUpdate
+            CreateMap<IBookServiceEditOneBookById, BookViewModelForUpdate>();
+            CreateMap<BookViewModelForUpdate, IBookServiceEditOneBookById>();
+            //IBookServiceGetOneBookById to BookViewModelForDetails
+            CreateMap<IBookServiceGetOneBookById, BookViewModelForDetails>();
+            CreateMap<BookViewModelForDetails, IBookServiceGetOneBookById>();
+            //IBookServiceGetOneBookById to BookViewModelForDelete
+            CreateMap<IBookServiceGetOneBookById, BookViewModelForDelete>();
+            CreateMap<BookViewModelForDelete, IBookServiceGetOneBookById>();
 		}
 	}
 }

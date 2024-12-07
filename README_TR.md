@@ -12,9 +12,11 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Business Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý.
-- Business katmanýna automapper kütüphanesi eklendi
-- Business katmanýnda,Automapper kütüphanesi sayesinde Ibookservice interfacesinde her fonksiyona ayrý bir entity atandý
+- Ana projeye implemente iþlemlerini baþlandý
+- Ana projede diðer katmanlarýn program.cs deki implementasyonlarý yapýldý(builder.services)
+- Ana projedeki data klasörü silindi.Onun yerine data layer kullanýlacak
+- data klasörü yerine data layer kullanýldý
+- BookController Yeni mimariye göre yeniden yazýldý
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -88,12 +90,18 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Business katmanýnda,Automapper kütüphanesi sayesinde Ibookservice interfacesinde her fonksiyona ayrý bir entity atandý
 - Ana projeye implemente iþlemlerini baþlandý
 - Ana projede diðer katmanlarýn program.cs deki implementasyonlarý yapýldý(builder.services)
+- Ana projedeki data klasörü silindi.Onun yerine data layer kullanýlacak
+- data klasörü yerine data layer kullanýldý
+- BookController Yeni mimariye göre yeniden yazýldý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
-
+ ### Yapýlacaklar
+- RoleController ýn yeni mimariye uygun hale getirilmesi
+- UserController ýn yeni mimariye uygun hale getirilmesi
+- 
 
 ### Geliþtirilebilecek Yerler
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)

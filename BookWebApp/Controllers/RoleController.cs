@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BookWebApp.Models.Auth;
+using Entity.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -68,38 +68,38 @@ namespace BookWebApp.Controllers
 
         }
 
-        [Authorize(Roles = "role_delete")]
-        [HttpGet]
-        public IActionResult DeleteRole()
-        {
-            DeleteRoleViewModel deleteRoleViewModel = new DeleteRoleViewModel();
-            deleteRoleViewModel.RoleNames = _roleManager.Roles.Select(r => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Value = r.Id.ToString(), Text = r.Name }).ToList();
-            return View(deleteRoleViewModel);
-        }
+        //[Authorize(Roles = "role_delete")]
+        //[HttpGet]
+        //public IActionResult DeleteRole()
+        //{
+        //    DeleteRoleViewModel deleteRoleViewModel = new DeleteRoleViewModel();
+        //    deleteRoleViewModel.RoleNames = _roleManager.Roles.Select(r => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Value = r.Id.ToString(), Text = r.Name }).ToList();
+        //    return View(deleteRoleViewModel);
+        //}
 
-        [Authorize(Roles = "role_delete")]
-        [HttpPost("DeleteRole")]
-        public async Task<IActionResult> DeleteRolePost(DeleteRoleViewModel deleteRoleViewModel)
-        {
-            //deleting Role
-            //find a role with id which comes from deleteRoleViewModel
-            AppRole foundRole = await _roleManager.FindByIdAsync(deleteRoleViewModel.SelectedRoleId);
-            if (foundRole == null)
-            {
-                return BadRequest("Böyle bir Rol Yok!");
-            }
-            Console.WriteLine("========================================================");
-            Console.WriteLine("delete role post method for each");
-            Console.WriteLine();
-            IList<AppUser> usersWithFoundRoleName = await _userManager.GetUsersInRoleAsync(foundRole.Name);
-            if (usersWithFoundRoleName.Count > 0) 
-            {
-                return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
-            }
+        //[Authorize(Roles = "role_delete")]
+        //[HttpPost("DeleteRole")]
+        //public async Task<IActionResult> DeleteRolePost(DeleteRoleViewModel deleteRoleViewModel)
+        //{
+        //    //deleting Role
+        //    //find a role with id which comes from deleteRoleViewModel
+        //    AppRole foundRole = await _roleManager.FindByIdAsync(deleteRoleViewModel.SelectedRoleId);
+        //    if (foundRole == null)
+        //    {
+        //        return BadRequest("Böyle bir Rol Yok!");
+        //    }
+        //    Console.WriteLine("========================================================");
+        //    Console.WriteLine("delete role post method for each");
+        //    Console.WriteLine();
+        //    IList<AppUser> usersWithFoundRoleName = await _userManager.GetUsersInRoleAsync(foundRole.Name);
+        //    if (usersWithFoundRoleName.Count > 0) 
+        //    {
+        //        return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
+        //    }
 
-            await _roleManager.DeleteAsync(foundRole);
-            return RedirectToAction("Index", "User");
-        }
+        //    await _roleManager.DeleteAsync(foundRole);
+        //    return RedirectToAction("Index", "User");
+        //}
 
 
 

@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BookWebApp.Models.ViewModel
+﻿
+namespace Entity.ViewModel
 {
     public class BookViewModelForUpdate
     {

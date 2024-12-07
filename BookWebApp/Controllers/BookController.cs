@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using BookWebApp.Data.Context;
-using BookWebApp.Models.Auth;
-using BookWebApp.Models.Dto;
-using BookWebApp.Models.ViewModel;
+using Entity.Auth;
+using Business.Abstracts;
+using Entity.IBookService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Entity.ViewModel;
 
 namespace BookWebApp.Controllers
 {
@@ -15,20 +15,21 @@ namespace BookWebApp.Controllers
     public class BookController : Controller
     {
 
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<BookController> _logger;
         private readonly UserManager<AppUser> _userManager;
 
+        private readonly IBookService _bookService;
 
-        public BookController(ApplicationDbContext context, IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager)
-        {
-            _context = context;
-            _mapper = mapper;
-            _logger = logger;
-            _userManager = userManager;
-        }
-        public async Task<IActionResult> Index()
+
+		public BookController(IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager, IBookService bookService)
+		{
+			_mapper = mapper;
+			_logger = logger;
+			_userManager = userManager;
+			_bookService = bookService;
+		}
+		public async Task<IActionResult> Index()
         {
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
             //oturum açan kullanıcıyı bulma
@@ -50,11 +51,10 @@ namespace BookWebApp.Controllers
                 ViewData["book_edit"] = await _userManager.IsInRoleAsync(user, "book_edit");
                 ViewData["book_delete"] = await _userManager.IsInRoleAsync(user, "book_delete");
             }
-            //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
-            //bookdtos mapping
-            IEnumerable<BookDto> bookDtos = _context.BookDtos.ToList();
-            IEnumerable<BookViewModelForList> bookViewModels = _mapper.Map<IEnumerable<BookViewModelForList>>(bookDtos);
-            return View(bookViewModels);
+			//kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
+			//IBookServiceGetAllBook mapping
+			List<BookViewModelForList> bookViewModelForLists = _mapper.Map<List<BookViewModelForList>>(await _bookService.getAll());
+            return View(bookViewModelForLists);
         }
         //create
 
@@ -67,15 +67,15 @@ namespace BookWebApp.Controllers
 
         [Authorize(Roles = "book_create")]
         [HttpPost("Create")]
-        public IActionResult Create([FromForm]BookViewModelForCreate bookViewModelForCreate)
+        public async Task<IActionResult> Create([FromForm] BookViewModelForCreate bookViewModelForCreate)
         {
-            if (bookViewModelForCreate is null)
+            //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)(bu kural business a yazılabilir)
+            IBookServiceCreateOneBook? createOneBook = await _bookService.createOneBook(_mapper.Map<IBookServiceCreateOneBook>(bookViewModelForCreate));
+            if (createOneBook is null)
             {
-                return BadRequest();
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "createOneBook is null(this error comes from Bookcontroller/Create(post))" });
             }
-            //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)
-            _context.BookDtos.Add(_mapper.Map<BookDto>(bookViewModelForCreate));
-            _context.SaveChanges();
+
             return RedirectToAction("Index", "Book");
         }
 
@@ -83,135 +83,71 @@ namespace BookWebApp.Controllers
         //edit
         [Authorize(Roles = "book_edit")]
         [HttpGet("Edit/{id:int}")]
-        public IActionResult Edit([FromRoute]int id)
+        public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            _logger.LogInformation("edit get çalıştı");
-
-            //id is null
-            if (id == 0)
+            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
+            if (getOneBookById is null)
             {
-                return BadRequest();
-            }
-            //id is not null
-            //find a object with id start
-            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
-            //foundBookDto is null
-            if (foundBookDto is null)
-            {
-                return NotFound();
+				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Edit)" });
+			}
+            return View(_mapper.Map<BookViewModelForUpdate>(getOneBookById));
 
-            }
-
-            //foundBookDto is not null
-            //find a object with id end
-            //map bookDto to bookViewModel
-            //idsiz işlem yapmayı deneyelim daha sonra
-            _logger.LogWarning($"(edit get function) book dto price is {foundBookDto.Price}");
-            BookViewModelForUpdate foundBookViewModelForUpdate = _mapper.Map<BookViewModelForUpdate>(foundBookDto);
-
-            return View(foundBookViewModelForUpdate);
-        }
+		}
 
         [Authorize(Roles = "book_edit")]
         [HttpPost("Edit/{id:int}")]
-        public IActionResult Edit([FromRoute]int id, [FromForm]BookViewModelForUpdate bookViewModelForUpdate)
+        public async Task<IActionResult >Edit([FromRoute] int id, [FromForm] BookViewModelForUpdate bookViewModelForUpdate)
         {
-            _logger.LogInformation("edit post çalıştı");
-            if (bookViewModelForUpdate is null)
+            IBookServiceEditOneBookById? editOneBookById = await _bookService.editOneBookById(id,_mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
+            if (editOneBookById is null)
             {
-                _logger.LogInformation("bookViewModelForUpdate is null if ine girildi");
-                return BadRequest();
-            }
-            _logger.LogInformation("bookViewModelForUpdate is null if ine girilmedi");
-            _logger.LogWarning($"BookViewModelForUpdate price is {bookViewModelForUpdate.Price}");
-            //update işlemi
-            _context.BookDtos.Update(_mapper.Map<BookDto>(bookViewModelForUpdate));
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Book");
-        }
+				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "editOneBookById is null(this error comes from Bookcontroller/Edit(post))" });
+			}
+			return RedirectToAction("Index", "Book");
+
+		}
 
         //Details
 
         [HttpGet("Details/{id:int}")]
-        public IActionResult Details([FromRoute]int id)
+        public async Task<IActionResult >Details([FromRoute] int id)
         {
-
-            //id is null
-            if (id == 0)
+            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
+            if (getOneBookById is null)
             {
-                return BadRequest();
-            }
-            //is is not null
-            
-            //find a bookdto
+				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Details)" });
+			}
 
-            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
-            //foundBookDto is null
-            if (foundBookDto is null)
-            {
-                return NotFound();
-            }
-
-            //foundBookDto is not null
-
-            //convert BookDto to BookViewModelForDetails
-            BookViewModelForDetails foundbookViewModelForDetails = _mapper.Map<BookViewModelForDetails>(foundBookDto);
-
-            return View(foundbookViewModelForDetails);
+			return View(_mapper.Map<BookViewModelForDetails>(getOneBookById));
         }
 
         [Authorize(Roles = "book_delete")]
         [HttpGet("Delete/{id:int}")]
-        public IActionResult Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            //id is null
-            if (id == 0)
+            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
+            if (getOneBookById is null)
             {
-                return BadRequest();
-            }
-            //id is not null
+				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Delete)" });
+			}
+            return View(_mapper.Map<BookViewModelForDelete>(getOneBookById));
+		}
 
 
-            //find a bookDto
-            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
-            //foundBookDto is null
-            if (foundBookDto is null)
-            {
-                return NotFound();
-            }
-            //foundBookDto is not null
-            //convert bookDto to BookViewModelForDelete
-            BookViewModelForDelete foundBookViewModelForDelete = _mapper.Map<BookViewModelForDelete>(foundBookDto);
-            return View(foundBookViewModelForDelete);
-        }
-
-
-        [Authorize(Roles = "book_delete")]
+		[Authorize(Roles = "book_delete")]
         [HttpPost("Delete/{id:int}")]
         public IActionResult DeletePost([FromRoute] int id)
         {
-            //id is null
-
-            if (id == 0)
-            {
-                return BadRequest();
-            }
-            //is is not null
-
-            //find a bookdto
-
-            BookDto foundBookDto = _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefault();
-            //foundBookDto is null
-
-            if (foundBookDto is null) { 
-                return NotFound();
-            
-            }
-            //foundBookDto is null
-            //safe delete bookDto(changing the isdeleted value)
-            foundBookDto.isDeleted = true;
-            _context.SaveChanges();
-            return RedirectToAction("Index","Book");
+            _bookService.deleteOneBookById(id);
+            return RedirectToAction("Index", "Book");
         }
+
+        public IActionResult MyErrorPage(string errorMessage)
+        {
+
+            ViewBag.ErrorMessage = errorMessage;
+            return View();
+        }
+
     }
 }

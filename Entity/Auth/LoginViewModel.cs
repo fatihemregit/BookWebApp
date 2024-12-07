@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookWebApp.Models.Auth
+namespace Entity.Auth
 {
     public class LoginViewModel
     {

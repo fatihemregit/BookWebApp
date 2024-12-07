@@ -1,8 +1,7 @@
-﻿namespace BookWebApp.Models.ViewModel
+﻿namespace Entity.ViewModel
 {
-    public class BookViewModelForDelete
+    public class BookViewModelForCreate
     {
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Writer { get; set; }

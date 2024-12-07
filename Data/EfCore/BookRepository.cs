@@ -81,7 +81,7 @@ namespace Data.EfCore
 			IBookRepositoryGetOneBookById? foundGetOneBookById = await getOneBookById(id);
 			if (foundGetOneBookById is null)
 			{
-				//burada ne yapabiliriz
+				//burada ne yapabiliriz(bool dönebiliriz)
 				return;
 			}
 			BookDto foundBookDto = _mapper.Map<BookDto>(foundGetOneBookById);

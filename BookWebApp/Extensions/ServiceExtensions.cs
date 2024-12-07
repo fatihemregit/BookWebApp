@@ -1,6 +1,6 @@
 ﻿using BookWebApp.Auth;
-using BookWebApp.Data.Context;
-using BookWebApp.Models.Auth;
+using Entity.Auth;
+using Data.EfCore.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,13 +8,6 @@ namespace BookWebApp.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<ApplicationDbContext>((options) =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("sqlConnection"));
-            });
-        }
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentity<AppUser, AppRole>(_ =>

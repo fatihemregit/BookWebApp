@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//set db context
-builder.Services.ConfigureSqlContext(builder.Configuration);
+//set db context for data layer
+builder.Services.ConfigureSqlContextForDataLayer(builder.Configuration);
 //identity config
 builder.Services.ConfigureIdentity();
 //cookie config

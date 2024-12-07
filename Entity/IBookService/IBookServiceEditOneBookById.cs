@@ -8,5 +8,10 @@ namespace Entity.IBookService
 {
 	public class IBookServiceEditOneBookById
 	{
+		public string Name { get; set; }
+
+		public string Writer { get; set; }
+
+		public decimal Price { get; set; }
 	}
 }
