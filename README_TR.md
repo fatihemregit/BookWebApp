@@ -86,6 +86,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Business Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý.
 - Business katmanýna automapper kütüphanesi eklendi
 - Business katmanýnda,Automapper kütüphanesi sayesinde Ibookservice interfacesinde her fonksiyona ayrý bir entity atandý
+- Ana projeye implemente iþlemlerini baþlandý
+- Ana projede diðer katmanlarýn program.cs deki implementasyonlarý yapýldý(builder.services)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

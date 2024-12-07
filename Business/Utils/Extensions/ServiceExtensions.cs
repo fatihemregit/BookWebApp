@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Util.Extensions
+namespace Business.Utils.Extensions
 {
     public static class ServiceExtensions
     {

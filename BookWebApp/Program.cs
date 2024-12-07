@@ -1,7 +1,8 @@
 using BookWebApp.Extensions;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
-
+using Business.Utils.Extensions;
+using Data.Utils.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,8 +14,17 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
 //cookie config
 builder.Services.ConfigureCookie();
-//automapper
+//automapper for main project(this project)
 builder.Services.AddAutoMapper(typeof(Program));
+//automapper for Data layer
+builder.Services.setAutoMapperForDataLayer();
+//automapper for Business layer
+builder.Services.setAutoMapperForBusinessLayer();
+
+//dependency injection for Data Layer
+builder.Services.setInterfaceConcretesForDataLayer();
+//dependency injection for Business Layer
+builder.Services.setInterfaceConcretesForBusinessLayer();
 var app = builder.Build();
 
 
