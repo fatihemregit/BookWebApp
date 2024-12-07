@@ -12,7 +12,9 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
--Readme düzenlemesi
+- Data katmanýna automapper kütüphanesi eklendi
+- Data katmanýnda,Automapper kütüphanesi sayesinde IbookRepository interfacesinde her fonksiyona ayrý bir entity atandý
+- Entity katmanýnda,IbookRepository interfacesinde kullanýlan entity ler oluþturuldu
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -77,6 +79,10 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Katmanlý mimariye geçiþ için gerekli  katmanlar yazýlmaya baþlandý (Data,Entity)
 - Data Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý
 - Entity Katmaný yazýlmaya baþlandý.Projede gerekli olan entity(model) ler gerektikçe yazýlacak
+### Gün 8 (7.12.2024)
+- Data katmanýna automapper kütüphanesi eklendi
+- Data katmanýnda,Automapper kütüphanesi sayesinde IbookRepository interfacesinde her fonksiyona ayrý bir entity atandý
+- Entity katmanýnda,IbookRepository interfacesinde kullanýlan entity ler oluþturuldu
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -85,4 +91,4 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 ### Geliþtirilebilecek Yerler
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
--Isbn ile kitap bilgilerini otomatik çekme
+-Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)

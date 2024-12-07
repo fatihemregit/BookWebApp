@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entity.IBookRepository;
 using Entity.Dto;
 namespace Data.Abstracts
 {
@@ -10,14 +11,13 @@ namespace Data.Abstracts
 
     public interface IBookRepository
 	{
-		Task<List<BookDto>> getAll();
+		Task<List<GetAllBook>> getAll();
 
-		Task<BookDto> getOneBookById(int id);
+		Task<GetOneBookById> getOneBookById(int id);
 
-		Task createOneBook(BookDto Book);
+		Task<CreateOneBook> createOneBook(CreateOneBook Book);
 
-		Task editOneBookById(int id,BookDto book);
-
+		Task<EditOneBookById> editOneBookById(int id,EditOneBookById Book);
 		Task deleteOneBookById(int id);
 
 
