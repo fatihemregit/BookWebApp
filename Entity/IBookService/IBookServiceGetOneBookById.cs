@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.IBookRepository
+namespace Entity.IBookService
 {
-	public class GetAllBook
+	public class IBookServiceGetOneBookById
 	{
-		public int Id { get; set; }
 		public string Name { get; set; }
+
 		public string Writer { get; set; }
+
 		public decimal Price { get; set; }
 	}
 }

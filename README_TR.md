@@ -12,9 +12,9 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Data katmanýna automapper kütüphanesi eklendi
-- Data katmanýnda,Automapper kütüphanesi sayesinde IbookRepository interfacesinde her fonksiyona ayrý bir entity atandý
-- Entity katmanýnda,IbookRepository interfacesinde kullanýlan entity ler oluþturuldu
+- Business Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý.
+- Business katmanýna automapper kütüphanesi eklendi
+- Business katmanýnda,Automapper kütüphanesi sayesinde Ibookservice interfacesinde her fonksiyona ayrý bir entity atandý
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -83,6 +83,9 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Data katmanýna automapper kütüphanesi eklendi
 - Data katmanýnda,Automapper kütüphanesi sayesinde IbookRepository interfacesinde her fonksiyona ayrý bir entity atandý
 - Entity katmanýnda,IbookRepository interfacesinde kullanýlan entity ler oluþturuldu
+- Business Katmaný yazýldý.Ancak Ana projeye implement iþlemleri yazýlmadý.
+- Business katmanýna automapper kütüphanesi eklendi
+- Business katmanýnda,Automapper kütüphanesi sayesinde Ibookservice interfacesinde her fonksiyona ayrý bir entity atandý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -92,3 +95,4 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
 -Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)
+- BookRepository.cs(namespace Data.EfCore) deki not

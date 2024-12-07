@@ -14,6 +14,11 @@ namespace Data.EfCore
 {
     public class BookRepository : IBookRepository
 	{
+		/*
+		 Genel bir öneri : acaba is deleted alanına tüm dtolarda ihtiyacımız var mı?
+		 Evet : çünkü data katmanında erişemeyeceksek başka nerede erişeceğiz
+		 Hayır : çünkü isdeleted alanını sadece silmede kullanıyoruz.
+		 */
 
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
@@ -24,47 +29,68 @@ namespace Data.EfCore
 			_mapper = mapper;
 		}
 
-		public async Task<CreateOneBook> createOneBook(CreateOneBook Book)
+		public async Task<List<IBookRepositoryGetAllBook>> getAll()
 		{
+			return _mapper.Map<List<IBookRepositoryGetAllBook>>(await _context.BookDtos.ToListAsync());
+
+		}
+
+
+		public async Task<IBookRepositoryCreateOneBook?> createOneBook(IBookRepositoryCreateOneBook Book)
+		{
+
+			if (Book is null)
+			{
+				//daha sonrasında(hata yönetimi eklendiğinde) hata fırlat ama şimdilik null döndürelim
+				return null;
+			}
 			await _context.BookDtos.AddAsync(_mapper.Map<BookDto>(Book));
 			return Book;
 		}
 
-		public async Task deleteOneBookById(int id)
+		public async Task<IBookRepositoryEditOneBookById?> editOneBookById(int id, IBookRepositoryEditOneBookById Book)
 		{
-			BookDto foundBookDto = _mapper.Map<BookDto>(await getOneBookById(id));
-			foundBookDto.isDeleted = true;
-			_context.SaveChanges();
-		}
-
-		public async Task<EditOneBookById> editOneBookById(int id, EditOneBookById Book)
-		{
-			GetOneBookById foundGetOneBookById = await getOneBookById(id);
+			IBookRepositoryGetOneBookById foundGetOneBookById = await getOneBookById(id);
+			if (foundGetOneBookById is null)
+			{
+				return null;
+			}
 			foundGetOneBookById.Name = Book.Name;
 			foundGetOneBookById.Writer = Book.Writer;
 			foundGetOneBookById.Price = Book.Price;
 			_context.BookDtos.Update(_mapper.Map<BookDto>(foundGetOneBookById));
-			return _mapper.Map<EditOneBookById>(foundGetOneBookById);
+			return _mapper.Map<IBookRepositoryEditOneBookById>(foundGetOneBookById);
 		}
 
-		public async Task<List<GetAllBook>> getAll()
-		{
-			return _mapper.Map<List<GetAllBook>>(await _context.BookDtos.ToListAsync());
-
-		}
-
-		public async Task<GetOneBookById> getOneBookById(int id)
+		public async Task<IBookRepositoryGetOneBookById?> getOneBookById(int id)
 		{
 			//bulunan ögedeki değişikleri kaydetmek için illa dto mu lazım bak 
 			BookDto foundbookDto = await _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefaultAsync();
 			if (foundbookDto is null)
 			{
-				//daha sonrasında(hata yönetimi eklendiğinde) hata fırlat
-				return _mapper.Map<GetOneBookById>(new BookDto());
+				//daha sonrasında(hata yönetimi eklendiğinde) hata fırlat ama şimdilik null döndürelim
+				return null;
 			}
-			return _mapper.Map<GetOneBookById>(foundbookDto);
+			return _mapper.Map<IBookRepositoryGetOneBookById>(foundbookDto);
 
 		}
+
+
+		public async Task deleteOneBookById(int id)
+		{
+			IBookRepositoryGetOneBookById? foundGetOneBookById = await getOneBookById(id);
+			if (foundGetOneBookById is null)
+			{
+				//burada ne yapabiliriz
+				return;
+			}
+			BookDto foundBookDto = _mapper.Map<BookDto>(foundGetOneBookById);
+			foundBookDto.isDeleted = true;
+			_context.SaveChanges();
+		}
+
+
+
 
 
 

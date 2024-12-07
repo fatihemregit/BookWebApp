@@ -1,4 +1,6 @@
-﻿using Data.Utils.AutoMapper;
+﻿using Data.Abstracts;
+using Data.EfCore;
+using Data.Utils.AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,15 @@ namespace Data.Utils.Extensions
 {
     public static class DataExtensions
     {
-        public static void setAutoMapper(this IServiceCollection services)
+        public static void setAutoMapperForDataLayer(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(MappingProfileForDataLayer));
         }
-    }
+        
+        public static void setInterfaceConcretesForDataLayer(this IServiceCollection services)
+        {
+			services.AddSingleton<IBookRepository, BookRepository>();
+		}
+
+	}
 }

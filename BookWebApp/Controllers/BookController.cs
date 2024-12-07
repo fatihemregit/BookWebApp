@@ -152,7 +152,7 @@ namespace BookWebApp.Controllers
                 return NotFound();
             }
 
-            //foundBookDto is not nullc
+            //foundBookDto is not null
 
             //convert BookDto to BookViewModelForDetails
             BookViewModelForDetails foundbookViewModelForDetails = _mapper.Map<BookViewModelForDetails>(foundBookDto);
