@@ -12,11 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Ana projeye implemente iþlemlerini baþlandý
-- Ana projede diðer katmanlarýn program.cs deki implementasyonlarý yapýldý(builder.services)
-- Ana projedeki data klasörü silindi.Onun yerine data layer kullanýlacak
-- data klasörü yerine data layer kullanýldý
-- BookController Yeni mimariye göre yeniden yazýldý
+- Readme düzenlemesi
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -101,7 +97,8 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
  ### Yapýlacaklar
 - RoleController ýn yeni mimariye uygun hale getirilmesi
 - UserController ýn yeni mimariye uygun hale getirilmesi
-- 
+- DeleteRoleViewModel hata veriyor(þuan hata vermesin diye baðlantýlý yerlerini yorum satýrýna aldým)
+- çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
 
 ### Geliþtirilebilecek Yerler
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
