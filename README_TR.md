@@ -89,8 +89,9 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Ana projedeki data klasörü silindi.Onun yerine data layer kullanýlacak
 - data klasörü yerine data layer kullanýldý
 - BookController Yeni mimariye göre yeniden yazýldý
-### gün 9 (9.12.2024)
+### Gün 9 (9.12.2024)
 - AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
+- AuthUserService ve IAuthUserService yazýldý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Entity.IAuthUserRepository;
+using Entity.IAuthUserService;
 using Entity.IBookRepository;
 using Entity.IBookService;
 using System;
@@ -18,6 +20,9 @@ namespace Business.Utils.AutoMapper
 
 		public MappingProfileForBusinessLayer()
         {
+
+			//service to repository
+
 			//IBookServiceGetOneBookById to IBookRepositoryGetOneBookById
 			CreateMap<IBookRepositoryGetOneBookById, IBookServiceGetOneBookById>();
 			CreateMap<IBookServiceGetOneBookById, IBookRepositoryGetOneBookById>();
@@ -32,6 +37,30 @@ namespace Business.Utils.AutoMapper
 			//IBookServiceCreateOneBook to IBookRepositoryCreateOneBook
 			CreateMap<IBookServiceCreateOneBook, IBookRepositoryCreateOneBook>();
 			CreateMap<IBookRepositoryCreateOneBook, IBookServiceCreateOneBook>();
+			//IAuthUserServiceCreateAsync to IAuthUserRepositoryCreateAsync
+			CreateMap<IAuthUserServiceCreateAsync, IAuthUserRepositoryCreateAsync>();
+			CreateMap<IAuthUserRepositoryCreateAsync, IAuthUserServiceCreateAsync>();
+			//IAuthUserServiceDeleteAsync to IAuthUserRepositoryDeleteAsync
+			CreateMap<IAuthUserServiceDeleteAsync, IAuthUserRepositoryDeleteAsync>();
+			CreateMap<IAuthUserRepositoryDeleteAsync, IAuthUserServiceDeleteAsync>();
+			//IAuthUserServiceFindByEmailAsync to IAuthUserRepositoryFindByEmailAsync
+			CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserRepositoryFindByEmailAsync>();
+			CreateMap<IAuthUserRepositoryFindByEmailAsync, IAuthUserServiceFindByEmailAsync>();
+			//IAuthUserServiceFindByNameAsync to IAuthUserRepositoryFindByNameAsync
+			CreateMap<IAuthUserServiceFindByNameAsync, IAuthUserRepositoryFindByNameAsync>();
+			CreateMap<IAuthUserRepositoryFindByNameAsync, IAuthUserServiceFindByNameAsync>();
+			//IAuthUserServiceGetAllUsersAsync to IAuthUserRepositoryGetAllUsersAsync
+			CreateMap<List<IAuthUserServiceGetAllUsersAsync>, List<IAuthUserRepositoryGetAllUsersAsync>>();
+			CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>, List<IAuthUserServiceGetAllUsersAsync>>();
+			CreateMap<IAuthUserServiceGetAllUsersAsync, IAuthUserRepositoryGetAllUsersAsync>();
+			CreateMap<IAuthUserRepositoryGetAllUsersAsync, IAuthUserServiceGetAllUsersAsync>();
+			//IAuthUserServiceGetRolesAsync to IAuthUserRepositoryGetRolesAsync
+			CreateMap<IAuthUserServiceGetRolesAsync, IAuthUserRepositoryGetRolesAsync>();
+			CreateMap<IAuthUserRepositoryGetRolesAsync, IAuthUserServiceGetRolesAsync>();
+			//IAuthUserServiceIsInRoleAsync to IAuthUserRepositoryIsInRoleAsync
+			CreateMap<IAuthUserServiceIsInRoleAsync, IAuthUserRepositoryIsInRoleAsync>();
+			CreateMap<IAuthUserRepositoryIsInRoleAsync, IAuthUserServiceIsInRoleAsync>();
+
 		}
 	}
 }

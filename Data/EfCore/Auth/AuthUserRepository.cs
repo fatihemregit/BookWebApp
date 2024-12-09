@@ -72,7 +72,6 @@ namespace Data.EfCore.Auth
 			{
 				return null;
 			}
-			//TODO:rollerin eklenmesi lazım(bu daha sonra yapılacak)
 			List<IAuthUserRepositoryGetAllUsersAsync> getAllUsers = _mapper.Map<List<IAuthUserRepositoryGetAllUsersAsync>>(appUsers);
 			foreach (IAuthUserRepositoryGetAllUsersAsync user in getAllUsers)
 			{

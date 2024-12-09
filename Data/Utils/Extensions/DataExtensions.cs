@@ -1,5 +1,7 @@
-﻿using Data.Abstracts.Book;
+﻿using Data.Abstracts.Auth;
+using Data.Abstracts.Book;
 using Data.EfCore;
+using Data.EfCore.Auth;
 using Data.EfCore.Context;
 using Data.Utils.AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +24,8 @@ namespace Data.Utils.Extensions
         
         public static void setInterfaceConcretesForDataLayer(this IServiceCollection services)
         {
-			services.AddSingleton<IBookRepository, BookRepository>();
+			services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IAuthUserRepository, AuthUserRepository>();
 		}
 		public static void ConfigureSqlContextForDataLayer(this IServiceCollection services, IConfiguration configuration)
         {

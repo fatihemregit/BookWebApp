@@ -65,7 +65,6 @@ namespace BookWebApp.Controllers
                 appUserViewModel.Email = appUser.Email;
                 appUserViewModel.Roles = await _userManager.GetRolesAsync(appUser);
                 appUserViewModels.Add(appUserViewModel);
-
             }
 
             return View(appUserViewModels);

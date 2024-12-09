@@ -1,5 +1,7 @@
-﻿using Business.Abstracts;
-using Business.Concretes;
+﻿using Business.Abstracts.Auth;
+using Business.Abstracts.Book;
+using Business.Concretes.Auth;
+using Business.Concretes.Book;
 using Business.Utils.AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,7 +20,8 @@ namespace Business.Utils.Extensions
         }
 		public static void setInterfaceConcretesForBusinessLayer(this IServiceCollection services)
         {
-            services.AddSingleton<IBookService,BookService>();
+            services.AddScoped<IBookService,BookService>();
+            services.AddScoped<IAuthUserService, AuthUserService>();
         }
 
 
