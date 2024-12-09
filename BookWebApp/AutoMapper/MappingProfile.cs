@@ -3,6 +3,7 @@ using Entity.ViewModel;
 using Entity.Dto;
 using Entity.Auth;
 using Entity.IBookService;
+using Entity.IAuthUserService;
 namespace BookWebApp.AutoMapper
 {
     public class MappingProfile : Profile
@@ -59,6 +60,23 @@ namespace BookWebApp.AutoMapper
             //IBookServiceGetOneBookById to BookViewModelForDelete
             CreateMap<IBookServiceGetOneBookById, BookViewModelForDelete>();
             CreateMap<BookViewModelForDelete, IBookServiceGetOneBookById>();
+            //IAuthUserServiceGetAllUsersAsync to AppUserViewModel
+            CreateMap<IAuthUserServiceGetAllUsersAsync, AppUserViewModel>();
+            CreateMap<AppUserViewModel, IAuthUserServiceGetAllUsersAsync>();
+            //IAuthUserServiceCreateAsync to AppUserViewModel
+            CreateMap<IAuthUserServiceCreateAsync, AppUserViewModel>();
+            CreateMap<AppUserViewModel, IAuthUserServiceCreateAsync>();
+            //IAuthUserServiceFindByEmailAsync to AppUser
+            CreateMap<IAuthUserServiceFindByEmailAsync, AppUser>();
+            CreateMap<AppUser, IAuthUserServiceFindByEmailAsync>();
+            //IAuthUserServiceFindByNameAsync to AppUser
+            CreateMap<IAuthUserServiceFindByNameAsync, AppUser>();
+            CreateMap<AppUser, IAuthUserServiceFindByNameAsync>();
+            //IAuthUserServiceDeleteAsync to AppUser
+            CreateMap<IAuthUserServiceDeleteAsync, AppUser>();
+            CreateMap<AppUser, IAuthUserServiceDeleteAsync>();
+
+
 		}
 	}
 }

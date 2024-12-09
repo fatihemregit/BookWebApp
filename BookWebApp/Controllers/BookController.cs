@@ -144,7 +144,7 @@ namespace BookWebApp.Controllers
 
         public IActionResult MyErrorPage(string errorMessage)
         {
-
+            //view i yok(oluştur)
             ViewBag.ErrorMessage = errorMessage;
             return View();
         }

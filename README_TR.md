@@ -92,6 +92,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ### Gün 9 (9.12.2024)
 - AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
 - AuthUserService ve IAuthUserService yazýldý
+- UserController ýn yeni mimariye uygun hale getirilmesi (IAuthUserService in ana projeye uygulanmasý)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -99,7 +100,7 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
  ### Yapýlacaklar
 - RoleController ýn yeni mimariye uygun hale getirilmesi
-- UserController ýn yeni mimariye uygun hale getirilmesi
+- 
 - DeleteRoleViewModel hata veriyor(þuan hata vermesin diye baðlantýlý yerlerini yorum satýrýna aldým)
 - çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
 
