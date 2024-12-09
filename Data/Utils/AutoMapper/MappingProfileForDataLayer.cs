@@ -3,6 +3,7 @@ using Data.Abstracts.Auth;
 using Entity.Auth;
 using Entity.Dto;
 using Entity.IBookRepository;
+using Entity.IAuthUserRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -12,7 +12,11 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
+- AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
+- AuthUserService ve IAuthUserService yazýldý
+- UserController ýn yeni mimariye uygun hale getirilmesi (IAuthUserService in ana projeye uygulanmasý)
 - Readme düzenlemesi
+- Role sistemi geçiçi olarak devredýþý býrakýldý
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -93,6 +97,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
 - AuthUserService ve IAuthUserService yazýldý
 - UserController ýn yeni mimariye uygun hale getirilmesi (IAuthUserService in ana projeye uygulanmasý)
+- Role sistemi geçiçi olarak devredýþý býrakýldý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -100,10 +105,8 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
  ### Yapýlacaklar
 - RoleController ýn yeni mimariye uygun hale getirilmesi
-- 
 - DeleteRoleViewModel hata veriyor(þuan hata vermesin diye baðlantýlý yerlerini yorum satýrýna aldým)
 - çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
-
 ### Geliþtirilebilecek Yerler
 - Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
@@ -111,3 +114,4 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 - BookRepository.cs(namespace Data.EfCore) deki not
 - AuthUserRepository.cs(namespace Data.EfCore.Auth) deki FindByEmailAsync deki not
 - Data katmanýnda ki null data dönünce çalýþacak kodlarýn iþ katmanýna taþýnmasýna gerek olup olmasýnýn tartýþýlmasý
+- tüm Identity iþlemlerini diðer katmanlara daðýtma(https://www.reddit.com/r/csharp/comments/98gj14/how_to_implement_identity_in_an_nlayer_solution/?rdt=52901)
