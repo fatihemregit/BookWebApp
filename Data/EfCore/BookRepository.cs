@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Data.Abstracts;
+using Data.Abstracts.Book;
 using Data.EfCore.Context;
 using Entity.Dto;
 using Entity.IBookRepository;

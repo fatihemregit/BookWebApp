@@ -57,8 +57,7 @@ namespace BookWebApp.Controllers
 
             List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
             List<AppUser> users = _userManager.Users.ToList();
-
-
+            
             foreach (AppUser appUser in users)
             {
                 AppUserViewModel appUserViewModel = new AppUserViewModel();

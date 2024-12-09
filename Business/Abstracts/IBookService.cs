@@ -15,6 +15,5 @@ namespace Business.Abstracts
 		Task<IBookServiceGetOneBookById?> getOneBookById(int id);
 		Task deleteOneBookById(int id);
 
-
 	}
 }

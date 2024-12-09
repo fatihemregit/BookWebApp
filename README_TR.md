@@ -89,6 +89,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Ana projedeki data klasörü silindi.Onun yerine data layer kullanýlacak
 - data klasörü yerine data layer kullanýldý
 - BookController Yeni mimariye göre yeniden yazýldý
+### gün 9 (9.12.2024)
+- AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -105,3 +107,5 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
 -Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)
 - BookRepository.cs(namespace Data.EfCore) deki not
+- AuthUserRepository.cs(namespace Data.EfCore.Auth) deki FindByEmailAsync deki not
+- Data katmanýnda ki null data dönünce çalýþacak kodlarýn iþ katmanýna taþýnmasýna gerek olup olmasýnýn tartýþýlmasý

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Data.Abstracts.Auth;
+using Entity.Auth;
 using Entity.Dto;
 using Entity.IBookRepository;
 using System;
@@ -31,6 +33,30 @@ namespace Data.Utils.AutoMapper
 			//CreateOneBook to BookDto
 			CreateMap<IBookRepositoryCreateOneBook, BookDto>();
 			CreateMap<BookDto, IBookRepositoryCreateOneBook>();
+			//IAuthUserRepositoryCreateAsync to AppUser
+			CreateMap<IAuthUserRepositoryCreateAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryCreateAsync>();
+			//IAuthUserRepositoryDeleteAsync to AppUser
+			CreateMap<IAuthUserRepositoryDeleteAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryDeleteAsync>();
+			//IAuthUserRepositoryFindByEmailAsync to AppUser
+			CreateMap<IAuthUserRepositoryFindByEmailAsync, AppUser>();
+			CreateMap<AppUser,IAuthUserRepositoryFindByEmailAsync>();
+			//IAuthUserRepositoryFindByNameAsync to AppUser
+			CreateMap<IAuthUserRepositoryFindByNameAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryFindByNameAsync>();
+			//IAuthUserRepositoryGetAllUsers to AppUser
+			CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>,List<AppUser>>();
+			CreateMap<List<AppUser>, List<IAuthUserRepositoryGetAllUsersAsync>>();
+			CreateMap<IAuthUserRepositoryGetAllUsersAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryGetAllUsersAsync>();
+			//IAuthUserRepositoryGetRolesAsync to AppUser
+			CreateMap<IAuthUserRepositoryGetRolesAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryGetRolesAsync>();
+			//IAuthUserRepositoryIsInRoleAsync to AppUser
+			CreateMap<IAuthUserRepositoryIsInRoleAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryIsInRoleAsync>();
+
 		}
 	}
 }

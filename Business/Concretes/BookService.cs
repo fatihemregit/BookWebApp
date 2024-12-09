@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Data.Abstracts;
-using Entity.IBookRepository; 
+using Data.Abstracts.Book;
+using Entity.IBookRepository;
 using Entity.IBookService;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
-	public class BookService : IBookService
+    public class BookService : IBookService
 	{
 
 

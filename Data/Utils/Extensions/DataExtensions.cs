@@ -1,4 +1,4 @@
-﻿using Data.Abstracts;
+﻿using Data.Abstracts.Book;
 using Data.EfCore;
 using Data.EfCore.Context;
 using Data.Utils.AutoMapper;
