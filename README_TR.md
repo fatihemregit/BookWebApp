@@ -100,7 +100,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Role sistemi geçiçi olarak devredýþý býrakýldý
 ### Gün 10 (10.12.2024)
 - IAuthRoleRepository ve AuthRoleRepository sýnýflarý yazýldý
-- IAuthRoleService ve AuthRoleService
+- IAuthRoleService ve AuthRoleService sýnýflarý yazýldý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
