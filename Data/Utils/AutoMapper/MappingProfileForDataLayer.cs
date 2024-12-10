@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entity.IAuthRoleRepository;
 
 namespace Data.Utils.AutoMapper
 {
@@ -42,12 +43,12 @@ namespace Data.Utils.AutoMapper
 			CreateMap<AppUser, IAuthUserRepositoryDeleteAsync>();
 			//IAuthUserRepositoryFindByEmailAsync to AppUser
 			CreateMap<IAuthUserRepositoryFindByEmailAsync, AppUser>();
-			CreateMap<AppUser,IAuthUserRepositoryFindByEmailAsync>();
+			CreateMap<AppUser, IAuthUserRepositoryFindByEmailAsync>();
 			//IAuthUserRepositoryFindByNameAsync to AppUser
 			CreateMap<IAuthUserRepositoryFindByNameAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryFindByNameAsync>();
 			//IAuthUserRepositoryGetAllUsers to AppUser
-			CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>,List<AppUser>>();
+			CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>, List<AppUser>>();
 			CreateMap<List<AppUser>, List<IAuthUserRepositoryGetAllUsersAsync>>();
 			CreateMap<IAuthUserRepositoryGetAllUsersAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryGetAllUsersAsync>();
@@ -57,6 +58,20 @@ namespace Data.Utils.AutoMapper
 			//IAuthUserRepositoryIsInRoleAsync to AppUser
 			CreateMap<IAuthUserRepositoryIsInRoleAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryIsInRoleAsync>();
+			//IAuthRoleRepositoryCreateAsync to AppRole
+			CreateMap<IAuthRoleRepositoryCreateAsync, AppRole>();
+			CreateMap<AppRole, IAuthRoleRepositoryCreateAsync>();
+			//IAuthRoleRepositoryDeleteAsync to AppRole
+			CreateMap<IAuthRoleRepositoryDeleteAsync, AppRole>();
+			CreateMap<AppRole, IAuthRoleRepositoryDeleteAsync>();
+			//IAuthRoleRepositoryFindByIdAsync to AppRole
+			CreateMap<IAuthRoleRepositoryFindByIdAsync, AppRole>();
+			CreateMap<AppRole, IAuthRoleRepositoryFindByIdAsync>();
+			//IAuthRoleRepositoryGetAllRolesAsync to AppRole
+			CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<AppRole>>();
+			CreateMap<List<AppRole>, List<IAuthRoleRepositoryGetAllRolesAsync>>();
+			CreateMap<IAuthRoleRepositoryGetAllRolesAsync, AppRole>();
+			CreateMap<AppRole, IAuthRoleRepositoryGetAllRolesAsync>();
 
 		}
 	}
