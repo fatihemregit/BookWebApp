@@ -24,6 +24,8 @@ namespace Business.Concretes.Auth
 			_mapper = mapper;
 		}
 
+		
+
 		public async Task<IdentityResult> CreateAsync(IAuthUserServiceCreateAsync user, string password)
 		{
 			IdentityResult result = await _userRepository.CreateAsync(_mapper.Map<IAuthUserRepositoryCreateAsync>(user),password);
@@ -84,6 +86,16 @@ namespace Business.Concretes.Auth
 		{
 			bool isInRoleAsync = await _userRepository.IsInRoleAsync(_mapper.Map<IAuthUserRepositoryIsInRoleAsync>(user),roleName);
 			return isInRoleAsync;
+		}
+
+		public async Task AddToRoleAsync(IAuthUserServiceAddToRoleAsync user, string roleName)
+		{
+			await _userRepository.AddToRoleAsync(_mapper.Map<IAuthUserRepositoryAddToRoleAsync>(user), roleName);
+		}
+
+		public async Task RemoveFromRoleAsync(IAuthUserServiceRemoveFromRoleAsync user, string roleName)
+		{
+			 await _userRepository.RemoveFromRoleAsync(_mapper.Map<IAuthUserRepositoryRemoveFromRoleAsync>(user),roleName);
 		}
 	}
 }

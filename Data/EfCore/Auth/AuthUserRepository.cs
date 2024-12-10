@@ -25,6 +25,11 @@ namespace Data.EfCore.Auth
 			_mapper = mapper;
 		}
 
+		public async Task AddToRoleAsync(IAuthUserRepositoryAddToRoleAsync user, string roleName)
+		{
+			await _userManager.AddToRoleAsync(_mapper.Map<AppUser>(user),roleName);
+		}
+
 		public async Task<IdentityResult> CreateAsync(IAuthUserRepositoryCreateAsync user, string password)
 		{
 			IdentityResult result = await _userManager.CreateAsync(_mapper.Map<AppUser>(user), password);
@@ -97,6 +102,11 @@ namespace Data.EfCore.Auth
 		{
 			bool result = await _userManager.IsInRoleAsync(_mapper.Map<AppUser>(user), roleName);
 			return result;
+		}
+
+		public async Task RemoveFromRoleAsync(IAuthUserRepositoryRemoveFromRoleAsync user, string roleName)
+		{
+			await _userManager.RemoveFromRoleAsync(_mapper.Map<AppUser>(user),roleName);
 		}
 	}
 }

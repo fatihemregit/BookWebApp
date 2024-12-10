@@ -101,13 +101,16 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ### Gün 10 (10.12.2024)
 - IAuthRoleRepository ve AuthRoleRepository sýnýflarý yazýldý
 - IAuthRoleService ve AuthRoleService sýnýflarý yazýldý
+- AuthUserService de AddToRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý
+- AuthUserService de RemoveFromRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý
+- Role Controller yeni mimariye uygun hale getirildi(SetRoleForUser post metodu ve delete role hariç)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
  ### Yapýlacaklar
-- RoleController ýn yeni mimariye uygun hale getirilmesi
+- RoleController ýn yeni mimariye uygun hale getirilmesi(SetRoleForUser post metodu ve delete role )
 - DeleteRoleViewModel hata veriyor(þuan hata vermesin diye baðlantýlý yerlerini yorum satýrýna aldým)
 - çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
 ### Geliþtirilebilecek Yerler

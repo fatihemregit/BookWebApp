@@ -1,4 +1,5 @@
-﻿using Entity.IAuthUserService;
+﻿using Entity.IAuthUserRepository;
+using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,12 @@ namespace Business.Abstracts.Auth
 
 		Task<IdentityResult> CreateAsync(IAuthUserServiceCreateAsync user, string password);
 		Task<IdentityResult> DeleteAsync(IAuthUserServiceDeleteAsync user);
+
+		Task AddToRoleAsync(IAuthUserServiceAddToRoleAsync user, string roleName);
+
+		Task RemoveFromRoleAsync(IAuthUserServiceRemoveFromRoleAsync user, string roleName);
+
+
 	}
 
 }

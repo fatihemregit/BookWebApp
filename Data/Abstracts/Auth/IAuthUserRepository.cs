@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entity.Auth;
-using Entity.IAuthUserRepository;
+﻿using Entity.IAuthUserRepository;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Abstracts.Auth
@@ -22,6 +16,9 @@ namespace Data.Abstracts.Auth
 
 		Task<IdentityResult> CreateAsync(IAuthUserRepositoryCreateAsync user, string password);
 		Task<IdentityResult> DeleteAsync(IAuthUserRepositoryDeleteAsync user);
+		Task AddToRoleAsync(IAuthUserRepositoryAddToRoleAsync user,string roleName);
+
+		Task RemoveFromRoleAsync(IAuthUserRepositoryRemoveFromRoleAsync user, string roleName);
 
 	}
 

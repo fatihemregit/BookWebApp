@@ -22,6 +22,7 @@ namespace Business.Utils.Extensions
         {
             services.AddScoped<IBookService,BookService>();
             services.AddScoped<IAuthUserService, AuthUserService>();
+            services.AddScoped<IAuthRoleService, AuthRoleService>();
         }
 
 

@@ -26,6 +26,7 @@ namespace Data.Utils.Extensions
         {
 			services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
+            services.AddScoped<IAuthRoleRepository, AuthRoleRepository>();
 		}
 		public static void ConfigureSqlContextForDataLayer(this IServiceCollection services, IConfiguration configuration)
         {

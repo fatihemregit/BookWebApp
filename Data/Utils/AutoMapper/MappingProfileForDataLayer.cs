@@ -35,6 +35,9 @@ namespace Data.Utils.AutoMapper
 			//CreateOneBook to BookDto
 			CreateMap<IBookRepositoryCreateOneBook, BookDto>();
 			CreateMap<BookDto, IBookRepositoryCreateOneBook>();
+			//IAuthUserRepositoryAddToRoleAsync to AppUser
+			CreateMap<IAuthUserRepositoryAddToRoleAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryAddToRoleAsync>();
 			//IAuthUserRepositoryCreateAsync to AppUser
 			CreateMap<IAuthUserRepositoryCreateAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryCreateAsync>();
@@ -58,6 +61,11 @@ namespace Data.Utils.AutoMapper
 			//IAuthUserRepositoryIsInRoleAsync to AppUser
 			CreateMap<IAuthUserRepositoryIsInRoleAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryIsInRoleAsync>();
+			//IAuthUserRepositoryRemoveFromRoleAsync to AppUser
+			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryRemoveFromRoleAsync>();
+
+
 			//IAuthRoleRepositoryCreateAsync to AppRole
 			CreateMap<IAuthRoleRepositoryCreateAsync, AppRole>();
 			CreateMap<AppRole, IAuthRoleRepositoryCreateAsync>();

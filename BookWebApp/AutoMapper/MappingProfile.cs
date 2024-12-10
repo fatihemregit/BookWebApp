@@ -4,6 +4,8 @@ using Entity.Dto;
 using Entity.Auth;
 using Entity.IBookService;
 using Entity.IAuthUserService;
+using Entity.IAuthRoleService;
+using Entity.IAuthUserRepository;
 namespace BookWebApp.AutoMapper
 {
     public class MappingProfile : Profile
@@ -76,6 +78,20 @@ namespace BookWebApp.AutoMapper
             CreateMap<IAuthUserServiceDeleteAsync, AppUser>();
             CreateMap<AppUser, IAuthUserServiceDeleteAsync>();
 
+            //IAuthRoleServiceCreateAsync to CreateRoleViewModel
+            CreateMap<IAuthRoleServiceCreateAsync, CreateRoleViewModel>();
+            CreateMap<CreateRoleViewModel, IAuthRoleServiceCreateAsync>();
+            //IAuthUserServiceGetRolesAsync to IAuthUserServiceFindByEmailAsync
+            CreateMap<IAuthUserServiceGetRolesAsync, IAuthUserServiceFindByEmailAsync>();
+            CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserServiceGetRolesAsync>();
+
+            //IAuthUserServiceAddToRoleAsync to IAuthUserServiceFindByEmailAsync
+            CreateMap<IAuthUserServiceAddToRoleAsync, IAuthUserServiceFindByEmailAsync>();
+            CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserServiceAddToRoleAsync>();
+
+            //IAuthUserServiceRemoveFromRoleAsync to IAuthUserServiceFindByEmailAsync
+            CreateMap<IAuthUserServiceRemoveFromRoleAsync, IAuthUserServiceFindByEmailAsync>();
+            CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserServiceRemoveFromRoleAsync>();
 
 		}
 	}

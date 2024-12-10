@@ -39,6 +39,7 @@ namespace Business.Utils.AutoMapper
 			//IBookServiceCreateOneBook to IBookRepositoryCreateOneBook
 			CreateMap<IBookServiceCreateOneBook, IBookRepositoryCreateOneBook>();
 			CreateMap<IBookRepositoryCreateOneBook, IBookServiceCreateOneBook>();
+			
 			//IAuthUserServiceCreateAsync to IAuthUserRepositoryCreateAsync
 			CreateMap<IAuthUserServiceCreateAsync, IAuthUserRepositoryCreateAsync>();
 			CreateMap<IAuthUserRepositoryCreateAsync, IAuthUserServiceCreateAsync>();
@@ -62,6 +63,13 @@ namespace Business.Utils.AutoMapper
 			//IAuthUserServiceIsInRoleAsync to IAuthUserRepositoryIsInRoleAsync
 			CreateMap<IAuthUserServiceIsInRoleAsync, IAuthUserRepositoryIsInRoleAsync>();
 			CreateMap<IAuthUserRepositoryIsInRoleAsync, IAuthUserServiceIsInRoleAsync>();
+			//IAuthUserServiceAddToRoleAsync to IAuthUserRepositoryAddToRoleAsync
+			CreateMap<IAuthUserServiceAddToRoleAsync, IAuthUserRepositoryAddToRoleAsync>();
+			CreateMap<IAuthUserRepositoryAddToRoleAsync, IAuthUserServiceAddToRoleAsync>();
+			//IAuthUserServiceRemoveFromRoleAsync to IAuthUserRepositoryRemoveFromRoleAsync
+			CreateMap<IAuthUserServiceRemoveFromRoleAsync, IAuthUserRepositoryRemoveFromRoleAsync>();
+			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, IAuthUserServiceRemoveFromRoleAsync>();
+
 			// IAuthRoleServiceCreateAsync to IAuthRoleRepositoryCreateAsync
 			CreateMap<IAuthRoleServiceCreateAsync, IAuthRoleRepositoryCreateAsync>();
 			CreateMap<IAuthRoleRepositoryCreateAsync, IAuthRoleServiceCreateAsync>();
