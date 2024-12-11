@@ -108,6 +108,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - AuthUserService de GetUsersInRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý.
 - Role Controller yeni mimariye uygun hale getirildi
 - Migration klasörü ana projeden data projesine taþýndý(Data/EfCore/Migrations)
+- Ana Projede Automapper,Auth ve Extensions klasörlerinin Utils Altýna Taþýnamasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

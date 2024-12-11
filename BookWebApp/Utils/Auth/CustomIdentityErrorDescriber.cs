@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BookWebApp.Auth
+namespace BookWebApp.Utils.Auth
 {
     public class CustomIdentityErrorDescriber:IdentityErrorDescriber
     {

@@ -1,10 +1,10 @@
-﻿using BookWebApp.Auth;
+﻿using BookWebApp.Utils.Auth;
 using Entity.Auth;
 using Data.EfCore.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookWebApp.Extensions
+namespace BookWebApp.Utils.Extensions
 {
     public static class ServiceExtensions
     {

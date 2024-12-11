@@ -1,8 +1,8 @@
-using BookWebApp.Extensions;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Business.Utils.Extensions;
 using Data.Utils.Extensions;
+using BookWebApp.Utils.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

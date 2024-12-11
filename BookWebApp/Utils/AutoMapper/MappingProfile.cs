@@ -7,7 +7,7 @@ using Entity.IAuthUserService;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
 using System.Security.Claims;
-namespace BookWebApp.AutoMapper
+namespace BookWebApp.Utils.AutoMapper
 {
     public class MappingProfile : Profile
     {

@@ -1,7 +1,7 @@
 ﻿using Entity.Auth;
 using Microsoft.AspNetCore.Identity;
 
-namespace BookWebApp.Auth
+namespace BookWebApp.Utils.Auth
 {
     public class CustomPasswordValidator : IPasswordValidator<AppUser>
     {
