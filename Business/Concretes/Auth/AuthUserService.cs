@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstracts.Auth;
+using Data;
 using Data.Abstracts.Auth;
 using Entity.IAuthUserRepository;
 using Entity.IAuthUserService;
@@ -97,5 +98,16 @@ namespace Business.Concretes.Auth
 		{
 			 await _userRepository.RemoveFromRoleAsync(_mapper.Map<IAuthUserRepositoryRemoveFromRoleAsync>(user),roleName);
 		}
-	}
+
+        public async Task<List<IAuthUserServiceGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName)
+        {
+			List<IAuthUserRepositoryGetUsersInRoleAsync>? getUsersInRole = await _userRepository.GetUsersInRoleAsync(roleName);
+			if (getUsersInRole is null)
+			{ 
+				return null;
+			}
+			return _mapper.Map<List<IAuthUserServiceGetUsersInRoleAsync>>(getUsersInRole);
+
+        }
+    }
 }

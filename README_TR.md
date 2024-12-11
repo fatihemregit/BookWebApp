@@ -104,6 +104,10 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - AuthUserService de AddToRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý
 - AuthUserService de RemoveFromRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý
 - Role Controller yeni mimariye uygun hale getirildi(SetRoleForUser post metodu ve delete role hariç)
+### Gün 11(11.12.2024)
+- AuthUserService de GetUsersInRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý.
+- Role Controller yeni mimariye uygun hale getirildi
+
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

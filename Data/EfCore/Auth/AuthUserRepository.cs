@@ -98,7 +98,17 @@ namespace Data.EfCore.Auth
 
 		}
 
-		public async Task<bool> IsInRoleAsync(IAuthUserRepositoryIsInRoleAsync user, string roleName)
+        public async Task<List<IAuthUserRepositoryGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName)
+        {
+			List<AppUser> getUsersInRoleAsync = (await _userManager.GetUsersInRoleAsync(roleName)).ToList();
+			if (getUsersInRoleAsync.Count <= 0)
+			{
+				return null;
+			}
+			return _mapper.Map<List<IAuthUserRepositoryGetUsersInRoleAsync>>(getUsersInRoleAsync);
+        }
+
+        public async Task<bool> IsInRoleAsync(IAuthUserRepositoryIsInRoleAsync user, string roleName)
 		{
 			bool result = await _userManager.IsInRoleAsync(_mapper.Map<AppUser>(user), roleName);
 			return result;
@@ -108,5 +118,6 @@ namespace Data.EfCore.Auth
 		{
 			await _userManager.RemoveFromRoleAsync(_mapper.Map<AppUser>(user),roleName);
 		}
-	}
+
+    }
 }

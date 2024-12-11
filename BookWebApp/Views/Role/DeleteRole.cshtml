@@ -1,4 +1,4 @@
-﻿@* @model Entity.Auth.DeleteRoleViewModel
+﻿@model Entity.Auth.DeleteRoleViewModel
 @{
     ViewData["Title"] = "DeleteRole";
 }
@@ -9,9 +9,8 @@
     <div class="col-md-4">
         <form asp-action="DeleteRolePost" asp-controller="Role" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="RoleNames" value="" />
             <div class="form-group">
-                <select asp-for="SelectedRoleId" asp-items="Model.RoleNames"></select>
+                <select asp-for="SelectedRoleId" asp-items="@ViewBag.RoleNames"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Delete Role" class="btn btn-danger" />
@@ -24,4 +23,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
- *@

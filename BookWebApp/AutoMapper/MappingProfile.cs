@@ -6,6 +6,7 @@ using Entity.IBookService;
 using Entity.IAuthUserService;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
+using System.Security.Claims;
 namespace BookWebApp.AutoMapper
 {
     public class MappingProfile : Profile
@@ -92,7 +93,15 @@ namespace BookWebApp.AutoMapper
             //IAuthUserServiceRemoveFromRoleAsync to IAuthUserServiceFindByEmailAsync
             CreateMap<IAuthUserServiceRemoveFromRoleAsync, IAuthUserServiceFindByEmailAsync>();
             CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserServiceRemoveFromRoleAsync>();
+            //IAuthUserServiceGetAllUsersAsync to IAuthUserServiceFindByEmailAsync
+            CreateMap<IAuthUserServiceGetAllUsersAsync, IAuthUserServiceFindByEmailAsync>().ForMember(m => m.Roles, opt => opt.Ignore());
+			CreateMap<IAuthUserServiceFindByEmailAsync, IAuthUserServiceGetAllUsersAsync>().ForMember(m => m.Roles, opt => opt.Ignore());
+            //IAuthRoleServiceDeleteAsync to IAuthRoleServiceFindByIdAsync
+            CreateMap<IAuthRoleServiceDeleteAsync, IAuthRoleServiceFindByIdAsync>();
+            CreateMap<IAuthRoleServiceFindByIdAsync, IAuthRoleServiceDeleteAsync>();
 
-		}
-	}
+
+
+        }
+    }
 }

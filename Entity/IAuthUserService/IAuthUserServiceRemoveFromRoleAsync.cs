@@ -1,4 +1,4 @@
-﻿namespace Entity.IAuthUserRepository
+﻿namespace Entity.IAuthUserService
 {
 	public class IAuthUserServiceRemoveFromRoleAsync
 	{

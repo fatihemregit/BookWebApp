@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Data;
 using Entity.IAuthRoleRepository;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
@@ -69,9 +70,15 @@ namespace Business.Utils.AutoMapper
 			//IAuthUserServiceRemoveFromRoleAsync to IAuthUserRepositoryRemoveFromRoleAsync
 			CreateMap<IAuthUserServiceRemoveFromRoleAsync, IAuthUserRepositoryRemoveFromRoleAsync>();
 			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, IAuthUserServiceRemoveFromRoleAsync>();
+			//IAuthUserServiceGetUsersInRoleAsync to IAuthUserRepositoryGetUsersInRoleAsync
+			CreateMap<List<IAuthUserServiceGetUsersInRoleAsync>, List<IAuthUserRepositoryGetUsersInRoleAsync>>();
+			CreateMap<List<IAuthUserRepositoryGetUsersInRoleAsync>, List<IAuthUserServiceGetUsersInRoleAsync>>();
+			CreateMap<IAuthUserServiceGetUsersInRoleAsync, IAuthUserRepositoryGetUsersInRoleAsync>();
+			CreateMap<IAuthUserRepositoryGetUsersInRoleAsync, IAuthUserServiceGetUsersInRoleAsync>();
 
-			// IAuthRoleServiceCreateAsync to IAuthRoleRepositoryCreateAsync
-			CreateMap<IAuthRoleServiceCreateAsync, IAuthRoleRepositoryCreateAsync>();
+
+            // IAuthRoleServiceCreateAsync to IAuthRoleRepositoryCreateAsync
+            CreateMap<IAuthRoleServiceCreateAsync, IAuthRoleRepositoryCreateAsync>();
 			CreateMap<IAuthRoleRepositoryCreateAsync, IAuthRoleServiceCreateAsync>();
 			//IAuthRoleServiceDeleteAsync to IAuthRoleRepositoryDeleteAsync
 			CreateMap<IAuthRoleServiceDeleteAsync, IAuthRoleRepositoryDeleteAsync>();
@@ -84,6 +91,8 @@ namespace Business.Utils.AutoMapper
 			CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<IAuthRoleServiceGetAllRolesAsync>>();
 			CreateMap<IAuthRoleServiceGetAllRolesAsync, IAuthRoleRepositoryGetAllRolesAsync>();
 			CreateMap<IAuthRoleRepositoryGetAllRolesAsync, IAuthRoleServiceGetAllRolesAsync>();
+			//
+
 		}
 	}
 }

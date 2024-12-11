@@ -80,42 +80,48 @@ namespace BookWebApp.Controllers
 
 		}
 
-		//[Authorize(Roles = "role_delete")]
-		//[HttpGet]
-		//public IActionResult DeleteRole()
-		//{
-		//    DeleteRoleViewModel deleteRoleViewModel = new DeleteRoleViewModel();
-		//    deleteRoleViewModel.RoleNames = _roleManager.Roles.Select(r => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Value = r.Id.ToString(), Text = r.Name }).ToList();
-		//    return View(deleteRoleViewModel);
-		//}
+		[Authorize(Roles = "role_delete")]
+		[HttpGet]
+		public async Task<IActionResult> DeleteRole()
+		{
+			DeleteRoleViewModel deleteRoleViewModel = new DeleteRoleViewModel();
+			List<IAuthRoleServiceGetAllRolesAsync>? getAllRolesAsync = await _roleService.GetAllRolesAsync();
+			if (getAllRolesAsync is null)
+			{
+				return BadRequest("Sistemde kayıtlı rol olmadan rol silemezsiniz");
+			}
+			List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> RoleNames = (getAllRolesAsync).Select(r => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Value = r.Id.ToString(),Text = r.Name}).ToList();
+			ViewBag.RoleNames = RoleNames;
+			return View(deleteRoleViewModel);
+		}
 
-		//[Authorize(Roles = "role_delete")]
-		//[HttpPost("DeleteRole")]
-		//public async Task<IActionResult> DeleteRolePost(DeleteRoleViewModel deleteRoleViewModel)
-		//{
-		//    //deleting Role
-		//    //find a role with id which comes from deleteRoleViewModel
-		//    AppRole foundRole = await _roleManager.FindByIdAsync(deleteRoleViewModel.SelectedRoleId);
-		//    if (foundRole == null)
-		//    {
-		//        return BadRequest("Böyle bir Rol Yok!");
-		//    }
-		//    Console.WriteLine("========================================================");
-		//    Console.WriteLine("delete role post method for each");
-		//    Console.WriteLine();
-		//    IList<AppUser> usersWithFoundRoleName = await _userManager.GetUsersInRoleAsync(foundRole.Name);
-		//    if (usersWithFoundRoleName.Count > 0) 
-		//    {
-		//        return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
-		//    }
+		[Authorize(Roles = "role_delete")]
+		[HttpPost("DeleteRole")]
+		public async Task<IActionResult> DeleteRolePost(DeleteRoleViewModel deleteRoleViewModel)
+		{
 
-		//    await _roleManager.DeleteAsync(foundRole);
-		//    return RedirectToAction("Index", "User");
-		//}
+			//rolü id ile  bulalım 
+			IAuthRoleServiceFindByIdAsync? foundrolewithId = await _roleService.FindByIdAsync(deleteRoleViewModel.SelectedRoleId);
+			if (foundrolewithId is null)
+			{
+				return BadRequest("rol bulunamadı");
+			}
+			//bu rolün aktif olarak kullanılıp kullanılmadığını öğrenelim
+			List<IAuthUserServiceGetUsersInRoleAsync>? getUsersInRoleAsync = await _userService.GetUsersInRoleAsync(foundrolewithId.Name);
+			if (getUsersInRoleAsync is  not null)
+			{
+				//rol aktif olarak kullanılıyor
+				return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
+			}
+			//rol aktif olarak kullanılmıyor
+			//rol silme 
+			await _roleService.DeleteAsync(_mapper.Map<IAuthRoleServiceDeleteAsync>(foundrolewithId));
+			return RedirectToAction("Index", "User");
+		}
 
 
 
-		[Authorize(Roles = "role_set")]
+        [Authorize(Roles = "role_set")]
 		[HttpGet]
 		public async Task<IActionResult> SetRoleForUser(string userEmail = null)
 		{
@@ -188,63 +194,21 @@ namespace BookWebApp.Controllers
 			}
 			//burada kaldım
 			//roller ayarlandı ancak etkili olması için giriş çıkış yapılması gerekli(burası biraz sıkıntılı,bakılması lazım)
-			//AppUser user = await _userService.;
-			//if (user == foundUserbyEmail)
-			//{
-			//	await _signInManager.SignOutAsync();
-			//	await _signInManager.SignInAsync(foundUserbyEmail, true);
-			//}
-			//else
-			//{
-			//	await _signInManager.SignOutAsync();
-			//}
+			//hali hazırdaki kullanıcıyı bulalım
+			//şuan bu kod çok kötü bir kod düzenlenemesi lazım
+			string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+			IAuthUserServiceFindByEmailAsync localUserWithUserId = _mapper.Map<IAuthUserServiceFindByEmailAsync>((await _userService.GetAllUsersAsync()).Where(u => u.Id.ToString() == userId).SingleOrDefault());
+			if (localUserWithUserId == foundUserbyEmail)
+			{
+				await _signInManager.SignOutAsync();
+				await _signInManager.SignInAsync(_mapper.Map<AppUser>(foundUserbyEmail), true);
+			}
+			else
+			{
+				await _signInManager.SignOutAsync();
+			}
 			return RedirectToAction("Index", "User");
 
-
-
-			//kullanıcıyı bul
-			//view modelden gelen nesneyi foreach le ve gerekli işlemleri yap
-
-			//role atamasının gerçekleşmesi için gir çık yaptır
-
-			//user index e yönlendir
-
-			//Console.WriteLine("========================================================================");
-
-			//Console.WriteLine("userEmail is " + userEmail);
-
-			//AppUser foundUserbyEmail = await _userManager.FindByEmailAsync(userEmail);
-
-			//if (foundUserbyEmail is null)
-			//{
-			//	return NotFound("Kullanıcı bulunamadı");
-
-			//}
-
-
-			//foreach (SetRoleForUserViewModel setRoleViewModel in setRoleViewModels)
-			//{
-			//	if (setRoleViewModel.State)
-			//	{
-			//		await _userManager.AddToRoleAsync(foundUserbyEmail, setRoleViewModel.RoleName);
-			//	}
-			//	else
-			//	{
-			//		await _userManager.RemoveFromRoleAsync(foundUserbyEmail, setRoleViewModel.RoleName);
-			//	}
-			//}
-			////roller ayarlandı ancak etkili olması için giriş çıkış yapılması gerekli(burası biraz sıkıntılı,bakılması lazım)
-			//AppUser user = await _userManager.GetUserAsync(User);
-			//if (user == foundUserbyEmail)
-			//{
-			//	await _signInManager.SignOutAsync();
-			//	await _signInManager.SignInAsync(foundUserbyEmail, true);
-			//}
-			//else
-			//{
-			//	await _signInManager.SignOutAsync();
-			//}
-			return RedirectToAction("Index", "User");
 		}
 
 

@@ -1,4 +1,5 @@
-﻿using Entity.IAuthUserRepository;
+﻿using Data;
+using Entity.IAuthUserRepository;
 using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstracts.Auth
 {
-	public interface IAuthUserService
+    public interface IAuthUserService
 	{
 		Task<List<IAuthUserServiceGetAllUsersAsync>?> GetAllUsersAsync();
 		Task<IAuthUserServiceFindByEmailAsync?> FindByEmailAsync(string email);
@@ -25,8 +26,9 @@ namespace Business.Abstracts.Auth
 		Task AddToRoleAsync(IAuthUserServiceAddToRoleAsync user, string roleName);
 
 		Task RemoveFromRoleAsync(IAuthUserServiceRemoveFromRoleAsync user, string roleName);
+        Task<List<IAuthUserServiceGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName);
 
 
-	}
+    }
 
 }

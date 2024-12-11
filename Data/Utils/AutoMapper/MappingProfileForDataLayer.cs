@@ -58,8 +58,14 @@ namespace Data.Utils.AutoMapper
 			//IAuthUserRepositoryGetRolesAsync to AppUser
 			CreateMap<IAuthUserRepositoryGetRolesAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryGetRolesAsync>();
-			//IAuthUserRepositoryIsInRoleAsync to AppUser
-			CreateMap<IAuthUserRepositoryIsInRoleAsync, AppUser>();
+			//IAuthUserRepositoryGetUsersInRoleAsync to AppUser
+			CreateMap<List<IAuthUserRepositoryGetUsersInRoleAsync>, List<AppUser>>();
+			CreateMap<List<AppUser>, List<IAuthUserRepositoryGetUsersInRoleAsync>>();
+			CreateMap<IAuthUserRepositoryGetUsersInRoleAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryGetUsersInRoleAsync>();
+
+            //IAuthUserRepositoryIsInRoleAsync to AppUser
+            CreateMap<IAuthUserRepositoryIsInRoleAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryIsInRoleAsync>();
 			//IAuthUserRepositoryRemoveFromRoleAsync to AppUser
 			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, AppUser>();

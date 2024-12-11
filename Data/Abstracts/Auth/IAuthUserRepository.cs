@@ -1,9 +1,10 @@
-﻿using Entity.IAuthUserRepository;
+﻿using Entity.Auth;
+using Entity.IAuthUserRepository;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Abstracts.Auth
 {
-	public interface IAuthUserRepository
+    public interface IAuthUserRepository
 	{
 
 		Task<List<IAuthUserRepositoryGetAllUsersAsync>?> GetAllUsersAsync();
@@ -20,7 +21,10 @@ namespace Data.Abstracts.Auth
 
 		Task RemoveFromRoleAsync(IAuthUserRepositoryRemoveFromRoleAsync user, string roleName);
 
-	}
+		Task<List<IAuthUserRepositoryGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName);
+
+
+    }
 
 
 }
