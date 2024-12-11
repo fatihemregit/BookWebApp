@@ -107,18 +107,15 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ### Gün 11(11.12.2024)
 - AuthUserService de GetUsersInRoleAsync metodunun olmadýðý farkedildi.Ve buna baðlý olarak düzenlemeler yapýldý.
 - Role Controller yeni mimariye uygun hale getirildi
-
+- Migration klasörü ana projeden data projesine taþýndý(Data/EfCore/Migrations)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
  ### Yapýlacaklar
-- RoleController ýn yeni mimariye uygun hale getirilmesi(SetRoleForUser post metodu ve delete role )
-- DeleteRoleViewModel hata veriyor(þuan hata vermesin diye baðlantýlý yerlerini yorum satýrýna aldým)
 - çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
 ### Geliþtirilebilecek Yerler
-- Migrationlarýn ana projeye deðil data projesine taþýnmasý(https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli)
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
 -Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)
 - BookRepository.cs(namespace Data.EfCore) deki not

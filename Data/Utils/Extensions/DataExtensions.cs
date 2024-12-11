@@ -32,7 +32,9 @@ namespace Data.Utils.Extensions
         {
 			services.AddDbContext<ApplicationDbContext>((options) =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+				options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                    x => x.MigrationsAssembly("Data")
+                    );
 			});
 		}
 
