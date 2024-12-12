@@ -167,6 +167,7 @@ namespace BookWebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SetRoleForUser(List<SetRoleForUserViewModel> setRoleViewModels, string userEmail)
 		{
+			//role atama hata veriyor
 
 			Console.WriteLine("========================================================================");
 

@@ -8,6 +8,9 @@
 
 		public IList<string> Roles { get; set; }//belki lazım olabilir
 
+		public string SecurityStamp { get; set; }
+		public string PasswordHash { get; set; }
+
 	}
 
 }

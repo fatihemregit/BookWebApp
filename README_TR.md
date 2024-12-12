@@ -109,6 +109,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Role Controller yeni mimariye uygun hale getirildi
 - Migration klasörü ana projeden data projesine taþýndý(Data/EfCore/Migrations)
 - Ana Projede Automapper,Auth ve Extensions klasörlerinin Utils Altýna Taþýnamasý
+### Gün 12(12.12.2024)
+- Login olma problemi vardý,çözüldü.(securitystamp ve passwordhash özellikleri service ve repository sýnýflarýnda olmadýðý için çalýþmýyordu.gerekli düzeltmeler yapýldý)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -123,3 +125,4 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 - AuthUserRepository.cs(namespace Data.EfCore.Auth) deki FindByEmailAsync deki not
 - Data katmanýnda ki null data dönünce çalýþacak kodlarýn iþ katmanýna taþýnmasýna gerek olup olmasýnýn tartýþýlmasý
 - tüm Identity iþlemlerini diðer katmanlara daðýtma(https://www.reddit.com/r/csharp/comments/98gj14/how_to_implement_identity_in_an_nlayer_solution/?rdt=52901)
+- Rol atama sistemi hata veriyor onun çözülmesi

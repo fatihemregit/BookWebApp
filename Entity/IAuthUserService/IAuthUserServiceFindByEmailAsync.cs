@@ -7,7 +7,9 @@
 
         public string PasswordHash { get; set; }
 
-        public string Email { get; set; }
+		public string SecurityStamp { get; set; }
+
+		public string Email { get; set; }
 		public IList<string> Roles { get; set; }//belki lazım olabilir
 
 
