@@ -39,12 +39,12 @@ namespace BookWebApp.Utils.AutoMapper
 
             //CreateRoleViewModel to AppRole
             CreateMap<AppRole, CreateRoleViewModel>();
-			CreateMap<CreateRoleViewModel,AppRole >();
+			CreateMap<CreateRoleViewModel,AppRole>();
 
 
             //IBookServiceGetAllBook to BookViewModelForList
-            CreateMap<List<IBookServiceGetAllBook>, List<BookViewModelForList>>();
-            CreateMap<List<BookViewModelForList>, List<IBookServiceGetAllBook>>();
+            //CreateMap<List<IBookServiceGetAllBook>, List<BookViewModelForList>>();
+            //CreateMap<List<BookViewModelForList>, List<IBookServiceGetAllBook>>();
 			CreateMap<IBookServiceGetAllBook, BookViewModelForList>();
 			CreateMap<BookViewModelForList, IBookServiceGetAllBook>();
 

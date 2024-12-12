@@ -33,6 +33,7 @@ namespace BookWebApp.Controllers
         {
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
             //oturum açan kullanıcıyı bulma
+            _logger.LogCritical("Index tetiklendi");
             var user = await _userManager.GetUserAsync(User);
             //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
             //oturum açan kullanıcı yoksa yapılacaklar

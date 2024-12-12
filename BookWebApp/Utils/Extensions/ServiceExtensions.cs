@@ -3,6 +3,7 @@ using Entity.Auth;
 using Data.EfCore.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BookWebApp.Utils.AutoMapper;
 
 namespace BookWebApp.Utils.Extensions
 {
@@ -44,6 +45,11 @@ namespace BookWebApp.Utils.Extensions
                 _.AccessDeniedPath = new PathString("/User/AccessDenied");
             }
             );
+        }
+
+        public static void setAutoMapperForMainLayer(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
     }

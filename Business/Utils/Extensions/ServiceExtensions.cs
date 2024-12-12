@@ -20,9 +20,9 @@ namespace Business.Utils.Extensions
         }
 		public static void setInterfaceConcretesForBusinessLayer(this IServiceCollection services)
         {
-            services.AddScoped<IBookService,BookService>();
             services.AddScoped<IAuthUserService, AuthUserService>();
             services.AddScoped<IAuthRoleService, AuthRoleService>();
+            services.AddScoped<IBookService,BookService>();
         }
 
 

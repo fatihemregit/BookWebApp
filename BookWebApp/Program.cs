@@ -14,17 +14,19 @@ builder.Services.ConfigureSqlContextForDataLayer(builder.Configuration);
 builder.Services.ConfigureIdentity();
 //cookie config
 builder.Services.ConfigureCookie();
+//dependency injection for Data Layer
+builder.Services.setInterfaceConcretesForDataLayer();
+//dependency injection for Business Layer
+builder.Services.setInterfaceConcretesForBusinessLayer();
+
 //automapper for main project(this project)
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.setAutoMapperForMainLayer();
 //automapper for Data layer
 builder.Services.setAutoMapperForDataLayer();
 //automapper for Business layer
 builder.Services.setAutoMapperForBusinessLayer();
 
-//dependency injection for Data Layer
-builder.Services.setInterfaceConcretesForDataLayer();
-//dependency injection for Business Layer
-builder.Services.setInterfaceConcretesForBusinessLayer();
+
 var app = builder.Build();
 
 
@@ -46,7 +48,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Book}/{action=Index}/"
+    pattern: "{controller=Book}/{action=Index}/{id?}"
     );
 
 app.Run();

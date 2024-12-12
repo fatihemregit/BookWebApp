@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entity.Auth.AppUserViewModel>
+﻿@model List<Entity.Auth.AppUserViewModel>
 
 @{
 	ViewData["Title"] = "Index";
@@ -13,10 +13,10 @@
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.UserName)
+				@Html.DisplayNameFor(model => model.First().UserName)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Email)
+				@Html.DisplayNameFor(model => model.First().Email)
 			</th>
 			@* <th>
 			@Html.DisplayNameFor(model => model.Sifre)

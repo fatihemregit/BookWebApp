@@ -25,8 +25,8 @@ namespace Data.Utils.AutoMapper
 			CreateMap<BookDto, IBookRepositoryGetOneBookById>();
 			CreateMap<IBookRepositoryGetOneBookById, BookDto>();
 			//GetAllBook to BookDto
-			CreateMap<List<BookDto>, List<IBookRepositoryGetAllBook>>();
-			CreateMap<List<IBookRepositoryGetAllBook>, List<BookDto>>();
+			//CreateMap<List<BookDto>, List<IBookRepositoryGetAllBook>>();
+			//CreateMap<List<IBookRepositoryGetAllBook>, List<BookDto>>();
 			CreateMap<BookDto, IBookRepositoryGetAllBook>();
 			CreateMap<IBookRepositoryGetAllBook, BookDto>();
 			//EditOneBookById to GetOneBookById
@@ -51,16 +51,16 @@ namespace Data.Utils.AutoMapper
 			CreateMap<IAuthUserRepositoryFindByNameAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryFindByNameAsync>();
 			//IAuthUserRepositoryGetAllUsers to AppUser
-			CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>, List<AppUser>>();
-			CreateMap<List<AppUser>, List<IAuthUserRepositoryGetAllUsersAsync>>();
+			//CreateMap<List<IAuthUserRepositoryGetAllUsersAsync>, List<AppUser>>();
+			//CreateMap<List<AppUser>, List<IAuthUserRepositoryGetAllUsersAsync>>();
 			CreateMap<IAuthUserRepositoryGetAllUsersAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryGetAllUsersAsync>();
 			//IAuthUserRepositoryGetRolesAsync to AppUser
 			CreateMap<IAuthUserRepositoryGetRolesAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryGetRolesAsync>();
 			//IAuthUserRepositoryGetUsersInRoleAsync to AppUser
-			CreateMap<List<IAuthUserRepositoryGetUsersInRoleAsync>, List<AppUser>>();
-			CreateMap<List<AppUser>, List<IAuthUserRepositoryGetUsersInRoleAsync>>();
+			//CreateMap<List<IAuthUserRepositoryGetUsersInRoleAsync>, List<AppUser>>();
+			//CreateMap<List<AppUser>, List<IAuthUserRepositoryGetUsersInRoleAsync>>();
 			CreateMap<IAuthUserRepositoryGetUsersInRoleAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryGetUsersInRoleAsync>();
 
@@ -82,8 +82,8 @@ namespace Data.Utils.AutoMapper
 			CreateMap<IAuthRoleRepositoryFindByIdAsync, AppRole>();
 			CreateMap<AppRole, IAuthRoleRepositoryFindByIdAsync>();
 			//IAuthRoleRepositoryGetAllRolesAsync to AppRole
-			CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<AppRole>>();
-			CreateMap<List<AppRole>, List<IAuthRoleRepositoryGetAllRolesAsync>>();
+			//CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<AppRole>>();
+			//CreateMap<List<AppRole>, List<IAuthRoleRepositoryGetAllRolesAsync>>();
 			CreateMap<IAuthRoleRepositoryGetAllRolesAsync, AppRole>();
 			CreateMap<AppRole, IAuthRoleRepositoryGetAllRolesAsync>();
 

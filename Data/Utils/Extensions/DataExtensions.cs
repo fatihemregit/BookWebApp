@@ -24,9 +24,9 @@ namespace Data.Utils.Extensions
         
         public static void setInterfaceConcretesForDataLayer(this IServiceCollection services)
         {
-			services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthUserRepository, AuthUserRepository>();
             services.AddScoped<IAuthRoleRepository, AuthRoleRepository>();
+			services.AddScoped<IBookRepository, BookRepository>();
 		}
 		public static void ConfigureSqlContextForDataLayer(this IServiceCollection services, IConfiguration configuration)
         {

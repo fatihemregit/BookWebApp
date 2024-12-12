@@ -19,6 +19,8 @@ namespace BookWebApp.Controllers
 		private readonly RoleManager<AppRole> _roleManager;
 		private readonly IMapper _mapper;
 		private readonly IAuthUserService _userService;
+		private readonly ILogger<UserController> _logger;
+
 
 
 		/* username:email:password
@@ -26,15 +28,16 @@ namespace BookWebApp.Controllers
          *  
          */
 
-		public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, AuthUserService userService)
-		{
-			_userManager = userManager;
-			_mapper = mapper;
-			_signInManager = signInManager;
-			_roleManager = roleManager;
-			_userService = userService;
-		}
-		[Authorize(Roles = "user_list")]
+		public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IAuthUserService userService, ILogger<UserController> logger)
+        {
+            _userManager = userManager;
+            _mapper = mapper;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _userService = userService;
+            _logger = logger;
+        }
+        [Authorize(Roles = "user_list")]
 		public async Task<IActionResult> Index()
 		{
 			//TAMAM
@@ -59,7 +62,6 @@ namespace BookWebApp.Controllers
 			}
 
 			//yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş
-
 			return View(_mapper.Map<List<AppUserViewModel>>(await _userService.GetAllUsersAsync()));
 		}
 
@@ -114,22 +116,25 @@ namespace BookWebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginViewModel loginViewModel)
 		{
+			//burada kaldım
+            Console.WriteLine("=======================Login post çalıştı========");
 			//TAMAM
 			if (ModelState.IsValid)
 			{
+                Console.WriteLine("model valid");
 				AppUser founduser = _mapper.Map<AppUser>(await _userService.FindByEmailAsync(loginViewModel.Email));
-
 				if (TempData["returnUrl"] is null)
 				{
 					TempData["returnUrl"] = "/";
 
 				}
-
 				if (founduser != null)
 				{
+                    Console.WriteLine("kullanıcı bulundu");
 					//İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
 					await _signInManager.SignOutAsync();
 					Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(founduser, loginViewModel.Password, loginViewModel.Persistent, false);
+                    Console.WriteLine($"Login result is : {result.Succeeded}");
 					if (result.Succeeded)
 						return Redirect(TempData["returnUrl"].ToString());
 				}
@@ -139,7 +144,6 @@ namespace BookWebApp.Controllers
 					ModelState.AddModelError("NotUser2", "E-posta veya şifre yanlış.");
 				}
 			}
-
 			return View(loginViewModel);
 		}
 
