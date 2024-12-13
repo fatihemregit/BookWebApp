@@ -27,7 +27,13 @@ namespace Data.EfCore.Auth
 
 		public async Task AddToRoleAsync(IAuthUserRepositoryAddToRoleAsync user, string roleName)
 		{
-			await _userManager.AddToRoleAsync(_mapper.Map<AppUser>(user),roleName);
+            Console.WriteLine($"AuthUserRepository/AddToRoleAsync metodu çalıştı ( {roleName} rolü için )");
+			AppUser foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
+			IdentityResult identityResult =  await _userManager.AddToRoleAsync(foundUser,roleName);
+			foreach (var item in identityResult.Errors)
+			{
+                Console.WriteLine($"Hata Kodu :{item.Code}\nhata açıklaması: {item.Description}");
+			}
 		}
 
 		public async Task<IdentityResult> CreateAsync(IAuthUserRepositoryCreateAsync user, string password)

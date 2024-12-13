@@ -12,11 +12,9 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- AuthUserRepository ve IAuthUserRepository sýnýflarý yazýldý
-- AuthUserService ve IAuthUserService yazýldý
-- UserController ýn yeni mimariye uygun hale getirilmesi (IAuthUserService in ana projeye uygulanmasý)
-- Readme düzenlemesi
-- Role sistemi geçiçi olarak devredýþý býrakýldý
+- Rol Atama sistemindeki hatanýn çözülmesi
+- Loglama sisteminde ufak deðiþiklik
+- Readme Düzenlemesi
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -111,6 +109,13 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Ana Projede Automapper,Auth ve Extensions klasörlerinin Utils Altýna Taþýnamasý
 ### Gün 12(12.12.2024)
 - Login olma problemi vardý,çözüldü.(securitystamp ve passwordhash özellikleri service ve repository sýnýflarýnda olmadýðý için çalýþmýyordu.gerekli düzeltmeler yapýldý)
+- Rol Atama sisteminde hata olduðu farkedildi.Çözülmeye çalýþýldý Ancak çözülemedi
+### Gün 13(13.12.2024)
+- Rol atama sistemindeki hatanýn çözülmesi(AuthUserRepository/AddToRoleAsync metodu)
+(hatanýn olma sebebi paramatre objesini AppUser a maplemeye çalýþmamýz.Bunu yapamýyormuþuz.Çýkarýmlarýma göre Ef core izin vermiyor.
+ Böyle bir durumda paramtredeki objenin id deðeri ile FindByIdAsync metodu ile AppUser nesnesi alýp onu kullanmak
+)
+- Loglama sisteminde ufak deðiþiklik(Microsoft.EntityFrameworkCore.Database.Command loglarýnýn warning e çekilmesi(appsettings.json).Hata Takibinde konsola bastýðýmýz deðerlerde takibi zorlaþtýrdýðý için.)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -125,4 +130,3 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 - AuthUserRepository.cs(namespace Data.EfCore.Auth) deki FindByEmailAsync deki not
 - Data katmanýnda ki null data dönünce çalýþacak kodlarýn iþ katmanýna taþýnmasýna gerek olup olmasýnýn tartýþýlmasý
 - tüm Identity iþlemlerini diðer katmanlara daðýtma(https://www.reddit.com/r/csharp/comments/98gj14/how_to_implement_identity_in_an_nlayer_solution/?rdt=52901)
-- Rol atama sistemi hata veriyor onun çözülmesi

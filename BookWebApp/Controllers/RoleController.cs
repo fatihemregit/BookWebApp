@@ -144,7 +144,7 @@ namespace BookWebApp.Controllers
 			//bulunan kullanıcının rolleri ile sistemdeki tüm rolleri karşılaştırarak viewde tikli olup olmamasını belirleyelim
 			//eğer kullanıcının hiç rolü yoksa herhangi bir karşılaştırma yapmaya gerek yok
 			List<SetRoleForUserViewModel> setRoleForUserViewModels = new List<SetRoleForUserViewModel>();
-			if (foundUser is null)
+			if (foundUserRoles is null)
 			{
 				//eğer kullanıcının hiç rolü yoksa herhangi bir karşılaştırma yapmaya gerek yok
 				allRoles.ForEach(r =>
@@ -170,8 +170,7 @@ namespace BookWebApp.Controllers
 			//role atama hata veriyor
 
 			Console.WriteLine("========================================================================");
-
-			Console.WriteLine("userEmail is " + userEmail);
+			Console.WriteLine("RoleController/SetRoleForUser Post metodu çalıştı");
 			//mail ile kullanıcıyı bulalım
 			IAuthUserServiceFindByEmailAsync? foundUserbyEmail = await _userService.FindByEmailAsync(userEmail);
 			if (foundUserbyEmail is null)

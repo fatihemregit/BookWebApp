@@ -35,7 +35,9 @@ namespace Data.Utils.Extensions
 				options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                     x => x.MigrationsAssembly("Data")
                     );
-			});
+                //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+            });
 		}
 
 

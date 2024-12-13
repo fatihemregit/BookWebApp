@@ -91,6 +91,7 @@ namespace Business.Concretes.Auth
 
 		public async Task AddToRoleAsync(IAuthUserServiceAddToRoleAsync user, string roleName)
 		{
+			Console.WriteLine("AuthUserService/AddToRoleAsync metodu çalıştı");
 			await _userRepository.AddToRoleAsync(_mapper.Map<IAuthUserRepositoryAddToRoleAsync>(user), roleName);
 		}
 

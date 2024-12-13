@@ -50,5 +50,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Book}/{action=Index}/{id?}"
     );
+app.MapControllerRoute(
+    name : "myTestRoute",
+    pattern:"test/add",
+    defaults : new { controller = "MyTest", action = "AddRoleAsync" }
+	);
+
 
 app.Run();
