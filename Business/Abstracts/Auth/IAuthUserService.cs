@@ -1,4 +1,6 @@
 ﻿using Data;
+using Entity;
+using Entity.Auth;
 using Entity.IAuthUserRepository;
 using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Identity;
@@ -27,6 +29,15 @@ namespace Business.Abstracts.Auth
 
 		Task RemoveFromRoleAsync(IAuthUserServiceRemoveFromRoleAsync user, string roleName);
         Task<List<IAuthUserServiceGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName);
+
+		Task<Exception> SignIn(IAuthUserServiceSignIn user);
+		
+		Task<Exception> Login(IAuthUserServiceLogin user);
+		Task Logout();
+
+		Task<Exception> DeleteUser(string userName);
+
+		Task<bool> checkUserIsLogin(string userName);
 
 
     }

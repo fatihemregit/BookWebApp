@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data;
+using Entity.Auth;
 using Entity.IAuthRoleRepository;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
@@ -91,8 +92,17 @@ namespace Business.Utils.AutoMapper
 			//CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<IAuthRoleServiceGetAllRolesAsync>>();
 			CreateMap<IAuthRoleServiceGetAllRolesAsync, IAuthRoleRepositoryGetAllRolesAsync>();
 			CreateMap<IAuthRoleRepositoryGetAllRolesAsync, IAuthRoleServiceGetAllRolesAsync>();
-			//
+			//ÖNEMLİ YER
+			//IAuthUserServiceSignIn to IAuthUserRepositoryCreateAsync
+			CreateMap<IAuthUserServiceSignIn, IAuthUserRepositoryCreateAsync>();
+			CreateMap<IAuthUserRepositoryCreateAsync, IAuthUserServiceSignIn>();
+			//IAuthUserRepositoryFindByNameAsync to IAuthUserRepositoryDeleteAsync
+			CreateMap<IAuthUserRepositoryFindByNameAsync, IAuthUserRepositoryDeleteAsync>();
+			CreateMap<IAuthUserRepositoryDeleteAsync, IAuthUserRepositoryFindByNameAsync>();
 
-		}
-	}
+			//IAuthUserRepositoryFindByEmailAsync to AppUser
+			CreateMap<IAuthUserRepositoryFindByEmailAsync, AppUser>();
+			CreateMap<AppUser, IAuthUserRepositoryFindByEmailAsync>();
+        }
+    }
 }

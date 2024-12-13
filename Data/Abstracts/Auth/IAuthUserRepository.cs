@@ -16,12 +16,14 @@ namespace Data.Abstracts.Auth
 		Task<IList<string>?> GetRolesAsync(IAuthUserRepositoryGetRolesAsync user);
 
 		Task<IdentityResult> CreateAsync(IAuthUserRepositoryCreateAsync user, string password);
-		Task<IdentityResult> DeleteAsync(IAuthUserRepositoryDeleteAsync user);
+		Task<IdentityResult?> DeleteAsync(IAuthUserRepositoryDeleteAsync user);
 		Task AddToRoleAsync(IAuthUserRepositoryAddToRoleAsync user,string roleName);
 
 		Task RemoveFromRoleAsync(IAuthUserRepositoryRemoveFromRoleAsync user, string roleName);
 
 		Task<List<IAuthUserRepositoryGetUsersInRoleAsync>?> GetUsersInRoleAsync(string roleName);
+
+		Task<AppUser?> FindByEmailAsyncAndReturnAppUser(string email);
 
 
     }

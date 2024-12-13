@@ -16,8 +16,9 @@ namespace Data.EfCore.Auth
 	{
 
 		private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-		private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
 		public AuthUserRepository(UserManager<AppUser> userManager, IMapper mapper)
 		{
@@ -42,9 +43,13 @@ namespace Data.EfCore.Auth
 			return result;
 		}
 
-		public async Task<IdentityResult> DeleteAsync(IAuthUserRepositoryDeleteAsync user)
+		public async Task<IdentityResult?> DeleteAsync(IAuthUserRepositoryDeleteAsync user)
 		{
-			AppUser foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
+			AppUser? foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
+			if(foundUser == null)
+			{
+				return null;
+			}
 			IdentityResult result = await _userManager.DeleteAsync(foundUser);
 			return result;
 		}
@@ -63,8 +68,18 @@ namespace Data.EfCore.Auth
 			return findByEmailAsync;
 		}
 
+        public async Task<AppUser?> FindByEmailAsyncAndReturnAppUser(string email)
+        {
+			AppUser? foundUser =  await _userManager.FindByEmailAsync(email);
+			if (foundUser is null)
+			{
+				return null;
+			}
+			return foundUser;
 
-		public async Task<IAuthUserRepositoryFindByNameAsync?> FindByNameAsync(string userName)
+        }
+
+        public async Task<IAuthUserRepositoryFindByNameAsync?> FindByNameAsync(string userName)
 		{
 			AppUser? foundappUser = await _userManager.FindByNameAsync(userName);
 			if (foundappUser is null)

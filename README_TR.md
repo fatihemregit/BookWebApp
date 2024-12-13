@@ -12,9 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Rol Atama sistemindeki hatanýn çözülmesi
-- Loglama sisteminde ufak deðiþiklik
-- Readme Düzenlemesi
+- User Controllerdeki tüm iþ kurallarýnýn Businesstaki User service taþýnmasý
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -116,6 +114,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
  Böyle bir durumda paramtredeki objenin id deðeri ile FindByIdAsync metodu ile AppUser nesnesi alýp onu kullanmak
 )
 - Loglama sisteminde ufak deðiþiklik(Microsoft.EntityFrameworkCore.Database.Command loglarýnýn warning e çekilmesi(appsettings.json).Hata Takibinde konsola bastýðýmýz deðerlerde takibi zorlaþtýrdýðý için.)
+- User Controllerdeki tüm iþ kurallarýnýn Businesstaki User service taþýnmasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

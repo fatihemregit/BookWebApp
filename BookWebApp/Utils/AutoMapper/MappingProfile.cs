@@ -8,6 +8,7 @@ using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
 using System.Security.Claims;
 using BookWebApp.Controllers;
+using Business;
 namespace BookWebApp.Utils.AutoMapper
 {
     public class MappingProfile : Profile
@@ -100,6 +101,14 @@ namespace BookWebApp.Utils.AutoMapper
             //IAuthRoleServiceDeleteAsync to IAuthRoleServiceFindByIdAsync
             CreateMap<IAuthRoleServiceDeleteAsync, IAuthRoleServiceFindByIdAsync>();
             CreateMap<IAuthRoleServiceFindByIdAsync, IAuthRoleServiceDeleteAsync>();
+
+            //önemli yer
+            //IAuthUserServiceSignIn to AppUserViewModel
+            CreateMap<IAuthUserServiceSignIn, AppUserViewModel>();
+            CreateMap<AppUserViewModel, IAuthUserServiceSignIn>();
+            //IAuthUserServiceLogin to LoginViewModel
+            CreateMap<IAuthUserServiceLogin, LoginViewModel>();
+            CreateMap<LoginViewModel, IAuthUserServiceLogin>();
 
         }
     }

@@ -18,7 +18,5 @@ namespace Entity.Auth
         public string Sifre { get; set; }
         public IList<string> Roles { get; set; }
 
-
-
     }
 }
