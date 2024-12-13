@@ -32,8 +32,11 @@ namespace Data.Utils.AutoMapper
 			//EditOneBookById to GetOneBookById
 			CreateMap<IBookRepositoryEditOneBookById, IBookRepositoryGetOneBookById>();
 			CreateMap<IBookRepositoryGetOneBookById, IBookRepositoryEditOneBookById>();
-			//CreateOneBook to BookDto
-			CreateMap<IBookRepositoryCreateOneBook, BookDto>();
+			//IBookRepositoryEditOneBookById to BookDto
+			CreateMap<IBookRepositoryEditOneBookById, BookDto>();
+			CreateMap<BookDto, IBookRepositoryEditOneBookById>();
+            //CreateOneBook to BookDto
+            CreateMap<IBookRepositoryCreateOneBook, BookDto>();
 			CreateMap<BookDto, IBookRepositoryCreateOneBook>();
 			//IAuthUserRepositoryAddToRoleAsync to AppUser
 			CreateMap<IAuthUserRepositoryAddToRoleAsync, AppUser>();

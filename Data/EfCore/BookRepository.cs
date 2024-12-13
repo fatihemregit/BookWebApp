@@ -45,21 +45,35 @@ namespace Data.EfCore
 				return null;
 			}
 			await _context.BookDtos.AddAsync(_mapper.Map<BookDto>(Book));
+			_context.SaveChanges();
 			return Book;
 		}
 
 		public async Task<IBookRepositoryEditOneBookById?> editOneBookById(int id, IBookRepositoryEditOneBookById Book)
 		{
-			IBookRepositoryGetOneBookById foundGetOneBookById = await getOneBookById(id);
-			if (foundGetOneBookById is null)
-			{
+			//IBookRepositoryGetOneBookById foundGetOneBookById = await getOneBookById(id);
+			//if (foundGetOneBookById is null)
+			//{
+			//	return null;
+			//}
+			//foundGetOneBookById.Name = Book.Name;
+			//foundGetOneBookById.Writer = Book.Writer;
+			//foundGetOneBookById.Price = Book.Price;
+			//_context.BookDtos.Update(_mapper.Map<BookDto>(foundGetOneBookById));
+			//return _mapper.Map<IBookRepositoryEditOneBookById>(foundGetOneBookById);
+			BookDto foundBookDto = await _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefaultAsync();
+			if (foundBookDto is null)
+			{ 
 				return null;
 			}
-			foundGetOneBookById.Name = Book.Name;
-			foundGetOneBookById.Writer = Book.Writer;
-			foundGetOneBookById.Price = Book.Price;
-			_context.BookDtos.Update(_mapper.Map<BookDto>(foundGetOneBookById));
-			return _mapper.Map<IBookRepositoryEditOneBookById>(foundGetOneBookById);
+			//Hayır,automapper ile yapmayı deneme.çalışmıyor :(
+			foundBookDto.Name = Book.Name;
+			foundBookDto.Writer = Book.Writer;
+			foundBookDto.Price = Book.Price;
+			_context.BookDtos.Update(foundBookDto);
+			_context.SaveChanges();
+			return _mapper.Map<IBookRepositoryEditOneBookById>(foundBookDto);
+
 		}
 
 		public async Task<IBookRepositoryGetOneBookById?> getOneBookById(int id)
@@ -78,13 +92,12 @@ namespace Data.EfCore
 
 		public async Task deleteOneBookById(int id)
 		{
-			IBookRepositoryGetOneBookById? foundGetOneBookById = await getOneBookById(id);
-			if (foundGetOneBookById is null)
+
+			BookDto foundBookDto = await _context.BookDtos.Where(bd => bd.Id == id).SingleOrDefaultAsync();
+			if (foundBookDto is null)
 			{
-				//burada ne yapabiliriz(bool dönebiliriz)
 				return;
 			}
-			BookDto foundBookDto = _mapper.Map<BookDto>(foundGetOneBookById);
 			foundBookDto.isDeleted = true;
 			_context.SaveChanges();
 		}

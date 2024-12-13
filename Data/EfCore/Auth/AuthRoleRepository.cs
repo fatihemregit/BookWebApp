@@ -36,7 +36,8 @@ namespace Data.EfCore.Auth
 
 		public async Task DeleteAsync(IAuthRoleRepositoryDeleteAsync role)
 		{
-			await _roleManager.DeleteAsync(_mapper.Map<AppRole>(role));
+			AppRole appRole = await _roleManager.FindByIdAsync(role.Id.ToString());
+			await _roleManager.DeleteAsync(appRole);
 		}
 
 		public async Task<IAuthRoleRepositoryFindByIdAsync?> FindByIdAsync(string roleId)

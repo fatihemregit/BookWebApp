@@ -44,7 +44,8 @@ namespace Data.EfCore.Auth
 
 		public async Task<IdentityResult> DeleteAsync(IAuthUserRepositoryDeleteAsync user)
 		{
-			IdentityResult result = await _userManager.DeleteAsync(_mapper.Map<AppUser>(user));
+			AppUser foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
+			IdentityResult result = await _userManager.DeleteAsync(foundUser);
 			return result;
 		}
 
@@ -122,7 +123,8 @@ namespace Data.EfCore.Auth
 
 		public async Task RemoveFromRoleAsync(IAuthUserRepositoryRemoveFromRoleAsync user, string roleName)
 		{
-			await _userManager.RemoveFromRoleAsync(_mapper.Map<AppUser>(user),roleName);
+			AppUser foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
+			await _userManager.RemoveFromRoleAsync(foundUser,roleName);
 		}
 
     }

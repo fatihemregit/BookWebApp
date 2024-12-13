@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Entity.Auth;
-using BookWebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Data.EfCore.Context;

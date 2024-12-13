@@ -137,9 +137,9 @@ namespace BookWebApp.Controllers
 
 		[Authorize(Roles = "book_delete")]
         [HttpPost("Delete/{id:int}")]
-        public IActionResult DeletePost([FromRoute] int id)
+        public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
-            _bookService.deleteOneBookById(id);
+            await _bookService.deleteOneBookById(id);
             return RedirectToAction("Index", "Book");
         }
 
