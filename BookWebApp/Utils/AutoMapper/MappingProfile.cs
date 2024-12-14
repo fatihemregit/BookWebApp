@@ -109,6 +109,9 @@ namespace BookWebApp.Utils.AutoMapper
             //IAuthUserServiceLogin to LoginViewModel
             CreateMap<IAuthUserServiceLogin, LoginViewModel>();
             CreateMap<LoginViewModel, IAuthUserServiceLogin>();
+            //IAuthUserServiceIsInRoleAsync to AppUser
+            CreateMap<IAuthUserServiceIsInRoleAsync, AppUser>();
+            CreateMap<AppUser, IAuthUserServiceIsInRoleAsync>();
 
         }
     }

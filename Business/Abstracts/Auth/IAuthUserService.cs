@@ -39,6 +39,8 @@ namespace Business.Abstracts.Auth
 
 		Task<bool> checkUserIsLogin(string userName);
 
+		Task<IAuthUserServiceFindLocalUserwithUserName?> findLocalUserwithUserName(string userName);
+
 
     }
 

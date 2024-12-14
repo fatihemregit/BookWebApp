@@ -103,6 +103,10 @@ namespace Business.Utils.AutoMapper
 			//IAuthUserRepositoryFindByEmailAsync to AppUser
 			CreateMap<IAuthUserRepositoryFindByEmailAsync, AppUser>();
 			CreateMap<AppUser, IAuthUserRepositoryFindByEmailAsync>();
+
+			//IAuthUserServiceFindLocalUserwithUserName to  IAuthUserRepositoryFindByNameAsync
+			CreateMap<IAuthUserServiceFindLocalUserwithUserName, IAuthUserRepositoryFindByNameAsync>();
+			CreateMap<IAuthUserRepositoryFindByNameAsync, IAuthUserServiceFindLocalUserwithUserName>();
         }
     }
 }

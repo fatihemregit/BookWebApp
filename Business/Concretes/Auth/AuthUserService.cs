@@ -216,5 +216,22 @@ namespace Business.Concretes.Auth
             }
             return false;
         }
+
+        public async Task<IAuthUserServiceFindLocalUserwithUserName?> findLocalUserwithUserName(string userName)
+        {
+            if (userName is null)
+            { 
+                return null;
+            }
+
+            IAuthUserRepositoryFindByNameAsync? findByNameAsync = await _userRepository.FindByNameAsync(userName);
+            if (findByNameAsync is null)
+            {
+                return null;
+            }
+            return _mapper.Map<IAuthUserServiceFindLocalUserwithUserName>(findByNameAsync);
+
+           
+        }
     }
 }

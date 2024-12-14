@@ -15,10 +15,10 @@ namespace BookWebApp.Controllers
     {
 
 
-        private readonly UserManager<AppUser> _userManager;
+        //private readonly UserManager<AppUser> _userManager;
 
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly RoleManager<AppRole> _roleManager;
+        //private readonly SignInManager<AppUser> _signInManager;
+        //private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IAuthUserService _userService;
         private readonly ILogger<UserController> _logger;
@@ -30,12 +30,12 @@ namespace BookWebApp.Controllers
          *  
          */
 
-        public UserController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IAuthUserService userService, ILogger<UserController> logger)
+        public UserController(/*UserManager<AppUser> userManager,*/ IMapper mapper, /*SignInManager<AppUser> signInManager,*/ /*RoleManager<AppRole> roleManager,*/ IAuthUserService userService, ILogger<UserController> logger)
         {
-            _userManager = userManager;
+            //_userManager = userManager;
             _mapper = mapper;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
+            //_signInManager = signInManager;
+            //_roleManager = roleManager;
             _userService = userService;
             _logger = logger;
         }
@@ -45,7 +45,7 @@ namespace BookWebApp.Controllers
             //TAMAM
             //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
             //oturum açan kullanıcıyı bulma
-            var user = await _userManager.GetUserAsync(User);
+            IAuthUserServiceFindLocalUserwithUserName? user = await _userService.findLocalUserwithUserName(User.Identity.Name);
             //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
             //oturum açan kullanıcı yoksa yapılacaklar
             if (user is null)
@@ -58,9 +58,9 @@ namespace BookWebApp.Controllers
             else
             {
                 ViewData["currentUser"] = user.Email.ToString();
-                ViewData["user_delete"] = await _userManager.IsInRoleAsync(user, "user_delete");
-                ViewData["roles_list_in_user"] = await _userManager.IsInRoleAsync(user, "roles_list_in_user");
-                ViewData["role_set"] = await _userManager.IsInRoleAsync(user, "role_set");
+                ViewData["user_delete"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "user_delete");
+                ViewData["roles_list_in_user"] = _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "roles_list_in_user");
+                ViewData["role_set"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "role_set");
             }
 
             //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş

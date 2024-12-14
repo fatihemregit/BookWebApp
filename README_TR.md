@@ -12,7 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- User Controllerdeki tüm iþ kurallarýnýn Businesstaki User service taþýnmasý
+- User Controllerdeki index metodununda deðiþiklik
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -115,6 +115,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 )
 - Loglama sisteminde ufak deðiþiklik(Microsoft.EntityFrameworkCore.Database.Command loglarýnýn warning e çekilmesi(appsettings.json).Hata Takibinde konsola bastýðýmýz deðerlerde takibi zorlaþtýrdýðý için.)
 - User Controllerdeki tüm iþ kurallarýnýn Businesstaki User service taþýnmasý
+### Gün 14(14.12.2024)
+- User Controllerdeki index metodunundaki GetUserAsync Metodunun deðiþtirilmesi
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

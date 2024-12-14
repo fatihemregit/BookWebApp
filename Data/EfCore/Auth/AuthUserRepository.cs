@@ -132,6 +132,7 @@ namespace Data.EfCore.Auth
 
         public async Task<bool> IsInRoleAsync(IAuthUserRepositoryIsInRoleAsync user, string roleName)
 		{
+
 			bool result = await _userManager.IsInRoleAsync(_mapper.Map<AppUser>(user), roleName);
 			return result;
 		}
