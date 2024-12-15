@@ -12,7 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- User Controllerdeki index metodununda deðiþiklik
+- Role controllerdaki bazý metotlarýnýn iþ kurallarýnýn ýn businesstaki role service taþýnmasý
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -117,6 +117,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - User Controllerdeki tüm iþ kurallarýnýn Businesstaki User service taþýnmasý
 ### Gün 14(14.12.2024)
 - User Controllerdeki index metodunundaki GetUserAsync Metodunun deðiþtirilmesi
+### Gün 15 (15.12.2024)
+- Role Controllerdeki metotlarýnýn(CreateRolePost,DeleteRoleGet,DeleteRolePost) iþ kurallarýnýn Businesstaki Role Service taþýnmasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

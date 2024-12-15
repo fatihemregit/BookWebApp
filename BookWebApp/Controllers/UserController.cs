@@ -59,7 +59,7 @@ namespace BookWebApp.Controllers
             {
                 ViewData["currentUser"] = user.Email.ToString();
                 ViewData["user_delete"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "user_delete");
-                ViewData["roles_list_in_user"] = _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "roles_list_in_user");
+                ViewData["roles_list_in_user"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "roles_list_in_user");
                 ViewData["role_set"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "role_set");
             }
 

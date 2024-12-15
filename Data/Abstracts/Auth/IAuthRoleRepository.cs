@@ -15,7 +15,7 @@ namespace Data.Abstracts.Auth
 
 		Task<IAuthRoleRepositoryFindByIdAsync?> FindByIdAsync(string roleId);
 
-		Task DeleteAsync(IAuthRoleRepositoryDeleteAsync role);
+		Task<IdentityResult> DeleteAsync(IAuthRoleRepositoryDeleteAsync role);
 
 	}
 

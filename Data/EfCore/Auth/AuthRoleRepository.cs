@@ -27,17 +27,17 @@ namespace Data.EfCore.Auth
 			_mapper = mapper;
 		}
 
-
 		public async Task<IdentityResult> CreateAsync(IAuthRoleRepositoryCreateAsync role)
 		{
 			IdentityResult identityResult = await _roleManager.CreateAsync(_mapper.Map<AppRole>(role));
 			return identityResult;
 		}
 
-		public async Task DeleteAsync(IAuthRoleRepositoryDeleteAsync role)
+		public async Task<IdentityResult> DeleteAsync(IAuthRoleRepositoryDeleteAsync role)
 		{
 			AppRole appRole = await _roleManager.FindByIdAsync(role.Id.ToString());
-			await _roleManager.DeleteAsync(appRole);
+			IdentityResult result = await _roleManager.DeleteAsync(appRole);
+			return result;
 		}
 
 		public async Task<IAuthRoleRepositoryFindByIdAsync?> FindByIdAsync(string roleId)
@@ -55,6 +55,7 @@ namespace Data.EfCore.Auth
 		{
 			//Roles null sa zaten burada null hatası almaz mıyız?
 			List<AppRole> allAppRoles = await _roleManager.Roles.ToListAsync();
+
 			if (allAppRoles is null)
 			{
 				return null;

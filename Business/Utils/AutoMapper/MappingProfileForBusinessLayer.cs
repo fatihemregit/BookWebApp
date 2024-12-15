@@ -87,11 +87,7 @@ namespace Business.Utils.AutoMapper
 			//IAuthRoleServiceFindByIdAsync to IAuthRoleRepositoryFindByIdAsync
 			CreateMap<IAuthRoleServiceFindByIdAsync, IAuthRoleRepositoryFindByIdAsync>();
 			CreateMap<IAuthRoleRepositoryFindByIdAsync, IAuthRoleServiceFindByIdAsync>();
-			//IAuthRoleServiceGetAllRolesAsync to IAuthRoleRepositoryGetAllRolesAsync
-			//CreateMap<List<IAuthRoleServiceGetAllRolesAsync>, List<IAuthRoleRepositoryGetAllRolesAsync>>();
-			//CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<IAuthRoleServiceGetAllRolesAsync>>();
-			CreateMap<IAuthRoleServiceGetAllRolesAsync, IAuthRoleRepositoryGetAllRolesAsync>();
-			CreateMap<IAuthRoleRepositoryGetAllRolesAsync, IAuthRoleServiceGetAllRolesAsync>();
+			
 			//ÖNEMLİ YER
 			//IAuthUserServiceSignIn to IAuthUserRepositoryCreateAsync
 			CreateMap<IAuthUserServiceSignIn, IAuthUserRepositoryCreateAsync>();
@@ -107,6 +103,20 @@ namespace Business.Utils.AutoMapper
 			//IAuthUserServiceFindLocalUserwithUserName to  IAuthUserRepositoryFindByNameAsync
 			CreateMap<IAuthUserServiceFindLocalUserwithUserName, IAuthUserRepositoryFindByNameAsync>();
 			CreateMap<IAuthUserRepositoryFindByNameAsync, IAuthUserServiceFindLocalUserwithUserName>();
+
+			//IAuthRoleRepositoryCreateAsync to IAuthRoleServiceCreateRole
+			CreateMap<IAuthRoleRepositoryCreateAsync, IAuthRoleServiceCreateRolePost>();
+			CreateMap<IAuthRoleServiceCreateRolePost, IAuthRoleRepositoryCreateAsync>();
+
+            //IAuthRoleServiceGetAllRolesAsync to IAuthRoleRepositoryGetAllRolesAsync
+            //CreateMap<List<IAuthRoleServiceGetAllRolesAsync>, List<IAuthRoleRepositoryGetAllRolesAsync>>();
+            //CreateMap<List<IAuthRoleRepositoryGetAllRolesAsync>, List<IAuthRoleServiceGetAllRolesAsync>>();
+            CreateMap<IAuthRoleServiceGetAllRolesAsync, IAuthRoleRepositoryGetAllRolesAsync>();
+            CreateMap<IAuthRoleRepositoryGetAllRolesAsync, IAuthRoleServiceGetAllRolesAsync>();
+
+			//IAuthRoleRepositoryDeleteAsync to IAuthRoleRepositoryFindByIdAsync
+			CreateMap<IAuthRoleRepositoryDeleteAsync, IAuthRoleRepositoryFindByIdAsync>();
+
         }
     }
 }
