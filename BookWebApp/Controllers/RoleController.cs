@@ -100,18 +100,9 @@ namespace BookWebApp.Controllers
 
 
             Exception result = await _roleService.DeleteRolePost(_mapper.Map<IAuthRoleServiceDeleteRolePost>(deleteRoleViewModel));
-            //burası daha güzel yazılabilir 
-            if ((result is IAuthRoleServiceDeleteRolePostNotSucceeded) && (result.Message == "role not found"))
+            if ((result is IAuthRoleServiceDeleteRolePostNotSucceeded))
             {
-                return BadRequest("rol bulunamadı");
-            }
-            else if ((result is IAuthRoleServiceDeleteRolePostNotSucceeded) && (result.Message == "role is active"))
-            {
-                return BadRequest("Bu Rol Aktif Olarak Kullanılıyor!");
-            }
-            else if ((result is IAuthRoleServiceDeleteRolePostNotSucceeded) && (result.Message == "DeleteAsync is not Succeeded"))
-            {
-                return BadRequest("DeleteAsync is not Succeeded");
+                return BadRequest(result.Message);
             }
             else
             {

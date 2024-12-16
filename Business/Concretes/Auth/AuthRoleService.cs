@@ -155,18 +155,10 @@ namespace Business.Concretes.Auth
             IList<string>? foundUserRoles = await _userRepository.GetRolesAsync(_mapper.Map<IAuthUserRepositoryGetRolesAsync>(foundUserwithEmail));
             //bulunan kullanıcının rolleri ile sistemdeki tüm rolleri karşılaştırarak viewde tikli olup olmamasını belirleyelim
             List<IAuthRoleServiceSetRoleForUserGet> setroles = new List<IAuthRoleServiceSetRoleForUserGet>();
-            //kullanıcının hiç rolü yok ise tüm tikler işaretsiz(false) olarak gelir
-            //bu kısım daha güzel yazılabilir
-            if (foundUserRoles is null)
+            bool foundUserRolesNullState = foundUserRoles is null;
+            foreach (IAuthRoleRepositoryGetAllRolesAsync role in rolesinrepository)
             {
-                rolesinrepository.ForEach(r => setroles.Add(new IAuthRoleServiceSetRoleForUserGet { RoleName = r.Name,State = false}));
-            }
-            else
-            {
-                foreach (IAuthRoleRepositoryGetAllRolesAsync role in rolesinrepository)
-                {
-                    setroles.Add(new IAuthRoleServiceSetRoleForUserGet { RoleName = role.Name,State = foundUserRoles.Any(s => s == role.Name) });
-                }
+                setroles.Add(new IAuthRoleServiceSetRoleForUserGet { RoleName = role.Name, State = foundUserRolesNullState ? false: foundUserRoles.Any(s => s == role.Name) });
             }
             //Succeeded dönelim
             return new IAuthRoleServiceSetRoleForUserGetSucceeded("SetRoleForUserGet is succeeded", setroles);
