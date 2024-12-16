@@ -5,6 +5,7 @@ using Data.Abstracts.Auth;
 using Entity;
 using Entity.Auth;
 using Entity.Exceptions;
+using Entity.Exceptions.IAuthUserService;
 using Entity.IAuthUserRepository;
 using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Identity;

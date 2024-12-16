@@ -12,7 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Entity/Exceptions klasörünün gruplandýrýlmasý
+- Entity/Exceptions klasörünün gruplandýrýlmasý sonucunda AuthUserService,AuthRoleService sýnýflarýnda ortaya çýkan hatalarýn düzeltilmesi
 ## Proje Günlüðü
 
 ### Gün 1 (14.11.2024)
@@ -125,6 +125,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - AuthRoleService sýnýfýnda SetRoleForUserGet metodunda ufak kod düzeltmeleri
 - UserController da DeleteUser metodunda ufak kod düzeltmeleri
 - Entity/Exceptions klasörünün gruplandýrýlmasý(IAuthRoleService ve IauthUserService)
+- Entity/Exceptions klasörünün gruplandýrýlmasý sonucunda Business katmanýndaki  AuthUserService,AuthRoleService sýnýflarýnda ortaya çýkan hatalarýn("using" hatasý düzeltilmesi)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

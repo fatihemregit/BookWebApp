@@ -2,7 +2,7 @@
 using Business.Abstracts.Auth;
 using Data.Abstracts.Auth;
 using Entity.Auth;
-using Entity.Exceptions;
+using Entity.Exceptions.IAuthRoleService;
 using Entity.IAuthRoleRepository;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
