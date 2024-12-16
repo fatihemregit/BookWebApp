@@ -14,7 +14,6 @@ namespace BookWebApp.Controllers
     public class UserController : Controller
     {
 
-
         //private readonly UserManager<AppUser> _userManager;
 
         //private readonly SignInManager<AppUser> _signInManager;
