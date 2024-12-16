@@ -3,7 +3,7 @@ using Business;
 using Business.Abstracts.Auth;
 using Business.Concretes.Auth;
 using Entity.Auth;
-using Entity.Exceptions;
+using Entity.Exceptions.IAuthUserService;
 using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Exceptions
+namespace Entity.Exceptions.IAuthUserService
 {
     public class IAuthUserServiceLoginNotSucceeded : Exception
     {

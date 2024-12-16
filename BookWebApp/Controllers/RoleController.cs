@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts.Auth;
 using Entity.Auth;
-using Entity.Exceptions;
+using Entity.Exceptions.IAuthRoleService;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
 using Entity.IAuthUserService;

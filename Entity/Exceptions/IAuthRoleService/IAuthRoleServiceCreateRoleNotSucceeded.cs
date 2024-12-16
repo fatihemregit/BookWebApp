@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Exceptions
+namespace Entity.Exceptions.IAuthRoleService
 {
     public class IAuthRoleServiceCreateRoleNotSucceeded : Exception
     {
