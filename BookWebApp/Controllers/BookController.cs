@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using Entity.ViewModel;
 using Business.Abstracts.Book;
+using Entity.Exceptions.IBookService;
 
 namespace BookWebApp.Controllers
 {
@@ -22,14 +23,14 @@ namespace BookWebApp.Controllers
         private readonly IBookService _bookService;
 
 
-		public BookController(IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager, IBookService bookService)
-		{
-			_mapper = mapper;
-			_logger = logger;
-			_userManager = userManager;
-			_bookService = bookService;
-		}
-		public async Task<IActionResult> Index()
+        public BookController(IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager, IBookService bookService)
+        {
+            _mapper = mapper;
+            _logger = logger;
+            _userManager = userManager;
+            _bookService = bookService;
+        }
+        public async Task<IActionResult> Index()
         {
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
             //oturum açan kullanıcıyı bulma
@@ -41,7 +42,7 @@ namespace BookWebApp.Controllers
             {
                 //oturum açan kullanıcı yoksa  create,edit ve delete butonları gözükmez
                 ViewData["book_create"] = false;
-                ViewData["book_edit"] = false; 
+                ViewData["book_edit"] = false;
                 ViewData["book_delete"] = false;
             }
             //oturum açan kullanıcı var
@@ -52,15 +53,22 @@ namespace BookWebApp.Controllers
                 ViewData["book_edit"] = await _userManager.IsInRoleAsync(user, "book_edit");
                 ViewData["book_delete"] = await _userManager.IsInRoleAsync(user, "book_delete");
             }
-			//kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
-			//IBookServiceGetAllBook mapping
-			List<BookViewModelForList> bookViewModelForLists = _mapper.Map<List<BookViewModelForList>>(await _bookService.getAll());
-            return View(bookViewModelForLists);
+            //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
+            //IBookServiceGetAllBook mapping
+            //List<BookViewModelForList> bookViewModelForLists = _mapper.Map<List<BookViewModelForList>>(await _bookService.getAll());
+            Exception result = await _bookService.getAll();
+            if (result is IBookServiceGetAllBookSucceeded)
+            {
+
+                List<BookViewModelForList> bookViewModelForLists = _mapper.Map<List<BookViewModelForList>>(((IBookServiceGetAllBookSucceeded)result).AllBooks);
+                return View(bookViewModelForLists);
+            }
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Index" });
         }
         //create
 
         [Authorize(Roles = "book_create")]
-        [HttpGet("Create")]
+        [HttpGet("BookCreate")]
         public IActionResult Create()
         {
             return View();
@@ -83,60 +91,60 @@ namespace BookWebApp.Controllers
 
         //edit
         [Authorize(Roles = "book_edit")]
-        [HttpGet("Edit/{id:int}")]
+        [HttpGet("BookEdit/{id:int}")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
             if (getOneBookById is null)
             {
-				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Edit)" });
-			}
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Edit)" });
+            }
             return View(_mapper.Map<BookViewModelForUpdate>(getOneBookById));
 
-		}
+        }
 
         [Authorize(Roles = "book_edit")]
-        [HttpPost("Edit/{id:int}")]
-        public async Task<IActionResult >Edit([FromRoute] int id, [FromForm] BookViewModelForUpdate bookViewModelForUpdate)
+        [HttpPost("BookEdit/{id:int}")]
+        public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] BookViewModelForUpdate bookViewModelForUpdate)
         {
-            IBookServiceEditOneBookById? editOneBookById = await _bookService.editOneBookById(id,_mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
+            IBookServiceEditOneBookById? editOneBookById = await _bookService.editOneBookById(id, _mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
             if (editOneBookById is null)
             {
-				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "editOneBookById is null(this error comes from Bookcontroller/Edit(post))" });
-			}
-			return RedirectToAction("Index", "Book");
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "editOneBookById is null(this error comes from Bookcontroller/Edit(post))" });
+            }
+            return RedirectToAction("Index", "Book");
 
-		}
+        }
 
         //Details
 
-        [HttpGet("Details/{id:int}")]
-        public async Task<IActionResult >Details([FromRoute] int id)
+        [HttpGet("BookDetails/{id:int}")]
+        public async Task<IActionResult> Details([FromRoute] int id)
         {
             IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
             if (getOneBookById is null)
             {
-				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Details)" });
-			}
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Details)" });
+            }
 
-			return View(_mapper.Map<BookViewModelForDetails>(getOneBookById));
+            return View(_mapper.Map<BookViewModelForDetails>(getOneBookById));
         }
 
         [Authorize(Roles = "book_delete")]
-        [HttpGet("Delete/{id:int}")]
+        [HttpGet("BookDelete/{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
             if (getOneBookById is null)
             {
-				return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Delete)" });
-			}
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Delete)" });
+            }
             return View(_mapper.Map<BookViewModelForDelete>(getOneBookById));
-		}
+        }
 
 
-		[Authorize(Roles = "book_delete")]
-        [HttpPost("Delete/{id:int}")]
+        [Authorize(Roles = "book_delete")]
+        [HttpPost("BookDelete/{id:int}")]
         public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
             await _bookService.deleteOneBookById(id);

@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Er";
+}
+
+<h1 style="font-weight:bolder;color:red">Hata!!</h1>
+
+<br />
+@if (ViewBag.ErrorMessage is not null)
+{
+    <text>@ViewBag.ErrorMessage</text>
+}

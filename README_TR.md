@@ -12,7 +12,8 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Custom Route iþlemleri
+- BookService sýnýfýna custom exception sistemi uygulanmasý
+- Book Controllerda daki Index metotunun Custom Exception a göre yazýlmasý
 ## Proje Günlüðü
 ### Gün 1 (14.11.2024)
 - Varsayýlan olarak gelen ErrorViewModel silindi
@@ -128,6 +129,8 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - AuthRoleService sýnýfýndaki metotlara paramater null check eklenmesi
 - AuthUserService sýnýfýndaki metotlara paramater null check eklenmesi
 - Custom Route iþlemleri(/Login,/SignIn,/DeleteUser,/CreateRole,/DeleteRole,/SetRoleForUser)
+- BookService sýnýfýna custom exception(Entity/Exceptions/IbookService) sistemi uygulanmasý
+- Book Controllerda daki Index metotunun Custom Exception(IBookServiceGetAllBookSucceeded) a göre yazýlmasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

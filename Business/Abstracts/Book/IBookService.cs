@@ -9,11 +9,11 @@ namespace Business.Abstracts.Book
 {
     public interface IBookService
     {
-        Task<List<IBookServiceGetAllBook>> getAll();
-        Task<IBookServiceCreateOneBook?> createOneBook(IBookServiceCreateOneBook Book);
-        Task<IBookServiceEditOneBookById?> editOneBookById(int id, IBookServiceEditOneBookById Book);
-        Task<IBookServiceGetOneBookById?> getOneBookById(int id);
-        Task deleteOneBookById(int id);
+        Task<Exception> getAll();
+        Task<Exception> createOneBook(IBookServiceCreateOneBook Book);
+        Task<Exception> editOneBookById(int id, IBookServiceEditOneBookById Book);
+        Task<Exception> getOneBookById(int id);
+        Task<Exception> deleteOneBookById(int id);
 
     }
 }

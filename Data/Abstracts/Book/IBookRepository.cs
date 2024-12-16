@@ -12,7 +12,7 @@ namespace Data.Abstracts.Book
     public interface IBookRepository
     {
         Task<List<IBookRepositoryGetAllBook>> getAll();
-        Task<IBookRepositoryCreateOneBook?> createOneBook(IBookRepositoryCreateOneBook Book);
+        Task<IBookRepositoryCreateOneBook> createOneBook(IBookRepositoryCreateOneBook Book);
         Task<IBookRepositoryEditOneBookById?> editOneBookById(int id, IBookRepositoryEditOneBookById Book);
         Task<IBookRepositoryGetOneBookById?> getOneBookById(int id);
         Task deleteOneBookById(int id);

@@ -31,14 +31,9 @@ namespace Data.EfCore
 		}
 
 
-		public async Task<IBookRepositoryCreateOneBook?> createOneBook(IBookRepositoryCreateOneBook Book)
+		public async Task<IBookRepositoryCreateOneBook> createOneBook(IBookRepositoryCreateOneBook Book)
 		{
 
-			if (Book is null)
-			{
-				//daha sonrasında(hata yönetimi eklendiğinde) hata fırlat ama şimdilik null döndürelim
-				return null;
-			}
 			await _context.BookDtos.AddAsync(_mapper.Map<BookDto>(Book));
 			_context.SaveChanges();
 			return Book;
