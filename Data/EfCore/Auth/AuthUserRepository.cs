@@ -53,7 +53,6 @@ namespace Data.EfCore.Auth
 		public async Task<IAuthUserRepositoryFindByEmailAsync?> FindByEmailAsync(string email)
 		{
 			AppUser? foundappUser = await _userManager.FindByEmailAsync(email);
-			//neden burada null check yapıyoruz ki?? bu null check i business te yapmamız gerekmez mi.sonuçta iş kuralı
 			if (foundappUser is null)
 			{
 				return null;

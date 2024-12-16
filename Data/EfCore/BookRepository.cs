@@ -14,11 +14,6 @@ namespace Data.EfCore
 {
     public class BookRepository : IBookRepository
 	{
-		/*
-		 Genel bir öneri : acaba is deleted alanına tüm dtolarda ihtiyacımız var mı?
-		 Evet : çünkü data katmanında erişemeyeceksek başka nerede erişeceğiz
-		 Hayır : çünkü isdeleted alanını sadece silmede kullanıyoruz.
-		 */
 
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;

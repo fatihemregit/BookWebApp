@@ -3,6 +3,8 @@ using System.Globalization;
 using Business.Utils.Extensions;
 using Data.Utils.Extensions;
 using BookWebApp.Utils.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -46,15 +48,51 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+//custom paths
+//UserController
+//custom Login path
+app.MapControllerRoute(
+    name: "customLoginPath",
+    pattern: "Login",
+    defaults: new { controller = "User", action = "Login" }
+    );
+//custom register(signin) path
+app.MapControllerRoute(
+    name: "customRegisterPath",
+    pattern: "Register",
+    defaults: new { controller = "User", action = "SignIn" }
+    );
+//custom DeleteUser path
+app.MapControllerRoute(
+    name: "customDeleteUserPath",
+    pattern: "DeleteUser",
+    defaults: new { controller = "User", action = "DeleteUser" }
+    );
+//RoleController
+//custom CreateRole path
+app.MapControllerRoute(
+    name : "customCreateRolePath",
+    pattern: "CreateRole",
+    defaults : new {controller = "Role",action = "CreateRole" }
+    );
+//custom DeleteRole path
+app.MapControllerRoute(
+    name: "customDeleteRolePath",
+    pattern: "DeleteRole",
+    defaults: new { controller = "Role", action = "DeleteRole" }
+    );
+//custom SetRoleForUser path
+app.MapControllerRoute(
+    name: "customSetRoleForUserPath",
+    pattern: "SetRole",
+    defaults: new { controller = "Role", action = "SetRoleForUser" }
+    );
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Book}/{action=Index}/{id?}"
     );
-app.MapControllerRoute(
-    name : "myTestRoute",
-    pattern:"test/add",
-    defaults : new { controller = "MyTest", action = "AddRoleAsync" }
-	);
-
 
 app.Run();

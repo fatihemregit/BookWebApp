@@ -12,7 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- AuthUserService sýnýfýndaki metotlara paramater null check eklenmesi
+- Custom Route iþlemleri
 ## Proje Günlüðü
 ### Gün 1 (14.11.2024)
 - Varsayýlan olarak gelen ErrorViewModel silindi
@@ -127,6 +127,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Entity/Exceptions klasörünün gruplandýrýlmasý sonucunda Business katmanýndaki  AuthUserService,AuthRoleService sýnýflarýnda ortaya çýkan hatalarýn("using" hatasý düzeltilmesi)
 - AuthRoleService sýnýfýndaki metotlara paramater null check eklenmesi
 - AuthUserService sýnýfýndaki metotlara paramater null check eklenmesi
+- Custom Route iþlemleri(/Login,/SignIn,/DeleteUser,/CreateRole,/DeleteRole,/SetRoleForUser)
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
@@ -137,8 +138,3 @@ validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 ### Geliþtirilebilecek Yerler
 - Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
 -Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)
-- BookRepository.cs(namespace Data.EfCore) deki not
-- AuthUserRepository.cs(namespace Data.EfCore.Auth) deki FindByEmailAsync deki not
-- Data katmanýnda ki null data dönünce çalýþacak kodlarýn iþ katmanýna taþýnmasýna gerek olup olmasýnýn tartýþýlmasý
-- tüm Identity iþlemlerini diðer katmanlara daðýtma(https://www.reddit.com/r/csharp/comments/98gj14/how_to_implement_identity_in_an_nlayer_solution/?rdt=52901)
-- Notsuceed mesajlarýnda bir de mesajýn türkçe karþýlýðý olsun ve badrequestlere bu mesaj karþýlýklarýný gönderelim

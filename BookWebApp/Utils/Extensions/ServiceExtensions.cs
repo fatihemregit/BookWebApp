@@ -31,7 +31,7 @@ namespace BookWebApp.Utils.Extensions
         {
             services.ConfigureApplicationCookie(_ =>
             {
-                _.LoginPath = new PathString("/User/Login");
+                _.LoginPath = new PathString("/Login");
                 _.Cookie = new CookieBuilder
                 {
                     Name = "BookWebAppIdentityCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.

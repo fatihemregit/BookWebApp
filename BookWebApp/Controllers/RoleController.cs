@@ -17,9 +17,9 @@ namespace BookWebApp.Controllers
     public class RoleController : Controller
     {
 
-        private readonly RoleManager<AppRole> _roleManager;
+        //private readonly RoleManager<AppRole> _roleManager;
 
-        private readonly UserManager<AppUser> _userManager;
+        //private readonly UserManager<AppUser> _userManager;
 
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -29,10 +29,10 @@ namespace BookWebApp.Controllers
 
         private readonly IMapper _mapper;
 
-        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, IAuthRoleService roleService, IAuthUserService userService)
+        public RoleController(/*RoleManager<AppRole> roleManager,*/ /*UserManager<AppUser> userManager,*/ IMapper mapper, SignInManager<AppUser> signInManager, IAuthRoleService roleService, IAuthUserService userService)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
+            //_roleManager = roleManager;
+            //_userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
             _roleService = roleService;
@@ -76,19 +76,6 @@ namespace BookWebApp.Controllers
                     return RedirectToAction("Index", "Role");
 
                 }
-
-                //if (result is IAuthRoleServiceCreateRoleSucceeded)
-                //{
-                //    return RedirectToAction("Index", "Role");
-                //}
-                //else
-                //{
-                //    IAuthRoleServiceCreateRoleNotSucceeded customResult = (IAuthRoleServiceCreateRoleNotSucceeded)result;
-                //    if (customResult.Errors is null){
-                //        return BadRequest(customResult.Message);
-                //    }
-                //    customResult.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
-                //}
             }
             return View(createRoleViewModel);
 

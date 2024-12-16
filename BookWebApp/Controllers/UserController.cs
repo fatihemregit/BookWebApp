@@ -41,6 +41,7 @@ namespace BookWebApp.Controllers
         [Authorize(Roles = "user_list")]
         public async Task<IActionResult> Index()
         {
+
             //TAMAM
             //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
             //oturum açan kullanıcıyı bulma
