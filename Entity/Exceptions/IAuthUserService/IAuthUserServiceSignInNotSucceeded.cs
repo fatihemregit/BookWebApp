@@ -13,7 +13,7 @@ namespace Entity.Exceptions.IAuthUserService
 
         public IEnumerable<IdentityError> Errors { get; set; }
 
-        public IAuthUserServiceSignInNotSucceeded(string? message, IEnumerable<IdentityError> errors) : base(message)
+        public IAuthUserServiceSignInNotSucceeded(string? message, IEnumerable<IdentityError>? errors = null) : base(message)
         {
             Errors = errors;
         }

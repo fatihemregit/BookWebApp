@@ -43,13 +43,9 @@ namespace Data.EfCore.Auth
 			return result;
 		}
 
-		public async Task<IdentityResult?> DeleteAsync(IAuthUserRepositoryDeleteAsync user)
+		public async Task<IdentityResult> DeleteAsync(IAuthUserRepositoryDeleteAsync user)
 		{
-			AppUser? foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
-			if(foundUser == null)
-			{
-				return null;
-			}
+			AppUser foundUser = await _userManager.FindByIdAsync(user.Id.ToString());
 			IdentityResult result = await _userManager.DeleteAsync(foundUser);
 			return result;
 		}

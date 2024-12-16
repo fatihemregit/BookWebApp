@@ -86,14 +86,18 @@ namespace BookWebApp.Controllers
             {
 
                 Exception result = await _userService.SignIn(_mapper.Map<IAuthUserServiceSignIn>(appUserViewModel));
-                if (result is IAuthUserServiceSignInSucceeded)
+                if (result is IAuthUserServiceSignInNotSucceeded)
+                {
+                    IAuthUserServiceSignInNotSucceeded customResult = (IAuthUserServiceSignInNotSucceeded)result;
+                    if (customResult.Errors is null)
+                    {
+                        return BadRequest(customResult.Message);
+                    }
+                    customResult.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                }
+                else
                 {
                     return RedirectToAction("Index");
-                }
-                else if (result is IAuthUserServiceSignInNotSucceeded)
-                {
-
-                    ((IAuthUserServiceSignInNotSucceeded)result).Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
                 }
             }
             return View();
@@ -127,14 +131,18 @@ namespace BookWebApp.Controllers
                 }
 
                 Exception result = await _userService.Login(_mapper.Map<IAuthUserServiceLogin>(loginViewModel));
-                if (result is IAuthUserServiceLoginSucceeded)
-                {
-                    return Redirect(TempData["returnUrl"].ToString());
-                }
                 if (result is IAuthUserServiceLoginNotSucceeded)
                 {
+                    if (result.Message == "user parameters is null")
+                    {
+                        return BadRequest(result.Message);
+                    }
                     ModelState.AddModelError("NotUser", "Böyle bir kullanıcı bulunmamaktadır.");
                     ModelState.AddModelError("NotUser2", "E-posta veya şifre yanlış.");
+                }
+                else
+                {
+                    return Redirect(TempData["returnUrl"].ToString());
                 }
             }
             return View(loginViewModel);
@@ -152,7 +160,7 @@ namespace BookWebApp.Controllers
         [Authorize(Roles = "user_delete")]
         public async Task<IActionResult> DeleteUser(string UserName)
         {
-           
+
             Exception result = await _userService.DeleteUser(UserName);
             if (result is IAuthUserServiceDeleteUserNotSucceeded)
             {

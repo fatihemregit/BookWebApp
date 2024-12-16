@@ -86,6 +86,7 @@ namespace Business.Concretes.Auth
 
         public async Task<IList<string>?> GetRolesAsync(IAuthUserServiceGetRolesAsync user)
         {
+
             IList<string>? getRolesAsync = await _userRepository.GetRolesAsync(_mapper.Map<IAuthUserRepositoryGetRolesAsync>(user));
             if (getRolesAsync is null)
             {
@@ -125,9 +126,12 @@ namespace Business.Concretes.Auth
 
 
 
-
         public async Task<Exception> SignIn(IAuthUserServiceSignIn user)
         {
+            if (user is null)
+            {
+                return new IAuthUserServiceSignInNotSucceeded("user paramater is null");
+            }
             IdentityResult result = await _userRepository.CreateAsync(_mapper.Map<IAuthUserRepositoryCreateAsync>(user), user.Sifre);
             if (result.Succeeded)
             {
@@ -143,6 +147,11 @@ namespace Business.Concretes.Auth
 
         public async Task<Exception> Login(IAuthUserServiceLogin user)
         {
+            if (user is null)
+            {
+                return new IAuthUserServiceLoginNotSucceeded("user parameters is null");
+            }
+
             //useri bulalım
             AppUser? foundUser = await _userRepository.FindByEmailAsyncAndReturnAppUser(user.Email);
             if (foundUser is null)
@@ -168,6 +177,11 @@ namespace Business.Concretes.Auth
 
         public async Task<Exception> DeleteUser(string userName)
         {
+            if (userName is null)
+            { 
+                return new IAuthUserServiceDeleteUserNotSucceeded("userName parameter is null");
+            }
+
             //kullanıcıyı bulalım
             IAuthUserRepositoryFindByNameAsync? foundUser = await _userRepository.FindByNameAsync(userName);
             if (foundUser is null)
@@ -175,7 +189,7 @@ namespace Business.Concretes.Auth
                 return new IAuthUserServiceDeleteUserNotSucceeded("User not found");
             }
             //kullanıcıyı silelim
-            IdentityResult? result = await _userRepository.DeleteAsync(_mapper.Map<IAuthUserRepositoryDeleteAsync>(foundUser));
+            IdentityResult result = await _userRepository.DeleteAsync(_mapper.Map<IAuthUserRepositoryDeleteAsync>(foundUser));
             if (result.Succeeded)
             {
                 return new IAuthUserServiceDeleteUserSucceeded("DeleteAsync result succeeded");
