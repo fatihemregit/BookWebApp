@@ -192,9 +192,6 @@ namespace Business.Concretes.Auth
                 Console.WriteLine("userName is null");
                 return false;
             }
-            
-
-
             IAuthUserRepositoryFindByNameAsync? findByNameAsync = await _userRepository.FindByNameAsync(userName);
             if (findByNameAsync is null)
             {

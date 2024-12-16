@@ -155,21 +155,16 @@ namespace BookWebApp.Controllers
         {
            
             Exception result = await _userService.DeleteUser(UserName);
-            if ((result is IAuthUserServiceDeleteUserNotSucceeded) && (result.Message == "User not found"))
+            if (result is IAuthUserServiceDeleteUserNotSucceeded)
             {
-                return NotFound();
+                return BadRequest(result.Message);
             }
-
-            if ((result is IAuthUserServiceDeleteUserNotSucceeded) && (result.Message == "DeleteAsync result not succeeded"))
-            {
-                Console.WriteLine("Kullanıcı silinemedi");
-            }
-
-            if (result is IAuthUserServiceDeleteUserSucceeded)
+            else
             {
                 Console.WriteLine("kullanıcı silindi");
             }
             return RedirectToAction("Index", "User");
+
         }
 
         public IActionResult AccessDenied(string ErrorMessage = "Yetkilendirme Hatasi")
