@@ -61,19 +61,34 @@ namespace BookWebApp.Controllers
             //tamam
             if (ModelState.IsValid)
             {
-                if (createRoleViewModel == null)
-                {
-                    return BadRequest();
-                }
                 Exception result = await _roleService.CreateRolePost(_mapper.Map<IAuthRoleServiceCreateRolePost>(createRoleViewModel));
-                if (result is IAuthRoleServiceCreateRoleSucceeded)
+                if (result is IAuthRoleServiceCreateRoleNotSucceeded)
                 {
-                    return RedirectToAction("Index", "Role");
+                    IAuthRoleServiceCreateRoleNotSucceeded customResult = (IAuthRoleServiceCreateRoleNotSucceeded)result;
+                    if (customResult.Errors is null)
+                    {
+                        return BadRequest(customResult.Message);
+                    }
+                    customResult.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
                 }
                 else
                 {
-                    ((IAuthRoleServiceCreateRoleNotSucceeded)result).Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                    return RedirectToAction("Index", "Role");
+
                 }
+
+                //if (result is IAuthRoleServiceCreateRoleSucceeded)
+                //{
+                //    return RedirectToAction("Index", "Role");
+                //}
+                //else
+                //{
+                //    IAuthRoleServiceCreateRoleNotSucceeded customResult = (IAuthRoleServiceCreateRoleNotSucceeded)result;
+                //    if (customResult.Errors is null){
+                //        return BadRequest(customResult.Message);
+                //    }
+                //    customResult.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                //}
             }
             return View(createRoleViewModel);
 
@@ -86,7 +101,7 @@ namespace BookWebApp.Controllers
             Exception result = await _roleService.DeleteRoleGet();
             if (result is IAuthRoleServiceDeleteRoleGetNotSucceeded)
             {
-                return BadRequest("Sistemde kayıtlı rol olmadan rol silemezsiniz");
+                return BadRequest(result.Message);
             }
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> RoleNames = ((IAuthRoleServiceDeleteRoleGetSucceeded)result).Roles.Select(r => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Value = r.Id.ToString(), Text = r.Name }).ToList();
             ViewBag.RoleNames = RoleNames;
@@ -135,13 +150,13 @@ namespace BookWebApp.Controllers
         public async Task<IActionResult> SetRoleForUser(List<SetRoleForUserViewModel> setRoleViewModels, string userEmail)
         {
             Exception result = await _roleService.SetRoleForUserPost(_mapper.Map<List<IAuthRoleServiceSetRoleForUserPost>>(setRoleViewModels),userEmail,User.Identity.Name);
-            if (result is IAuthRoleServiceSetRoleForUserPostSucceeded)
+            if (result is IAuthRoleServiceSetRoleForUserPostNotSucceeded)
             {
-                return RedirectToAction("Index", "User");
+                return BadRequest(result.Message);
             }
             else
             {
-                return BadRequest(result.Message);
+                return RedirectToAction("Index", "User");
             }
         }
 

@@ -75,6 +75,11 @@ namespace Business.Concretes.Auth
         public async Task<Exception> CreateRolePost(IAuthRoleServiceCreateRolePost role)
         {
             //parameter null check(daha sonra ekle)
+            if (role is null)
+            {
+                return new IAuthRoleServiceCreateRoleNotSucceeded("role parameter is null");
+            }
+
             IdentityResult result = await _roleRepository.CreateAsync(_mapper.Map<IAuthRoleRepositoryCreateAsync>(role));
             if (result.Succeeded)
             {
@@ -102,6 +107,10 @@ namespace Business.Concretes.Auth
 
         public async Task<Exception> DeleteRolePost(IAuthRoleServiceDeleteRolePost role)
         {
+            if (role is null)
+            {
+                return new IAuthRoleServiceDeleteRolePostNotSucceeded("role parameter is null");
+            }
             //rolü id ile  bulalım
             IAuthRoleRepositoryFindByIdAsync? foundRoleWithId = await _roleRepository.FindByIdAsync(role.SelectedRoleId);
             if (foundRoleWithId is null)
@@ -132,7 +141,7 @@ namespace Business.Concretes.Auth
         {
             if (userEmail is null)
             {
-                return new IAuthRoleServiceSetRoleForUserGetNotSucceeded("useremail is null");
+                return new IAuthRoleServiceSetRoleForUserGetNotSucceeded("useremail parameter is null");
             }
 
             //email ile userı bulalım
@@ -167,6 +176,11 @@ namespace Business.Concretes.Auth
 
         public async Task<Exception> SetRoleForUserPost(List<IAuthRoleServiceSetRoleForUserPost> roles, string userEmail,string localUserName)
         {
+            if ((roles is null) || (userEmail is null) || (localUserName is null))
+            { 
+                return new IAuthRoleServiceSetRoleForUserPostNotSucceeded("some parameters are null");
+            }
+
             //kullanıcıyı bulalım
             IAuthUserRepositoryFindByEmailAsync? foundUser = await _userRepository.FindByEmailAsync(userEmail);
             //kullanıcı yoksa NotSucceeded dönelim

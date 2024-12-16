@@ -11,7 +11,7 @@ namespace Entity.Exceptions.IAuthRoleService
     {
         public IEnumerable<IdentityError> Errors { get; set; }
 
-        public IAuthRoleServiceCreateRoleNotSucceeded(string? message, IEnumerable<IdentityError> errors) : base(message)
+        public IAuthRoleServiceCreateRoleNotSucceeded(string? message,IEnumerable<IdentityError>? errors = null) : base(message)
         {
             Errors = errors;
         }
