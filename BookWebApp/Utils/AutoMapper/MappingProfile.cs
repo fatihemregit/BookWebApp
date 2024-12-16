@@ -118,6 +118,14 @@ namespace BookWebApp.Utils.AutoMapper
             //IAuthRoleServiceDeleteRolePost to DeleteRoleViewModel
             CreateMap<IAuthRoleServiceDeleteRolePost, DeleteRoleViewModel>();
             CreateMap<DeleteRoleViewModel, IAuthRoleServiceDeleteRolePost>();
+            //IAuthRoleServiceSetRoleForUserGet to SetRoleForUserViewModel
+            CreateMap<IAuthRoleServiceSetRoleForUserGet, SetRoleForUserViewModel>();
+            CreateMap<SetRoleForUserViewModel, IAuthRoleServiceSetRoleForUserGet>();
+
+            //IAuthRoleServiceSetRoleForUserPost to SetRoleForUserViewModel
+            CreateMap<IAuthRoleServiceSetRoleForUserPost, SetRoleForUserViewModel>();
+            CreateMap<SetRoleForUserViewModel, IAuthRoleServiceSetRoleForUserPost>();
+
         }
     }
 }

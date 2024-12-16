@@ -44,7 +44,6 @@ namespace BookWebApp.Controllers
         [Authorize(Roles = "role_index")]
         public IActionResult Index()
         {
-
             return View();
         }
 
@@ -126,88 +125,33 @@ namespace BookWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> SetRoleForUser(string userEmail = null)
         {
-            //email ile userı bulalım
-            IAuthUserServiceFindByEmailAsync? foundUser = await _userService.FindByEmailAsync(userEmail);
-            //foundUser null check
-            if (foundUser is null)
+            Exception result = await _roleService.SetRoleForUserGet(userEmail);
+            if (result is IAuthRoleServiceSetRoleForUserGetNotSucceeded)
             {
-                return BadRequest("kullanıcı bulunamadı");
-            }
-            //sistemdeki tüm rolleri alalım
-            List<IAuthRoleServiceGetAllRolesAsync>? allRoles = await _roleService.GetAllRolesAsync();
-            //sistemde hiç rol yoksa rol atamayı yapamayız(nası yapcan rol yok??)
-            if (allRoles is null)
-            {
-                return BadRequest("Sistemde kayıtlı rol olmadan rol atayamazsınız");
-            }
-            //bulunan kullanıcının tüm rollerini alalım
-            IList<string>? foundUserRoles = await _userService.GetRolesAsync(_mapper.Map<IAuthUserServiceGetRolesAsync>(foundUser));
-            //bulunan kullanıcının rolleri ile sistemdeki tüm rolleri karşılaştırarak viewde tikli olup olmamasını belirleyelim
-            //eğer kullanıcının hiç rolü yoksa herhangi bir karşılaştırma yapmaya gerek yok
-            List<SetRoleForUserViewModel> setRoleForUserViewModels = new List<SetRoleForUserViewModel>();
-            if (foundUserRoles is null)
-            {
-                //eğer kullanıcının hiç rolü yoksa herhangi bir karşılaştırma yapmaya gerek yok
-                allRoles.ForEach(r =>
-                {
-                    setRoleForUserViewModels.Add(new SetRoleForUserViewModel() { RoleName = r.Name, State = false });
-                });
+                return BadRequest(result.Message);
             }
             else
             {
-                foreach (IAuthRoleServiceGetAllRolesAsync item in allRoles)
-                {
-                    setRoleForUserViewModels.Add(new SetRoleForUserViewModel() { RoleName = item.Name, State = foundUserRoles.Any(s => s == item.Name) });
-                }
+                TempData["userEmail"] = userEmail;
+                List<IAuthRoleServiceSetRoleForUserGet> setroles = ((IAuthRoleServiceSetRoleForUserGetSucceeded)result).setroles;
+                List<SetRoleForUserViewModel> setRoleForUserViewModels = _mapper.Map<List<SetRoleForUserViewModel>>(setroles);
+                return View(setRoleForUserViewModels);
             }
-            TempData["userEmail"] = userEmail;
-            return View(setRoleForUserViewModels);
 
         }
         [Authorize(Roles = "role_set")]
         [HttpPost]
         public async Task<IActionResult> SetRoleForUser(List<SetRoleForUserViewModel> setRoleViewModels, string userEmail)
         {
-            Console.WriteLine("========================================================================");
-            Console.WriteLine("RoleController/SetRoleForUser Post metodu çalıştı");
-            //mail ile kullanıcıyı bulalım
-            IAuthUserServiceFindByEmailAsync? foundUserbyEmail = await _userService.FindByEmailAsync(userEmail);
-            if (foundUserbyEmail is null)
+            Exception result = await _roleService.SetRoleForUserPost(_mapper.Map<List<IAuthRoleServiceSetRoleForUserPost>>(setRoleViewModels),userEmail,User.Identity.Name);
+            if (result is IAuthRoleServiceSetRoleForUserPostSucceeded)
             {
-                return NotFound("Kullanıcı bulunamadı");
-            }
-            //viewmodel in içine girelim ve tik durumuna göre rol atayıp silelim
-            //viewmodel in içine girelim
-            foreach (SetRoleForUserViewModel item in setRoleViewModels)
-            {
-                //tik durumuna göre rol atayıp silelim
-                //rol atama
-                if (item.State)
-                {
-                    await _userService.AddToRoleAsync(_mapper.Map<IAuthUserServiceAddToRoleAsync>(foundUserbyEmail), item.RoleName);
-                }
-                else
-                {
-                    await _userService.RemoveFromRoleAsync(_mapper.Map<IAuthUserServiceRemoveFromRoleAsync>(foundUserbyEmail), item.RoleName);
-                }
-            }
-            //burada kaldım
-            //roller ayarlandı ancak etkili olması için giriş çıkış yapılması gerekli(burası biraz sıkıntılı,bakılması lazım)
-            //hali hazırdaki kullanıcıyı bulalım
-            //şuan bu kod çok kötü bir kod düzenlenemesi lazım
-            string? userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            IAuthUserServiceFindByEmailAsync localUserWithUserId = _mapper.Map<IAuthUserServiceFindByEmailAsync>((await _userService.GetAllUsersAsync()).Where(u => u.Id.ToString() == userId).SingleOrDefault());
-            if (localUserWithUserId == foundUserbyEmail)
-            {
-                await _signInManager.SignOutAsync();
-                await _signInManager.SignInAsync(_mapper.Map<AppUser>(foundUserbyEmail), true);
+                return RedirectToAction("Index", "User");
             }
             else
             {
-                await _signInManager.SignOutAsync();
+                return BadRequest(result.Message);
             }
-            return RedirectToAction("Index", "User");
-
         }
 
 

@@ -23,6 +23,8 @@ namespace Business.Abstracts.Auth
 
         Task<Exception> DeleteRolePost(IAuthRoleServiceDeleteRolePost role);
 
+        Task<Exception> SetRoleForUserGet(string userEmail);
+        Task<Exception> SetRoleForUserPost(List<IAuthRoleServiceSetRoleForUserPost> roles,string userEmail, string localUserName);
     }
 
 }

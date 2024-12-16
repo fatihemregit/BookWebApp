@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts.Auth;
 using Data.Abstracts.Auth;
+using Entity.Auth;
 using Entity.Exceptions;
 using Entity.IAuthRoleRepository;
 using Entity.IAuthRoleService;
 using Entity.IAuthUserRepository;
+using Entity.IAuthUserService;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -21,13 +23,16 @@ namespace Business.Concretes.Auth
 
         private readonly IAuthUserRepository _userRepository;
 
+        private readonly SignInManager<AppUser> _signInManager;
+
         private readonly IMapper _mapper;
 
-        public AuthRoleService(IAuthRoleRepository RoleRepository, IMapper mapper, IAuthUserRepository userRepository)
+        public AuthRoleService(IAuthRoleRepository RoleRepository, IMapper mapper, IAuthUserRepository userRepository, SignInManager<AppUser> signInManager)
         {
             _roleRepository = RoleRepository;
             _mapper = mapper;
             _userRepository = userRepository;
+            _signInManager = signInManager;
         }
 
 
@@ -121,6 +126,87 @@ namespace Business.Concretes.Auth
             }
             //silme başarısız,NotSucceeded dönelim
             return new IAuthRoleServiceDeleteRolePostNotSucceeded("DeleteAsync is not Succeeded");
+        }
+
+        public async Task<Exception> SetRoleForUserGet(string userEmail)
+        {
+            if (userEmail is null)
+            {
+                return new IAuthRoleServiceSetRoleForUserGetNotSucceeded("useremail is null");
+            }
+
+            //email ile userı bulalım
+            IAuthUserRepositoryFindByEmailAsync? foundUserwithEmail = await  _userRepository.FindByEmailAsync(userEmail);
+            
+            if (foundUserwithEmail is null)
+            {
+                //NotSucceeded dönelim
+                return new IAuthRoleServiceSetRoleForUserGetNotSucceeded("user not found");
+            }
+            //sistemdeki tüm rolleri alalım
+            List<IAuthRoleRepositoryGetAllRolesAsync>? rolesinrepository = await _roleRepository.GetAllRolesAsync();
+            //sistemde hiç rol yoksa rol atamayı yapamayız
+            if (rolesinrepository is null)
+            {
+                //NotSucceeded dönelim
+                return new IAuthRoleServiceSetRoleForUserGetNotSucceeded("does not have any roles in system");
+            }
+            //bulunan kullanıcının tüm rollerini alalım
+            IList<string>? foundUserRoles = await _userRepository.GetRolesAsync(_mapper.Map<IAuthUserRepositoryGetRolesAsync>(foundUserwithEmail));
+            //bulunan kullanıcının rolleri ile sistemdeki tüm rolleri karşılaştırarak viewde tikli olup olmamasını belirleyelim
+            List<IAuthRoleServiceSetRoleForUserGet> setroles = new List<IAuthRoleServiceSetRoleForUserGet>();
+            //kullanıcının hiç rolü yok ise tüm tikler işaretsiz(false) olarak gelir
+            //bu kısım daha güzel yazılabilir
+            if (foundUserRoles is null)
+            {
+                rolesinrepository.ForEach(r => setroles.Add(new IAuthRoleServiceSetRoleForUserGet { RoleName = r.Name,State = false}));
+            }
+            else
+            {
+                foreach (IAuthRoleRepositoryGetAllRolesAsync role in rolesinrepository)
+                {
+                    setroles.Add(new IAuthRoleServiceSetRoleForUserGet { RoleName = role.Name,State = foundUserRoles.Any(s => s == role.Name) });
+                }
+            }
+            //Succeeded dönelim
+            return new IAuthRoleServiceSetRoleForUserGetSucceeded("SetRoleForUserGet is succeeded", setroles);
+
+        }
+
+        public async Task<Exception> SetRoleForUserPost(List<IAuthRoleServiceSetRoleForUserPost> roles, string userEmail,string localUserName)
+        {
+            //kullanıcıyı bulalım
+            IAuthUserRepositoryFindByEmailAsync? foundUser = await _userRepository.FindByEmailAsync(userEmail);
+            //kullanıcı yoksa NotSucceeded dönelim
+            if (foundUser is null)
+            {
+                return new IAuthRoleServiceSetRoleForUserPostNotSucceeded("user not found");
+            }
+            //role listesine girip rol atama ve silme işlemlerini yapalım
+            foreach (IAuthRoleServiceSetRoleForUserPost role in roles)
+            {
+                if (role.State)
+                {
+                    //rol ata
+                    await _userRepository.AddToRoleAsync(_mapper.Map<IAuthUserRepositoryAddToRoleAsync>(foundUser),role.RoleName);
+                }
+                else
+                {
+                    //rol sil
+                    await _userRepository.RemoveFromRoleAsync(_mapper.Map<IAuthUserRepositoryRemoveFromRoleAsync>(foundUser),role.RoleName);
+                }
+            }
+            //rol atama ve silme işlemlerinin geçerli olması için gir çık yapılması gerekli
+            //eğer local user ile rol işlemi yapılan kullanıcı aynı ise gir çık yapılsın fakat aynı değil ise herhangi bir şey yapılmasın
+            if (foundUser.UserName == localUserName)
+            {
+                //local user ile rol işlemi yapılan kullanıcı aynı
+                await _signInManager.SignOutAsync();
+                await _signInManager.SignInAsync(_mapper.Map<AppUser>(foundUser), true);
+            }
+            //local user ile rol işlemi yapılan kullanıcı aynı değil
+            //işlemler başarıyla tamamlandı Succeeded dönelim
+            return new IAuthRoleServiceSetRoleForUserPostSucceeded("SetRoleForUserPost is Succeeded");
         }
     }
 }

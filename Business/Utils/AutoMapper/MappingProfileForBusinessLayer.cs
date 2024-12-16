@@ -116,7 +116,19 @@ namespace Business.Utils.AutoMapper
 
 			//IAuthRoleRepositoryDeleteAsync to IAuthRoleRepositoryFindByIdAsync
 			CreateMap<IAuthRoleRepositoryDeleteAsync, IAuthRoleRepositoryFindByIdAsync>();
+			CreateMap<IAuthRoleRepositoryFindByIdAsync, IAuthRoleRepositoryDeleteAsync>();
 
+			//IAuthUserRepositoryGetRolesAsync to IAuthUserRepositoryFindByEmailAsync
+			CreateMap<IAuthUserRepositoryGetRolesAsync, IAuthUserRepositoryFindByEmailAsync>();
+			CreateMap<IAuthUserRepositoryFindByEmailAsync, IAuthUserRepositoryGetRolesAsync>();
+
+			// IAuthUserRepositoryAddToRoleAsync to IAuthUserRepositoryFindByEmailAsync
+			CreateMap<IAuthUserRepositoryAddToRoleAsync, IAuthUserRepositoryFindByEmailAsync>();
+			CreateMap<IAuthUserRepositoryFindByEmailAsync, IAuthUserRepositoryAddToRoleAsync>();
+            // IAuthUserRepositoryRemoveFromRoleAsync to IAuthUserRepositoryFindByEmailAsync
+           
+			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, IAuthUserRepositoryFindByEmailAsync>();
+            CreateMap<IAuthUserRepositoryFindByEmailAsync, IAuthUserRepositoryRemoveFromRoleAsync>();
         }
     }
 }
