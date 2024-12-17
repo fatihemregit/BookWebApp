@@ -36,41 +36,7 @@ namespace Business.Concretes.Auth
         }
 
 
-        public async Task<IdentityResult> CreateAsync(IAuthRoleServiceCreateAsync role)
-        {
-            IdentityResult identityResult = await _roleRepository.CreateAsync(_mapper.Map<IAuthRoleRepositoryCreateAsync>(role));
-            return identityResult;
-        }
-
-
-
-        public async Task DeleteAsync(IAuthRoleServiceDeleteAsync role)
-        {
-            await _roleRepository.DeleteAsync(_mapper.Map<IAuthRoleRepositoryDeleteAsync>(role));
-
-        }
-
-        public async Task<IAuthRoleServiceFindByIdAsync?> FindByIdAsync(string roleId)
-        {
-            IAuthRoleRepositoryFindByIdAsync? findByIdAsync = await _roleRepository.FindByIdAsync(roleId);
-            if (findByIdAsync == null)
-            {
-                return null;
-            }
-            return _mapper.Map<IAuthRoleServiceFindByIdAsync>(findByIdAsync);
-
-        }
-
-        public async Task<List<IAuthRoleServiceGetAllRolesAsync>?> GetAllRolesAsync()
-        {
-            List<IAuthRoleRepositoryGetAllRolesAsync>? getAllRolesAsync = await _roleRepository.GetAllRolesAsync();
-            if (getAllRolesAsync is null)
-            {
-                return null;
-            }
-            return _mapper.Map<List<IAuthRoleServiceGetAllRolesAsync>>(getAllRolesAsync);
-
-        }
+        //NEW CODES
 
         public async Task<Exception> CreateRolePost(IAuthRoleServiceCreateRolePost role)
         {

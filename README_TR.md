@@ -12,7 +12,10 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Index sayfalarýnda yetkiye göre buton gösterme iþlemlerinin Business taki User Service taþýnmasý
+- Business katmanýndaki sýnýflarýndaki gereksiz fonksiyonlarýn silinmesi
+- Automapper sýnýflarýndaki gereksiz kodlarýn silinmesi
+- Entity Katmanýndaki gereksiz sýnýflarýn silinmesi
+
 ## Proje Günlüðü
 ### Gün 1 (14.11.2024)
 - Varsayýlan olarak gelen ErrorViewModel silindi
@@ -133,6 +136,9 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 ## Gün 17 (17.12.2024)
 - Book Controllerda daki Create,Edit,Details,Delete metotlarýnýn Custom Exception(Entity/Exceptions/IbookService) a göre yazýlmasý
 - Index sayfalarýnda(/User/Index ve /Book/Index) yetkiye göre buton gösterme iþlemlerinin Business taki User Service taþýnmasý
+- Business katmanýndaki sýnýflarýndaki(AuthRoleService ve AuthUserService) gereksiz fonksiyonlarýn(AuthRoleService(GetAllRolesAsync,FindByIdAsync,DeleteAsync),AuthUserService(FindByEmailAsync,FindByNameAsync,IsInRoleAsync,GetRolesAsync,CreateAsync,DeleteAsync,AddToRoleAsync,RemoveFromRoleAsync,GetUsersInRoleAsync)) silinmesi
+- Automapper sýnýflarýndaki(MappingProfile.cs,MappingProfileForBusinessLayer.cs) gereksiz kodlarýn(CreateMap<>()) silinmesi
+- Entity Katmanýndaki gereksiz sýnýflarýn(IAuthRoleService(IAuthRoleServiceDeleteAsync,IAuthRoleServiceFindByIdAsync),IAuthUserService(IAuthUserServiceAddToRoleAsync,IAuthUserServiceCreateAsync,IAuthUserServiceDeleteAsync,IAuthUserServiceFindByEmailAsync,IAuthUserServiceFindByNameAsync,IAuthUserServiceGetRolesAsync,IAuthUserServiceGetUsersInRoleAsync,IAuthUserServiceIsInRoleAsync,IAuthUserServiceRemoveFromRoleAsync)) silinmesi
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
