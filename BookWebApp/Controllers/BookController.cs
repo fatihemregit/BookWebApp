@@ -75,17 +75,16 @@ namespace BookWebApp.Controllers
         }
 
         [Authorize(Roles = "book_create")]
-        [HttpPost("Create")]
+        [HttpPost("BookCreate")]
         public async Task<IActionResult> Create([FromForm] BookViewModelForCreate bookViewModelForCreate)
         {
             //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)(bu kural business a yazılabilir)
-            IBookServiceCreateOneBook? createOneBook = await _bookService.createOneBook(_mapper.Map<IBookServiceCreateOneBook>(bookViewModelForCreate));
-            if (createOneBook is null)
+            Exception result = await _bookService.createOneBook(_mapper.Map<IBookServiceCreateOneBook>(bookViewModelForCreate));
+            if (result is IBookServiceCreateOneBookSucceeded)
             {
-                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "createOneBook is null(this error comes from Bookcontroller/Create(post))" });
+                return RedirectToAction("Index", "Book");
             }
-
-            return RedirectToAction("Index", "Book");
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Create(post))" });
         }
 
 
@@ -94,12 +93,13 @@ namespace BookWebApp.Controllers
         [HttpGet("BookEdit/{id:int}")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
-            if (getOneBookById is null)
+            Exception result = await _bookService.getOneBookById(id);
+            if (result is IBookServiceGetOneBookByIdSucceeded)
             {
-                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Edit)" });
+                return View(_mapper.Map<BookViewModelForUpdate>(((IBookServiceGetOneBookByIdSucceeded)result).Book));
             }
-            return View(_mapper.Map<BookViewModelForUpdate>(getOneBookById));
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Edit)" });
+
 
         }
 
@@ -107,12 +107,12 @@ namespace BookWebApp.Controllers
         [HttpPost("BookEdit/{id:int}")]
         public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] BookViewModelForUpdate bookViewModelForUpdate)
         {
-            IBookServiceEditOneBookById? editOneBookById = await _bookService.editOneBookById(id, _mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
-            if (editOneBookById is null)
+            Exception result = await _bookService.editOneBookById(id, _mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
+            if (result is IBookServiceEditOneBookByIdSucceeded)
             {
-                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "editOneBookById is null(this error comes from Bookcontroller/Edit(post))" });
+                return RedirectToAction("Index", "Book");
             }
-            return RedirectToAction("Index", "Book");
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Edit(post))" });
 
         }
 
@@ -121,25 +121,26 @@ namespace BookWebApp.Controllers
         [HttpGet("BookDetails/{id:int}")]
         public async Task<IActionResult> Details([FromRoute] int id)
         {
-            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
-            if (getOneBookById is null)
+            Exception result = await _bookService.getOneBookById(id);
+            if (result is IBookServiceGetOneBookByIdSucceeded)
             {
-                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Details)" });
+                return View(_mapper.Map<BookViewModelForDetails>(((IBookServiceGetOneBookByIdSucceeded)result).Book));
             }
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Details)" });
 
-            return View(_mapper.Map<BookViewModelForDetails>(getOneBookById));
         }
 
         [Authorize(Roles = "book_delete")]
         [HttpGet("BookDelete/{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            IBookServiceGetOneBookById? getOneBookById = await _bookService.getOneBookById(id);
-            if (getOneBookById is null)
+            Exception result = await _bookService.getOneBookById(id);
+            if (result is IBookServiceGetOneBookByIdSucceeded)
             {
-                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = "getOneBookById is null(this error comes from Bookcontroller/Delete)" });
+                return View(_mapper.Map<BookViewModelForDelete>(((IBookServiceGetOneBookByIdSucceeded)result).Book));
             }
-            return View(_mapper.Map<BookViewModelForDelete>(getOneBookById));
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Delete)" });
+
         }
 
 
@@ -147,8 +148,12 @@ namespace BookWebApp.Controllers
         [HttpPost("BookDelete/{id:int}")]
         public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
-            await _bookService.deleteOneBookById(id);
-            return RedirectToAction("Index", "Book");
+            Exception result = await _bookService.deleteOneBookById(id);
+            if (result is IBookServiceDeleteOneBookByIdSucceeded)
+            {
+                return RedirectToAction("Index", "Book");
+            }
+            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Delete(Post))" });
         }
 
         public IActionResult MyErrorPage(string errorMessage)
