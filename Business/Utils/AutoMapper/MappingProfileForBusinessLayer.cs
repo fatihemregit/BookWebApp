@@ -129,6 +129,11 @@ namespace Business.Utils.AutoMapper
            
 			CreateMap<IAuthUserRepositoryRemoveFromRoleAsync, IAuthUserRepositoryFindByEmailAsync>();
             CreateMap<IAuthUserRepositoryFindByEmailAsync, IAuthUserRepositoryRemoveFromRoleAsync>();
+
+			//IAuthUserRepositoryIsInRoleAsync to IAuthUserServiceFindLocalUserwithUserName
+			CreateMap<IAuthUserRepositoryIsInRoleAsync, IAuthUserServiceFindLocalUserwithUserName>();
+			CreateMap<IAuthUserServiceFindLocalUserwithUserName, IAuthUserRepositoryIsInRoleAsync>();
+
         }
     }
 }

@@ -242,8 +242,25 @@ namespace Business.Concretes.Auth
                 return null;
             }
             return _mapper.Map<IAuthUserServiceFindLocalUserwithUserName>(findByNameAsync);
-
            
         }
+        public async Task<Dictionary<string,bool>> checkRoleswithLocalUserName(string userName,List<string> roleNames)
+        {
+            IAuthUserServiceFindLocalUserwithUserName? localUser = await findLocalUserwithUserName(userName);
+            Dictionary<string, bool> result = new Dictionary<string, bool>();
+            if (localUser is null) {
+                foreach (string role in roleNames)
+                {
+                    result.Add(role,false);
+                }
+                return result;
+            }
+            foreach (string role in roleNames)
+            {
+                result.Add(role, await _userRepository.IsInRoleAsync(_mapper.Map<IAuthUserRepositoryIsInRoleAsync>(localUser),role));
+            }
+            return result;
+        }
+
     }
 }

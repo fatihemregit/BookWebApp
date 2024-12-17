@@ -8,6 +8,9 @@ using System.Globalization;
 using Entity.ViewModel;
 using Business.Abstracts.Book;
 using Entity.Exceptions.IBookService;
+using Business.Concretes.Auth;
+using Business.Abstracts.Auth;
+using Entity.IAuthUserService;
 
 namespace BookWebApp.Controllers
 {
@@ -18,44 +21,31 @@ namespace BookWebApp.Controllers
 
         private readonly IMapper _mapper;
         private readonly ILogger<BookController> _logger;
-        private readonly UserManager<AppUser> _userManager;
-
+        //private readonly UserManager<AppUser> _userManager;
+        private readonly IAuthUserService _userService;
         private readonly IBookService _bookService;
 
 
-        public BookController(IMapper mapper, ILogger<BookController> logger, UserManager<AppUser> userManager, IBookService bookService)
+        public BookController(IMapper mapper, ILogger<BookController> logger, /*UserManager<AppUser> userManager,*/ IBookService bookService, IAuthUserService userService)
         {
             _mapper = mapper;
             _logger = logger;
-            _userManager = userManager;
+            //_userManager = userManager;
             _bookService = bookService;
+            _userService = userService;
         }
         public async Task<IActionResult> Index()
         {
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
-            //oturum açan kullanıcıyı bulma
-            _logger.LogCritical("Index tetiklendi");
-            var user = await _userManager.GetUserAsync(User);
-            //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
-            //oturum açan kullanıcı yoksa yapılacaklar
-            if (user is null)
-            {
-                //oturum açan kullanıcı yoksa  create,edit ve delete butonları gözükmez
-                ViewData["book_create"] = false;
-                ViewData["book_edit"] = false;
-                ViewData["book_delete"] = false;
-            }
-            //oturum açan kullanıcı var
-            //kullanıcının yetkilerini öğrenme ve yetkileri view datalara atama
-            else
-            {
-                ViewData["book_create"] = await _userManager.IsInRoleAsync(user, "book_create");
-                ViewData["book_edit"] = await _userManager.IsInRoleAsync(user, "book_edit");
-                ViewData["book_delete"] = await _userManager.IsInRoleAsync(user, "book_delete");
-            }
+
+            Dictionary<string, bool> checkRoleswithLocalUserName = await _userService.checkRoleswithLocalUserName(
+                                                                    User.Identity.Name, 
+                                                                    new List<string> { "book_create", "book_edit", "book_delete" });
+            
+            ViewData["book_create"] = checkRoleswithLocalUserName["book_create"];
+            ViewData["book_edit"] = checkRoleswithLocalUserName["book_edit"];
+            ViewData["book_delete"] = checkRoleswithLocalUserName["book_delete"];
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) bitiş
-            //IBookServiceGetAllBook mapping
-            //List<BookViewModelForList> bookViewModelForLists = _mapper.Map<List<BookViewModelForList>>(await _bookService.getAll());
             Exception result = await _bookService.getAll();
             if (result is IBookServiceGetAllBookSucceeded)
             {

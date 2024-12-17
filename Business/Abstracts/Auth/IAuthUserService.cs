@@ -41,6 +41,8 @@ namespace Business.Abstracts.Auth
 
 		Task<IAuthUserServiceFindLocalUserwithUserName?> findLocalUserwithUserName(string userName);
 
+		Task<Dictionary<string, bool>> checkRoleswithLocalUserName(string userName, List<string> roleNames);
+
 
     }
 

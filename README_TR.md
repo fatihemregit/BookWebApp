@@ -12,7 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Book Controllerda daki metotlarýn Custom Exception a göre yazýlmasý
+- Index sayfalarýnda yetkiye göre buton gösterme iþlemlerinin Business taki User Service taþýnmasý
 ## Proje Günlüðü
 ### Gün 1 (14.11.2024)
 - Varsayýlan olarak gelen ErrorViewModel silindi
@@ -132,6 +132,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Book Controllerda daki Index metotunun Custom Exception(IBookServiceGetAllBookSucceeded) a göre yazýlmasý
 ## Gün 17 (17.12.2024)
 - Book Controllerda daki Create,Edit,Details,Delete metotlarýnýn Custom Exception(Entity/Exceptions/IbookService) a göre yazýlmasý
+- Index sayfalarýnda(/User/Index ve /Book/Index) yetkiye göre buton gösterme iþlemlerinin Business taki User Service taþýnmasý
 ### Sorunlar
 - BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not

@@ -42,28 +42,18 @@ namespace BookWebApp.Controllers
         public async Task<IActionResult> Index()
         {
 
-            //TAMAM
             //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) başlangıç
-            //oturum açan kullanıcıyı bulma
-            IAuthUserServiceFindLocalUserwithUserName? user = await _userService.findLocalUserwithUserName(User.Identity.Name);
-            //eğer oturum açan kullanıcı yoksa "user" değişkeni null gelir
-            //oturum açan kullanıcı yoksa yapılacaklar
-            if (user is null)
-            {
-                ViewData["currentUser"] = "";
-                ViewData["user_delete"] = false;
-                ViewData["roles_list_in_user"] = false;
-                ViewData["role_set"] = false;
-            }
-            else
-            {
-                ViewData["currentUser"] = user.Email.ToString();
-                ViewData["user_delete"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "user_delete");
-                ViewData["roles_list_in_user"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "roles_list_in_user");
-                ViewData["role_set"] = await _userService.IsInRoleAsync(_mapper.Map<IAuthUserServiceIsInRoleAsync>(user), "role_set");
-            }
-
+            Dictionary<string, bool> checkRoleswithLocalUserName = await _userService.checkRoleswithLocalUserName(
+                                                                   User.Identity.Name,
+                                                                   new List<string> { "user_delete", "roles_list_in_user", "role_set" });
+            ViewData["user_delete"] = checkRoleswithLocalUserName["user_delete"];
+            ViewData["roles_list_in_user"] = checkRoleswithLocalUserName["roles_list_in_user"];
+            ViewData["role_set"] = checkRoleswithLocalUserName["role_set"];
             //yetkiye göre butonları gösterme(delete user,Manage Roles,Roles(column)) bitiş
+            //oturum açan kullanıcının email ini viewData ya gönderme
+            ViewData["currentUser"] = ((await _userService.findLocalUserwithUserName(User.Identity.Name)) is null) ? "": (await _userService.findLocalUserwithUserName(User.Identity.Name)).Email;
+
+            //tüm kullanıcıları view e gönderme
             return View(_mapper.Map<List<AppUserViewModel>>(await _userService.GetAllUsersAsync()));
         }
 
