@@ -1,5 +1,6 @@
 # Book Web App Project
 [trReadmeHere](https://github.com/fatihemregit/BookWebApp/blob/master/README_TR.md)
+<br>
 A project where I implemented CRUD operations on a Book object using simple EF Core to improve my skills.  
 <br>  
 <br>  
@@ -7,14 +8,14 @@ I set up the authentication mechanism for the project using the Identity library
 
 ## Project Purpose
 
-To apply the topics I’ve learned so far in this [course](https://www.btkakademi.gov.tr/portal/course/aspnet-core-web-api-23993) (Logging, Layered Architecture, AutoMapper).  
+To apply the topics Iâ€™ve learned so far in this [course](https://www.btkakademi.gov.tr/portal/course/aspnet-core-web-api-23993) (Logging, Layered Architecture, AutoMapper).  
 <br>  
 <br>  
 And to implement an authentication mechanism with Identity.
 
 ## Tasks Completed in This Commit
 
-- Fixed the price validation issue on the Book Create and Edit pages.
+- Readme Update
 
 ## Project Log
 
@@ -45,11 +46,11 @@ And to implement an authentication mechanism with Identity.
 - Wrote the GET part of the `Edit` method for the Book Controller.
 - Created and wrote the `BookViewModelForUpdate` class.
 - Added mapping from `BookDto` to `BookViewModelForUpdate` in `MappingProfile.cs`.
-- Tried to fix the decimal issue but couldn’t resolve it.
+- Tried to fix the decimal issue but couldnâ€™t resolve it.
 
 ### Day 2 (15.11.2024)
 
-- Fixed the decimal issue, though validation in the `ViewModel` still doesn’t work. For now, it’s acceptable (resolved by adding jQuery code to `_ValidationScriptsPartial.cshtml`).
+- Fixed the decimal issue, though validation in the `ViewModel` still doesnâ€™t work. For now, itâ€™s acceptable (resolved by adding jQuery code to `_ValidationScriptsPartial.cshtml`).
 - Temporarily created `denemedto.cs`, `denemedtoConfig.cs`, and a controller to test if the issue also occurred with `double`. Deleted all related files after resolving the problem.
 - Deleted the migration containing `denemedto`.
 - Deleted the database using SQL Server Management Studio.
@@ -138,7 +139,7 @@ And to implement an authentication mechanism with Identity.
 
 ### Day 13 (13.12.2024)
 - The bug in the role assignment system was fixed (AuthUserRepository/AddToRoleAsync method).
-  (The issue was that we were trying to map the parameter object to AppUser. This was not allowed, and as per my findings, EF Core doesn’t support this. Instead, the object’s ID is used to fetch the AppUser using the FindByIdAsync method).
+  (The issue was that we were trying to map the parameter object to AppUser. This was not allowed, and as per my findings, EF Core doesnâ€™t support this. Instead, the objectâ€™s ID is used to fetch the AppUser using the FindByIdAsync method).
 - A small change was made in the logging system (moved Microsoft.EntityFrameworkCore.Database.Command logs to warnings in appsettings.json. This was done to make error tracking easier, as too many log messages on the console can make debugging difficult).
 - All business logic in the UserController was moved to the UserService in the Business layer.
 
