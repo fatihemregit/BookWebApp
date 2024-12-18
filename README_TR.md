@@ -10,7 +10,6 @@ bu [eðitimde](https://www.btkakademi.gov.tr/portal/course/aspnet-core-web-api-23
 ve Identity ile auth mekanizmasý kurmak
 <br>
 <br>
-Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
 - Book Create ve edit sayfasýndaki price validasyon probleminin çözülmesi
 
