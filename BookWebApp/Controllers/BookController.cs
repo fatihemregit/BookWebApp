@@ -39,9 +39,9 @@ namespace BookWebApp.Controllers
             //kullanıcının yetkilerine göre create,edit ve delete butonlarını gösterip göstermeme(details i herkes görebilir) başlangıç
 
             Dictionary<string, bool> checkRoleswithLocalUserName = await _userService.checkRoleswithLocalUserName(
-                                                                    User.Identity.Name, 
+                                                                    User.Identity.Name,
                                                                     new List<string> { "book_create", "book_edit", "book_delete" });
-            
+
             ViewData["book_create"] = checkRoleswithLocalUserName["book_create"];
             ViewData["book_edit"] = checkRoleswithLocalUserName["book_edit"];
             ViewData["book_delete"] = checkRoleswithLocalUserName["book_delete"];
@@ -68,13 +68,17 @@ namespace BookWebApp.Controllers
         [HttpPost("BookCreate")]
         public async Task<IActionResult> Create([FromForm] BookViewModelForCreate bookViewModelForCreate)
         {
-            //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)(bu kural business a yazılabilir)
-            Exception result = await _bookService.createOneBook(_mapper.Map<IBookServiceCreateOneBook>(bookViewModelForCreate));
-            if (result is IBookServiceCreateOneBookSucceeded)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Book");
+                //aynı kitabı ekleme yi engelleme(proje bittikten sonra bak)(bu kural business a yazılabilir)
+                Exception result = await _bookService.createOneBook(_mapper.Map<IBookServiceCreateOneBook>(bookViewModelForCreate));
+                if (result is IBookServiceCreateOneBookSucceeded)
+                {
+                    return RedirectToAction("Index", "Book");
+                }
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Create(post))" });
             }
-            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Create(post))" });
+            return View(bookViewModelForCreate);
         }
 
 
@@ -97,13 +101,16 @@ namespace BookWebApp.Controllers
         [HttpPost("BookEdit/{id:int}")]
         public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] BookViewModelForUpdate bookViewModelForUpdate)
         {
-            Exception result = await _bookService.editOneBookById(id, _mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
-            if (result is IBookServiceEditOneBookByIdSucceeded)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Book");
+                Exception result = await _bookService.editOneBookById(id, _mapper.Map<IBookServiceEditOneBookById>(bookViewModelForUpdate));
+                if (result is IBookServiceEditOneBookByIdSucceeded)
+                {
+                    return RedirectToAction("Index", "Book");
+                }
+                return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Edit(post))" });
             }
-            return RedirectToAction("MyErrorPage", "Book", new { errorMessage = $"{result.Message}(this error comes from Bookcontroller/Edit(post))" });
-
+            return View(bookViewModelForUpdate);
         }
 
         //Details

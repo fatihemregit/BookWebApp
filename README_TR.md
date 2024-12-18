@@ -12,9 +12,7 @@ ve Identity ile auth mekanizmasý kurmak
 <br>
 Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra eklenecektir.
 ## Bu Committe Yapýlan Ýþlemler
-- Business katmanýndaki sýnýflarýndaki gereksiz fonksiyonlarýn silinmesi
-- Automapper sýnýflarýndaki gereksiz kodlarýn silinmesi
-- Entity Katmanýndaki gereksiz sýnýflarýn silinmesi
+- Book Create ve edit sayfasýndaki price validasyon probleminin çözülmesi
 
 ## Proje Günlüðü
 ### Gün 1 (14.11.2024)
@@ -121,7 +119,7 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - User Controllerdeki index metodunundaki GetUserAsync Metodunun deðiþtirilmesi
 ### Gün 15 (15.12.2024)
 - Role Controllerdeki CreateRolePost,DeleteRoleGet,DeleteRolePost metotlarýnýn iþ kurallarýnýn Businesstaki Role Service taþýnmasý
-## Gün 16 (16.12.2024)
+### Gün 16 (16.12.2024)
 - Role Controllerdeki SetRoleForUserGet,SetRoleForUserPost metotlarýnýn iþ kurallarýnýn Businesstaki Role Service taþýnmasý
 - Role Controllerda  DeleteRolePost metotunda ufak kod düzeltmeleri
 - AuthRoleService sýnýfýnda SetRoleForUserGet metodunda ufak kod düzeltmeleri
@@ -133,19 +131,20 @@ Not : uygulamanýn ilk sürümlerinde katmanlý mimari bulunmamaktadýr.Daha sonra ek
 - Custom Route iþlemleri(/Login,/SignIn,/DeleteUser,/CreateRole,/DeleteRole,/SetRoleForUser)
 - BookService sýnýfýna custom exception(Entity/Exceptions/IbookService) sistemi uygulanmasý
 - Book Controllerda daki Index metotunun Custom Exception(IBookServiceGetAllBookSucceeded) a göre yazýlmasý
-## Gün 17 (17.12.2024)
+### Gün 17 (17.12.2024)
 - Book Controllerda daki Create,Edit,Details,Delete metotlarýnýn Custom Exception(Entity/Exceptions/IbookService) a göre yazýlmasý
 - Index sayfalarýnda(/User/Index ve /Book/Index) yetkiye göre buton gösterme iþlemlerinin Business taki User Service taþýnmasý
 - Business katmanýndaki sýnýflarýndaki(AuthRoleService ve AuthUserService) gereksiz fonksiyonlarýn(AuthRoleService(GetAllRolesAsync,FindByIdAsync,DeleteAsync),AuthUserService(FindByEmailAsync,FindByNameAsync,IsInRoleAsync,GetRolesAsync,CreateAsync,DeleteAsync,AddToRoleAsync,RemoveFromRoleAsync,GetUsersInRoleAsync)) silinmesi
 - Automapper sýnýflarýndaki(MappingProfile.cs,MappingProfileForBusinessLayer.cs) gereksiz kodlarýn(CreateMap<>()) silinmesi
 - Entity Katmanýndaki gereksiz sýnýflarýn(IAuthRoleService(IAuthRoleServiceDeleteAsync,IAuthRoleServiceFindByIdAsync),IAuthUserService(IAuthUserServiceAddToRoleAsync,IAuthUserServiceCreateAsync,IAuthUserServiceDeleteAsync,IAuthUserServiceFindByEmailAsync,IAuthUserServiceFindByNameAsync,IAuthUserServiceGetRolesAsync,IAuthUserServiceGetUsersInRoleAsync,IAuthUserServiceIsInRoleAsync,IAuthUserServiceRemoveFromRoleAsync)) silinmesi
+### Gün 18 (18.12.2024)
+- Book Create ve edit sayfasýndaki price validasyon probleminin çözülmesi
+
 ### Sorunlar
-- BookViewModelForUpdate.cs de price a validation yazýldýðýnda validasyon sistemi bozuluyor.(sebebi _ValidationScriptsPartial.cshtml deki jquery kodu.Bu kodu silemeyiz).Þuanlýk Çok önemli deðil
 ### Kendime Not
 validation konusunda ve viewler konusunda zayýf olduðumu fark ettim
 
- ### Yapýlacaklar
-- çoðu yerde artýk(genellikle kullanýcýnýn gördüðü yerlerde) id deðerini göstermeyelim(bookservice objelerinde direkt id prop u yok.ama olmasý lazým çünkü iþlemler için ihtiyacýmýz var)
+### Yapýlacaklar
+
 ### Geliþtirilebilecek Yerler
-- Custom Route yapýlmasý(ör : kullanýcý giriþ "user/login" deðil "/login" olsun)
 -Isbn ile kitap bilgilerini otomatik çekme(https://isbndb.com/apidocs/v2)
